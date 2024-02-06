@@ -36,6 +36,15 @@ const INFO = {
 
 	projects: [
 		{
+			title: "Docreator",
+			description:
+				"This application simplifies the creation of Air Waybill (AWB) documents for the logistics and shipping industry. With a user-friendly interface, modular design, and seamless library integration, the app delivers a streamlined and efficient document generation experience. It reflects my expertise in React development, emphasizing modularity, responsiveness, and a commitment to enhancing industry processes.",
+			logo: "https://cogoport-production.sgp1.digitaloceanspaces.com/60f19d21e99a8e720647ba8a6bb4646a/react.png",
+			linkText: "View Project",
+			link: "https://www.docreator.in.net/",
+		},
+
+		{
 			title: "VaxSlotSearch",
 			description:
 				"This project is a web application built using JavaScript that is basically a COVID-19 Vaccination Slot Finder that helps users find available vaccination slots in their region. The application leverages the CoWIN API, which provides real-time data on vaccine availability across various vaccination centers in India. Users can enter their location details, such as state and district, and the application will display a list of vaccination centers with available slots.",
