@@ -17,12 +17,23 @@ import NavBar from "../components/common/navBar";
 import INFO from "../data/user";
 import SEO from "../data/seo";
 
+import { useSelector } from 'react-redux';
+
 import "./styles/homepage.css";
 
 const Homepage = () => {
 	const [stayLogo, setStayLogo] = useState(false);
 	const [logoSize, setLogoSize] = useState(80);
 	const [oldLogoSize, setOldLogoSize] = useState(80);
+
+	const data = useSelector((state) => state.data);
+
+	const { user = {} } = data || {};
+
+	const socialObject = user?.social?.reduce((acc, curr) => {
+		acc[curr.name] = curr.url;
+		return acc;
+	}, {});
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -67,7 +78,7 @@ const Homepage = () => {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{INFO.main.title}</title>
+				<title>{user?.name || INFO.main.title}</title>
 				<meta name="description" content={currentSEO.description} />
 				<meta
 					name="keywords"
@@ -80,7 +91,7 @@ const Homepage = () => {
 				<div className="content-wrapper">
 					<div className="homepage-logo-container">
 						<div style={logoStyle}>
-							<Logo width={logoSize} link={false} />
+							<Logo width={logoSize} user={user} link={false} />
 						</div>
 					</div>
 
@@ -88,11 +99,11 @@ const Homepage = () => {
 						<div className="homepage-first-area">
 							<div className="homepage-first-area-left-side">
 								<div className="title homepage-title">
-									{INFO.homepage.title}
+									{user?.name || INFO.homepage.title}
 								</div>
 
 								<div className="subtitle homepage-subtitle">
-									{INFO.homepage.description}
+									{user?.description || INFO.homepage.description}
 								</div>
 							</div>
 
@@ -100,7 +111,7 @@ const Homepage = () => {
 								<div className="homepage-image-container">
 									<div className="homepage-image-wrapper">
 										<img
-											src="my-pic.jpg"
+											src={user?.pictureUrl?.home || "my-pic.jpg"}
 											alt="about"
 											className="homepage-image"
 										/>
@@ -111,7 +122,7 @@ const Homepage = () => {
 
 						<div className="homepage-socials">
 							<a
-								href={INFO.socials.github}
+								href={socialObject?.github || INFO.socials.github}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -121,7 +132,7 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={INFO.socials.linkedin}
+								href={socialObject?.linkedin || INFO.socials.linkedin}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -131,7 +142,7 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={INFO.socials.twitter}
+								href={socialObject?.twitter || INFO.socials.twitter}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -141,7 +152,7 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={INFO.socials.instagram}
+								href={socialObject?.instagram || INFO.socials.instagram}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -151,7 +162,7 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={`mailto:${INFO.main.email}`}
+								href={`mailto:${socialObject?.email || INFO.main.email}`}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -163,7 +174,7 @@ const Homepage = () => {
 						</div>
 
 						<div className="page-footer">
-							<Footer />
+							<Footer user={user} />
 						</div>
 					</div>
 				</div>

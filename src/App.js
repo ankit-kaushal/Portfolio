@@ -9,16 +9,34 @@ import Articles from "./pages/articles";
 import ReadArticle from "./pages/readArticle";
 import Contact from "./pages/contact";
 import Notfound from "./pages/404";
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { fetchDataSuccess } from "./requests/actions";
 
 import { TRACKING_ID } from "./data/tracking";
 import "./app.css";
 
 function App() {
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (TRACKING_ID !== "") {
 			ReactGA.initialize(TRACKING_ID);
 		}
 	}, []);
+
+	useEffect(() => {
+		const fetchData = async () => {
+		  try {
+			const response = await axios.get('https://www.api.ankitkaushal.tech/');
+			dispatch(fetchDataSuccess(response.data));
+		  } catch (error) {
+			console.error('Error fetching data:', error);
+		  }
+		};
+	
+		fetchData();
+	  }, [dispatch]);
 
 	return (
 		<div className="App">
