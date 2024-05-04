@@ -28,6 +28,10 @@ const Homepage = () => {
 
 	const data = useSelector((state) => state.data);
 
+	const state = useSelector((state) => state);
+
+	console.log("state",state);
+
 	const { user = {} } = data || {};
 
 	const socialObject = user?.social?.reduce((acc, curr) => {
