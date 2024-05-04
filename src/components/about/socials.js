@@ -12,11 +12,11 @@ import INFO from "../../data/user";
 
 import "./styles/socials.css";
 
-const Socials = () => {
+const Socials = ({ social={} }) => {
 	return (
 		<div className="socials">
 			<div className="social">
-				<a href={INFO.socials.twitter} target="_blank" rel="noreferrer">
+				<a href={social?.twitter || INFO.socials.twitter} target="_blank" rel="noreferrer">
 					<div className="social-icon">
 						<FontAwesomeIcon
 							icon={faTwitter}
@@ -28,7 +28,7 @@ const Socials = () => {
 			</div>
 
 			<div className="social">
-				<a href={INFO.socials.github} target="_blank" rel="noreferrer">
+				<a href={social?.github || INFO.socials.github} target="_blank" rel="noreferrer">
 					<div className="social-icon">
 						<FontAwesomeIcon
 							icon={faGithub}
@@ -41,7 +41,7 @@ const Socials = () => {
 
 			<div className="social">
 				<a
-					href={INFO.socials.linkedin}
+					href={social?.linkedin || INFO.socials.linkedin}
 					target="_blank"
 					rel="noreferrer"
 				>
@@ -57,7 +57,7 @@ const Socials = () => {
 
 			<div className="social">
 				<a
-					href={INFO.socials.instagram}
+					href={social?.instagram || INFO.socials.instagram}
 					target="_blank"
 					rel="noreferrer"
 				>
@@ -74,7 +74,7 @@ const Socials = () => {
 			<div className="email">
 				<div className="email-wrapper">
 					<a
-						href={`mailto:${INFO.main.email}`}
+						href={`mailto:${social?.email || INFO.main.email}`}
 						target="_blank"
 						rel="noreferrer"
 					>
@@ -82,7 +82,7 @@ const Socials = () => {
 							<FontAwesomeIcon icon={faEnvelope} />
 						</div>
 
-						<div className="social-text">{INFO.main.email}</div>
+						<div className="social-text">{social?.email || INFO.main.email}</div>
 					</a>
 				</div>
 			</div>

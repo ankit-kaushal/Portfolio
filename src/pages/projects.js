@@ -9,9 +9,15 @@ import AllProjects from "../components/projects/allProjects";
 import INFO from "../data/user";
 import SEO from "../data/seo";
 
+import { useSelector } from 'react-redux';
+
 import "./styles/projects.css";
 
 const Projects = () => {
+	const data = useSelector((state) => state.data);
+
+	const { user = {}, projects = [] } = data || {};
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
@@ -21,7 +27,7 @@ const Projects = () => {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`Projects | ${INFO.main.title}`}</title>
+				<title>{`Projects | ${user?.name || INFO.main.title}`}</title>
 				<meta name="description" content={currentSEO.description} />
 				<meta
 					name="keywords"
@@ -34,7 +40,7 @@ const Projects = () => {
 				<div className="content-wrapper">
 					<div className="projects-logo-container">
 						<div className="projects-logo">
-							<Logo width={46} />
+							<Logo width={46} user={user} />
 						</div>
 					</div>
 					<div className="projects-container">
@@ -57,11 +63,11 @@ const Projects = () => {
 						</div>
 
 						<div className="projects-list">
-							<AllProjects />
+							<AllProjects projects={projects} />
 						</div>
 					</div>
 					<div className="page-footer">
-						<Footer />
+						<Footer user={user} />
 					</div>
 				</div>
 			</div>

@@ -10,9 +10,21 @@ import Works from "../components/homepage/works";
 import INFO from "../data/user";
 import SEO from "../data/seo";
 
+import { useSelector } from 'react-redux';
+
 import "./styles/about.css";
 
 const About = () => {
+
+	const data = useSelector((state) => state.data);
+
+	const { user = {}, works = {} } = data || {};
+
+	const social = user?.social?.reduce((acc, curr) => {
+		acc[curr.name] = curr.url;
+		return acc;
+	}, {});
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
@@ -22,7 +34,7 @@ const About = () => {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{`About | ${INFO.main.title}`}</title>
+				<title>{`About | ${user?.name || INFO.main.title}`}</title>
 				<meta name="description" content={currentSEO.description} />
 				<meta
 					name="keywords"
@@ -35,7 +47,7 @@ const About = () => {
 				<div className="content-wrapper">
 					<div className="about-logo-container">
 						<div className="about-logo">
-							<Logo width={46} />
+							<Logo width={46} user={user} />
 						</div>
 					</div>
 
@@ -43,11 +55,11 @@ const About = () => {
 						<div className="about-main">
 							<div className="about-right-side">
 								<div className="title about-title">
-									{INFO.about.title}
+									{user?.aboutTitle || INFO.about.title}
 								</div>
 
 								<div className="subtitle about-subtitle">
-									{INFO.about.description}
+									{user?.aboutDescription || INFO.about.description}
 								</div>
 							</div>
 
@@ -55,7 +67,7 @@ const About = () => {
 								<div className="about-image-container">
 									<div className="about-image-wrapper">
 										<img
-											src="about.jpg"
+											src={user?.pictureUrl?.about || "about.jpg"}
 											alt="about"
 											className="about-image"
 										/>
@@ -65,18 +77,18 @@ const About = () => {
 						</div>
 						<div className="about-after-title">
 							<div className="about-works">
-								<Works />
+								<Works works={works} />
 							</div>
 							<div className="about-socials">
-								<Socials />
+								<Socials social={social} />
 							</div>
 						</div>
 						<div className="about-socials-mobile">
-							<Socials />
+							<Socials social={social} />
 						</div>
 					</div>
 					<div className="page-footer">
-						<Footer />
+						<Footer user={user} />
 					</div>
 				</div>
 			</div>
