@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 
 import NavBar from "../components/common/navBar";
@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import "./styles/about.css";
 
 const About = () => {
+	const [loadingImage, setLoadingImage] = useState(true);
+	const [imageSrc, setImageSrc] = useState('');
 
 	const data = useSelector((state) => state.data);
 
@@ -30,6 +32,19 @@ const About = () => {
 	}, []);
 
 	const currentSEO = SEO.find((item) => item.page === "about");
+
+	useEffect(() => {
+		const loadImage = () => {
+		  const img = new Image();
+		  img.src = `${user?.pictureUrl?.about || "my-pic.jpg"}`; 
+		  img.onload = () => {
+			setImageSrc(img.src);
+			setLoadingImage(false);
+		  };
+		};
+		
+		loadImage();
+	  }, []);
 
 	return (
 		<React.Fragment>
@@ -65,14 +80,17 @@ const About = () => {
 
 							<div className="about-left-side">
 								<div className="about-image-container">
-									<div className="about-image-wrapper">
-										<div className="about-image-wrap-circle"></div>
-										<img
-											src={user?.pictureUrl?.about || "about.jpg"}
-											alt="about"
-											className="about-image"
-										/>
-									</div>
+								{loadingImage ?
+									(<div className="about-image-wrapper-loading"></div>)
+									: (<div className="about-image-wrapper">
+											<div className="about-image-wrap-circle"></div>
+											<img
+												src={imageSrc}
+												alt="about"
+												className="about-image"
+											/>
+										</div>)
+									}
 								</div>
 							</div>
 						</div>

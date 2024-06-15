@@ -25,6 +25,8 @@ const Homepage = () => {
 	const [stayLogo, setStayLogo] = useState(false);
 	const [logoSize, setLogoSize] = useState(80);
 	const [oldLogoSize, setOldLogoSize] = useState(80);
+	const [loadingImage, setLoadingImage] = useState(true);
+  	const [imageSrc, setImageSrc] = useState('');
 
 	const data = useSelector((state) => state.data);
 
@@ -79,6 +81,19 @@ const Homepage = () => {
 		boxShadow: stayLogo ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none",
 	};
 
+	useEffect(() => {
+		const loadImage = () => {
+		  const img = new Image();
+		  img.src = `${user?.pictureUrl?.home || "my-pic.jpg"}`; 
+		  img.onload = () => {
+			setImageSrc(img.src);
+			setLoadingImage(false);
+		  };
+		};
+		
+		loadImage();
+	  }, []);
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -113,14 +128,18 @@ const Homepage = () => {
 
 							<div className="homepage-first-area-right-side">
 								<div className="homepage-image-container">
-									<div className="homepage-image-wrapper">
-									<div className="image-wrap-circle"></div>
+								{loadingImage ?
+									(<div className="homepage-image-wrapper-loading">
+									</div>)
+								: (<div className="homepage-image-wrapper">
+										<div className="image-wrap-circle"></div>
 										<img
-											src={user?.pictureUrl?.home || "my-pic.jpg"}
+											src={imageSrc}
 											alt="about"
 											className="homepage-image"
 										/>
-									</div>
+									</div>)
+								}
 								</div>
 							</div>
 						</div>

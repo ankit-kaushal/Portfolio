@@ -47,6 +47,38 @@
     overflow: hidden;
 }
 
+.homepage-image-wrapper-loading {
+	background: #f0f0f0;
+	margin: 0 auto;
+	border-radius: 51% 49% 77% 23% / 65% 50% 50% 35%;
+    overflow: hidden;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.homepage-image-wrapper-loading:before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -150px;
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(to right, transparent 0%, #e0e0e0 50%, transparent 100%);
+	animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+	0% {
+	  transform: translateX(-150%);
+	}
+	100% {
+	  transform: translateX(150%);
+	}
+}
+
+
 .homepage-image {
 	max-width: 100%;
     height: auto;
@@ -150,6 +182,12 @@
 	}
 
 	.homepage-image-wrapper {
+		border-radius: 10%;
+		transform: rotate(3deg);
+		margin-top: 20px;
+	}
+
+	.homepage-image-wrapper-loading {
 		border-radius: 10%;
 		transform: rotate(3deg);
 		margin-top: 20px;
