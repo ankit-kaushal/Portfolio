@@ -114,6 +114,7 @@ const Homepage = () => {
 							<div className="homepage-first-area-right-side">
 								<div className="homepage-image-container">
 									<div className="homepage-image-wrapper">
+									<div className="image-wrap-circle"></div>
 										<img
 											src={user?.pictureUrl?.home || "my-pic.jpg"}
 											alt="about"
@@ -123,6 +124,10 @@ const Homepage = () => {
 								</div>
 							</div>
 						</div>
+
+						{/* <div className="homepage-tag">
+							Coder  •  Designer  •  Thinker
+						</div> */}
 
 						<div className="homepage-socials">
 							<a

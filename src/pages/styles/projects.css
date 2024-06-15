@@ -30,4 +30,8 @@
 	.projects-project {
 		width: calc(100% / 2);
 	}
+
+	.projects-subtitle {
+		text-align: justify;
+	}
 }

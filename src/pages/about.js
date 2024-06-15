@@ -66,6 +66,7 @@ const About = () => {
 							<div className="about-left-side">
 								<div className="about-image-container">
 									<div className="about-image-wrapper">
+										<div className="about-image-wrap-circle"></div>
 										<img
 											src={user?.pictureUrl?.about || "about.jpg"}
 											alt="about"
