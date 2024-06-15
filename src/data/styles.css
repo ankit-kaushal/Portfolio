@@ -1,14 +1,22 @@
 :root {
-	/* ------- colors ------- */
 	--primary-color: #27272a;
 	--secondary-color: #65656d;
 	--tertiary-color: #acacb4;
 	--quaternary-color: #e4e4e7;
 	--link-color: #14b8a6;
-	/* ---------------------- */
+	--background-color: #fff;
+	--side-background-color: #fafafa;
+	--elements-background-color: #fff;
 
-	/* ------- fonts ------- */
 	--primary-font: "Heebo", sans-serif;
 	--secondary-font: "Roboto", sans-serif;
-	/* --------------------- */
+}
+
+[data-theme='dark'] {
+	--primary-color: #fff;
+	--secondary-color: #fff;
+	--quaternary-color: #333;
+	--background-color: #121212;
+	--side-background-color: #292929;
+	--elements-background-color: #292929;
 }

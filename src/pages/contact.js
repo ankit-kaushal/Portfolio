@@ -64,7 +64,7 @@ const Contact = () => {
 							If you have a specific question or
 							comment, please feel free to email me directly at
 							&nbsp;{" "}
-							<a href={`mailto:${social?.email || INFO.main.email}`}>
+							<a href={`mailto:${social?.email || INFO.main.email}`} className="contact-link">
 								{social?.email || INFO.main.email}
 							</a>
 							.Finally, if you prefer to connect on
@@ -73,6 +73,7 @@ const Contact = () => {
 								href={social?.instagram || INFO.socials.instagram}
 								target="_blank"
 								rel="noreferrer"
+								className="contact-link"
 							>
 								{social?.instagram || INFO.socials.instagram}
 							</a>

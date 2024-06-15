@@ -18,7 +18,7 @@
 }
 
 .page-content {
-	background-color: white;
+	background-color: var(--background-color);
 	position: relative;
 }
 
@@ -29,7 +29,7 @@
 	top: 0;
 	bottom: 0;
 	width: calc((100% - 1200px) / 2);
-	background-color: #fafafa;
+	background-color: var(--side-background-color);
 	box-shadow: inset rgba(0, 0, 0, 0.16) 0px -10px 36px 0px, inset rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 

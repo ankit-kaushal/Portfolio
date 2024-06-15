@@ -37,6 +37,10 @@
 	align-items: center;
 }
 
+.contact-link {
+	color: var(--link-color);
+}
+
 @media (max-width: 600px) {
 	.contact-subtitle {
 		text-align: justify;

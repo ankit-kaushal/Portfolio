@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/themeContext";
 
 import "./styles/navBar.css";
 
 const NavBar = (props) => {
+	const { toggleTheme } = useTheme();
 	const { active } = props;
 
 	return (
@@ -61,6 +63,10 @@ const NavBar = (props) => {
 					</div>
 				</nav>
 			</div>
+			<label id="switch" class="switch">
+				<input type="checkbox" onClick={toggleTheme} id="slider" />
+				<span class="slider round"></span>
+			</label>
 		</React.Fragment>
 	);
 };
