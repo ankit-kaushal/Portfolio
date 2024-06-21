@@ -32,7 +32,7 @@ function App() {
 		const fetchData = async () => {
 		  dispatch(fetchDataRequest());
 		  try {
-			const response = await axios.get('https://www.api.ankitkaushal.tech/');
+			const response = await axios.get('https://www.api.ankitkaushal.tech/profile');
 			dispatch(fetchDataSuccess(response.data));
 		  } catch (error) {
 			dispatch(fetchDataFailure(error.message));
