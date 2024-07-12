@@ -94,7 +94,7 @@ const Blogs = () => {
 						</div>
 					</div>
 					<div className="page-footer">
-						<Footer />
+						<Footer user={user} />
 					</div>
 				</div>
 			</div>
