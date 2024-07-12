@@ -18,9 +18,9 @@ const Footer = ({ user={} }) => {
 						<li className="footer-nav-link-item">
 							<Link to="/projects">Projects</Link>
 						</li>
-						{/* <li className="footer-nav-link-item">
-							<Link to="/articles">Articles</Link>
-						</li> */}
+						<li className="footer-nav-link-item">
+							<Link to="/blogs">Blogs</Link>
+						</li>
 						<li className="footer-nav-link-item">
 							<Link to="/contact">Contact</Link>
 						</li>

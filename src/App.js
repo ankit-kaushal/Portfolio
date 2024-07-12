@@ -5,8 +5,7 @@ import ReactGA from "react-ga4";
 import Homepage from "./pages/homepage";
 import About from "./pages/about";
 import Projects from "./pages/projects";
-import Articles from "./pages/articles";
-import ReadArticle from "./pages/readArticle";
+import Blogs from "./pages/blogs";
 import Contact from "./pages/contact";
 import Notfound from "./pages/404";
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +31,7 @@ function App() {
 		const fetchData = async () => {
 		  dispatch(fetchDataRequest());
 		  try {
-			const response = await axios.get('https://www.api.ankitkaushal.tech/profile');
+			const response = await axios.get('https://www.pi.ankitkaushal.tech/profile');
 			dispatch(fetchDataSuccess(response.data));
 		  } catch (error) {
 			dispatch(fetchDataFailure(error.message));
@@ -60,8 +59,7 @@ function App() {
 					<Route path="/" element={<Homepage />} />
 					<Route path="/about" element={<About />} />
 					<Route path="/projects" element={<Projects />} />
-					<Route path="/articles" element={<Articles />} />
-					<Route path="/article/:slug" element={<ReadArticle />} />
+					<Route path="/blogs" element={<Blogs />} />
 					<Route path="/contact" element={<Contact />} />
 					<Route path="*" element={<Notfound />} />
 				</Routes>

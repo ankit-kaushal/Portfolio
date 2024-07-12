@@ -20,7 +20,7 @@ const INFO = {
 	},
 
 	about: {
-		title: "I’m Ankit Kaushal,",
+		title: "I'm Ankit Kaushal,",
 		description:
 			`and I am delighted to introduce myself as a software engineer at Cogoport Pvt Ltd, located in the vibrant city of Gurgaon. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role.\n\n
 			I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures.
@@ -28,10 +28,10 @@ const INFO = {
 			\n`,
 	},
 
-	articles: {
-		title: "I'm passionate about pushing the boundaries of what's possible and inspiring the next generation of innovators.",
+	blogs: {
+		title: "Ankit's Coding Insights",
 		description:
-			"Chronological collection of my long-form thoughts on programming, leadership, product design, and more.",
+			"Insights on web development, front-end engineering, and solving real-world coding challenges.",
 	},
 
 	projects: [

@@ -13,12 +13,12 @@ const SEO = [
 		keywords: ["Ankit", "Ankit K", "Ankit Kaushal"],
 	},
 
-	// {
-	// 	page: "articles",
-	// 	description:
-	// 		"Chronological collection of my long-form thoughts on programming, leadership, product design, and more.",
-	// 	keywords: ["Ankit", "Ankit K", "Ankit Kaushal"],
-	// },
+	{
+		page: "blogs",
+		description:
+			"A place to explore solutions to common coding challenges, especially in frontend development",
+		keywords: ["Ankit", "Ankit K", "Ankit Kaushal"],
+	},
 
 	{
 		page: "projects",

@@ -6,6 +6,7 @@
 
 .article a {
 	text-decoration: none;
+	width: 100%;
 }
 
 .article-left-side {
@@ -23,19 +24,18 @@
 }
 
 .article-right-side:hover {
-	background: #fafafa;
+	background: var(--side-background-color);
 	opacity: 1;
 	transition: background-color 0.3s ease-in-out;
 }
 
 .article-date {
-	padding-top: 30px;
-	font-size: 15px;
+	font-size: 13px;
 	color: var(--tertiary-color);
 }
 
 .article-title {
-	color: #000000;
+	color: var(--primary-color);
 	font-size: 16px;
 	font-weight: 600;
 }
@@ -46,6 +46,12 @@
 	color: var(--secondary-color);
 	font-weight: 480;
 	line-height: 25px;
+}
+
+.article-flex {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .article-link {
