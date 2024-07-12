@@ -63,9 +63,9 @@ const NavBar = (props) => {
 					</div>
 				</nav>
 			</div>
-			<label id="switch" class="switch">
+			<label id="switch" className="switch">
 				<input type="checkbox" onClick={toggleTheme} id="slider" />
-				<span class="slider round"></span>
+				<span className="slider round"></span>
 			</label>
 		</React.Fragment>
 	);

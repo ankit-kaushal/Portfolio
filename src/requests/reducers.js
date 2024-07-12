@@ -5,7 +5,6 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-  console.log("action",action);
   switch (action.type) {
     case FETCH_DATA_REQUEST:
       return {

@@ -43,10 +43,10 @@ function App() {
 
 	if (loading) {
 		return (
-			<div class="loading-wrap">
+			<div className="loading-wrap">
 				<div>
-					<div class="bounceball"></div>
-					<div class="loading-text">PORTFOLIO LOADING...</div>
+					<div className="bounceball"></div>
+					<div className="loading-text">PORTFOLIO LOADING...</div>
 				</div>
 			</div>
 		);

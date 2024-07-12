@@ -61,10 +61,10 @@ const Blogs = () => {
 									{blogs?.map((blog, index) => (
 										<div
 											className="articles-article"
-											key={(index + 1).toString()}
+											key={blog._id}
 										>
 											<Article
-												key={(index + 1).toString()}
+												key={blog._id}
 												date={blog.blogPublishDate}
 												title={blog.blogTitle}
 												description={blog.blogDescription}
