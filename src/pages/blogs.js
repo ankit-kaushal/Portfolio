@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import "./styles/articles.css";
 
 const Blogs = () => {
+	const parser = new DOMParser();
 	const data = useSelector((state) => state.data);
 
 	const { user = {}, blogs = [] } = data || {};
@@ -24,7 +25,7 @@ const Blogs = () => {
 	}, []);
 
 	const currentSEO = SEO.find((item) => item.page === "blogs");
-
+	
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -58,20 +59,32 @@ const Blogs = () => {
 							<div className="articles-wrapper">
 							{blogs.length ? 
 								<>
-									{blogs?.map((blog, index) => (
-										<div
-											className="articles-article"
-											key={blog._id}
-										>
-											<Article
-												key={blog._id}
-												date={blog.blogPublishDate}
-												title={blog.blogTitle}
-												description={blog.blogDescription}
-												link={blog.blogUrl}
-											/>
-										</div>
-									))}
+									{blogs?.map((blog, index) => {
+										const doc = parser.parseFromString(blog.description, 'text/html');
+										const firstParagraph = doc.querySelector('p');
+										let description = firstParagraph ? firstParagraph.textContent : '';
+										const maxLength = 100;
+										if (description.length > maxLength) {
+											description = description.slice(0, maxLength) + '...';
+										}
+										const firstImage = doc.querySelector('img');
+										const imageUrl = firstImage ? firstImage.getAttribute('src') : '';
+										return (
+											<div
+												className="articles-article"
+												key={blog.guid}
+											>
+												<Article
+													key={blog.guid}
+													date={blog.pubDate}
+													title={blog.title}
+													description={description}
+													image={imageUrl}
+													link={blog.link}
+												/>
+											</div>
+										)}
+									)}
 								</> : 
 								<>
 									{myArticles.map((article, index) => (

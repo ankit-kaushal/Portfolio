@@ -2,6 +2,7 @@
 
 .article {
 	display: flex;
+	max-width: 400px;
 }
 
 .article a {
@@ -16,9 +17,7 @@
 
 .article-right-side {
 	flex-basis: 80%;
-	min-width: 700px;
 	mix-blend-mode: normal;
-	border-radius: 20px;
 	opacity: 0.8;
 	padding: 30px;
 }
@@ -38,6 +37,13 @@
 	color: var(--primary-color);
 	font-size: 16px;
 	font-weight: 600;
+}
+
+.article-image {
+	background-position: 50%;
+    background-size: cover;
+    height: 160px;
+	margin-bottom: 12px;
 }
 
 .article-description {

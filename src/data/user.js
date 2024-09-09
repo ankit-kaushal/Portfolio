@@ -29,9 +29,9 @@ const INFO = {
 	},
 
 	blogs: {
-		title: "Ankit's Coding Insights",
+		title: "Code & Curiosity with Ankit",
 		description:
-			"Insights on web development, front-end engineering, and solving real-world coding challenges.",
+			"A Collection of Experiments, Insights, and Reflections",
 	},
 
 	projects: [

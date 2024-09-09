@@ -31,15 +31,12 @@
 	padding-top: 50px;
 	padding-bottom: 50px;
 	display: flex;
-	flex-direction: column;
+	gap: 20px;
+	flex-wrap: wrap;
 }
 
 .articles-article {
-	padding-top: 0px;
-	padding-left: 35px;
-	padding-bottom: 20px;
-	border-left: 2px solid #f4f4f5;
-	width: 100%;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 @media (max-width: 1024px) {
