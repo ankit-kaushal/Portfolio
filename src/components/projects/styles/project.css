@@ -2,9 +2,9 @@
 
 .project {
 	mix-blend-mode: normal;
-	border-radius: 20px;
 	opacity: 0.8;
 	height: 100%;
+	background: var(--elements-background-color);
 }
 
 .project a {
@@ -12,7 +12,7 @@
 }
 
 .project:hover {
-	background: var(--side-background-color);
+	background: var(--side-background-color); 
 	opacity: 1;
 	transition: background-color 0.3s ease-in-out;
 }
@@ -24,6 +24,12 @@
 
 .project-container {
 	padding: 30px;
+}
+
+.project-header {
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
 .project-logo {
@@ -63,10 +69,4 @@
 .project-link-text {
 	padding-left: 20px;
 	font-weight: 700;
-}
-
-@media (max-width: 600px) {
-	.project {
-		height: 300px;
-	}
 }

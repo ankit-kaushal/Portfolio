@@ -1,22 +1,28 @@
 .all-projects-container {
 	display: flex;
+	gap: 20px;
 	flex-wrap: wrap;
 	align-items: stretch;
 	padding-top: 30px;
 	padding-bottom: 30px;
-	margin-left: -35px;
-	margin-right: -35px;
 }
 
 .all-projects-project {
-	width: calc(100% / 3);
+	width: calc(100% / 2 - 2%);
 	box-sizing: border-box;
-	padding: 10px;
 	overflow: hidden;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.all-projects-project:hover {
+	width: calc(100% / 2 - 2%);
+	box-sizing: border-box;
+	overflow: hidden;
+	transform: scale(1.01);
 }
 
 @media (max-width: 600px) {
 	.all-projects-project {
-		width: calc(100% / 2);
+		width: 100%;
 	}
 }

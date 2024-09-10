@@ -13,10 +13,12 @@ const Project = (props) => {
 			<div className="project">
 				<Link to={link}>
 					<div className="project-container">
-						<div className="project-logo">
-							<img src={logo} alt="logo" />
+						<div className="project-header">
+							<div className="project-logo">
+								<img src={logo} alt="logo" />
+							</div>
+							<div className="project-title">{title}</div>
 						</div>
-						<div className="project-title">{title}</div>
 						<div className="project-description">{description}</div>
 						<div className="project-link">
 							<div className="project-link-icon">
