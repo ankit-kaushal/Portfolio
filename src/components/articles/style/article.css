@@ -2,7 +2,7 @@
 
 .article {
 	display: flex;
-	max-width: 400px;
+	max-width: 320px;
 }
 
 .article a {
@@ -16,18 +16,8 @@
 }
 
 .article-right-side {
-	flex-basis: 80%;
 	mix-blend-mode: normal;
-	opacity: 0.8;
-	padding: 30px;
-	background: var(--elements-background-color);
-}
-
-.article-right-side:hover {
-	background: var(--side-background-color);
-	opacity: 1;
-	transition: background-color 0.3s ease-in-out;
-	transform: scale(1.01);
+	padding: 20px;
 }
 
 .article-date {
