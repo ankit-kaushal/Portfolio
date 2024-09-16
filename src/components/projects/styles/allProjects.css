@@ -25,4 +25,8 @@
 	.all-projects-project {
 		width: 100%;
 	}
+
+	.all-projects-project:hover {
+		width: 100%;
+	}
 }
