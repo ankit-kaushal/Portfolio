@@ -31,7 +31,7 @@ function App() {
 		const fetchData = async () => {
 		  dispatch(fetchDataRequest());
 		  try {
-			const response = await axios.get('https://www.api.ankitkaushal.tech/profile');
+			const response = await axios.get('https://www.api.ankitkaushal.in.net/profile');
 			dispatch(fetchDataSuccess(response.data));
 		  } catch (error) {
 			dispatch(fetchDataFailure(error.message));
