@@ -12,11 +12,15 @@ import INFO from "../../data/user";
 
 import "./styles/socials.css";
 
-const Socials = ({ social={} }) => {
+const Socials = ({ social = {} }) => {
 	return (
 		<div className="socials">
 			<div className="social">
-				<a href={social?.twitter || INFO.socials.twitter} target="_blank" rel="noreferrer">
+				<a
+					href={social?.twitter || INFO.socials.twitter}
+					target="_blank"
+					rel="noreferrer"
+				>
 					<div className="social-icon">
 						<FontAwesomeIcon
 							icon={faTwitter}
@@ -28,7 +32,11 @@ const Socials = ({ social={} }) => {
 			</div>
 
 			<div className="social">
-				<a href={social?.github || INFO.socials.github} target="_blank" rel="noreferrer">
+				<a
+					href={social?.github || INFO.socials.github}
+					target="_blank"
+					rel="noreferrer"
+				>
 					<div className="social-icon">
 						<FontAwesomeIcon
 							icon={faGithub}
@@ -82,7 +90,9 @@ const Socials = ({ social={} }) => {
 							<FontAwesomeIcon icon={faEnvelope} />
 						</div>
 
-						<div className="social-text">{social?.email || INFO.main.email}</div>
+						<div className="social-text">
+							{social?.email || INFO.main.email}
+						</div>
 					</a>
 				</div>
 			</div>

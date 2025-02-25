@@ -1,4 +1,4 @@
-@import "../../data/styles.css";
+@import url("../../data/styles.css");
 
 .homepage-logo-container {
 	display: flex;
@@ -57,7 +57,7 @@
 	position: relative;
 }
 
-.homepage-image-wrapper-loading:before {
+.homepage-image-wrapper-loading::before {
 	content: '';
 	display: block;
 	position: absolute;
@@ -73,6 +73,7 @@
 	0% {
 	  transform: translateX(-150%);
 	}
+
 	100% {
 	  transform: translateX(150%);
 	}

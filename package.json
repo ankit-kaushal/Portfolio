@@ -35,8 +35,9 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"lint": "eslint src/**/*.{js,jsx} --fix",
-		"lint:css": "stylelint src/**/*.css --fix"
+		"lint": "eslint \"src/**/*.js\" --fix",
+		"lint:css": "stylelint \"src/**/*.css\" --fix",
+		"lint:all": "npm run lint && npm run lint:css"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -69,6 +70,7 @@
 		"prettier": "^3.2.5",
 		"stylelint": "^14.16.1",
 		"stylelint-config-prettier": "^9.0.5",
-		"stylelint-config-standard": "^29.0.0"
+		"stylelint-config-standard": "^29.0.0",
+		"stylelint-order": "^6.0.4"
 	}
 }

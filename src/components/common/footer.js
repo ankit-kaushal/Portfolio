@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./styles/footer.css";
 
-const Footer = ({ user={} }) => {
+const Footer = ({ user = {} }) => {
 	return (
 		<React.Fragment>
 			<div className="footer">
@@ -29,7 +29,8 @@ const Footer = ({ user={} }) => {
 
 				<div className="footer-credits">
 					<div className="footer-credits-text">
-						© {new Date().getFullYear()} {user?.name || 'Ankit Kaushal'}. All Rights Reserved.
+						© {new Date().getFullYear()}{" "}
+						{user?.name || "Ankit Kaushal"}. All Rights Reserved.
 					</div>
 				</div>
 			</div>

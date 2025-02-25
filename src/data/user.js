@@ -21,8 +21,7 @@ const INFO = {
 
 	about: {
 		title: "I'm Ankit Kaushal,",
-		description:
-			`and I am delighted to introduce myself as a software engineer at Cogoport Pvt Ltd, located in the vibrant city of Gurgaon. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role.\n\n
+		description: `and I am delighted to introduce myself as a software engineer at Cogoport Pvt Ltd, located in the vibrant city of Gurgaon. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role.\n\n
 			I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures.
 			Throughout my academic journey, I actively engaged in coding competitions and collaborative projects, sharpening my skills and fostering a hands-on approach to software development.
 			\n`,
@@ -30,8 +29,7 @@ const INFO = {
 
 	blogs: {
 		title: "Code & Curiosity with Ankit",
-		description:
-			"A Collection of Experiments, Insights, and Reflections",
+		description: "A Collection of Experiments, Insights, and Reflections",
 	},
 
 	projects: [
@@ -79,7 +77,6 @@ const INFO = {
 			linkText: "View Project",
 			link: "https://github.com/ankit-kaushal/sabal",
 		},
-		
 	],
 };
 
