@@ -8,19 +8,23 @@ import Projects from "./pages/projects";
 import Blogs from "./pages/blogs";
 import Contact from "./pages/contact";
 import Notfound from "./pages/404";
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { fetchDataRequest, fetchDataSuccess, fetchDataFailure } from './requests/actions';
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {
+	fetchDataRequest,
+	fetchDataSuccess,
+	fetchDataFailure,
+} from "./requests/actions";
 import { ThemeProvider } from "./components/context/themeContext";
 
 import { TRACKING_ID } from "./data/tracking";
 import "./app.css";
-import TravelJourney from './pages/TravelJourney';
-import JourneyDetail from './pages/JourneyDetail';
+import TravelJourney from "./pages/TravelJourney";
+import JourneyDetail from "./pages/JourneyDetail";
 
 function App() {
-	const loading = useSelector(state => state.loading);
-	
+	const loading = useSelector((state) => state.loading);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -31,17 +35,19 @@ function App() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-		  dispatch(fetchDataRequest());
-		  try {
-			const response = await axios.get('https://www.api.ankitkaushal.in.net/profile');
-			dispatch(fetchDataSuccess(response.data));
-		  } catch (error) {
-			dispatch(fetchDataFailure(error.message));
-		  }
+			dispatch(fetchDataRequest());
+			try {
+				const response = await axios.get(
+					"https://www.api.ankitkaushal.in.net/profile",
+				);
+				dispatch(fetchDataSuccess(response.data));
+			} catch (error) {
+				dispatch(fetchDataFailure(error.message));
+			}
 		};
-	
+
 		fetchData();
-	  }, [dispatch]);
+	}, [dispatch]);
 
 	if (loading) {
 		return (

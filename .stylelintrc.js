@@ -1,0 +1,11 @@
+module.exports = {
+  extends: [
+    'stylelint-config-standard',
+    'stylelint-config-prettier'
+  ],
+  rules: {
+    'at-rule-no-unknown': null,
+    'selector-class-pattern': null,
+    'keyframes-name-pattern': null
+  }
+}; 
