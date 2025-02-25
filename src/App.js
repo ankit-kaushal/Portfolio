@@ -15,6 +15,8 @@ import { ThemeProvider } from "./components/context/themeContext";
 
 import { TRACKING_ID } from "./data/tracking";
 import "./app.css";
+import TravelJourney from './pages/TravelJourney';
+import JourneyDetail from './pages/JourneyDetail';
 
 function App() {
 	const loading = useSelector(state => state.loading);
@@ -61,6 +63,8 @@ function App() {
 					<Route path="/projects" element={<Projects />} />
 					<Route path="/blogs" element={<Blogs />} />
 					<Route path="/contact" element={<Contact />} />
+					<Route path="/travel-journey" element={<TravelJourney />} />
+					<Route path="/journey/:id" element={<JourneyDetail />} />
 					<Route path="*" element={<Notfound />} />
 				</Routes>
 			</ThemeProvider>
