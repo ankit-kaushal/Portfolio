@@ -36,7 +36,7 @@ const Card = styled(motion.div)`
 
 const HeaderSection = styled.div`
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 2fr 1.1fr;
 	gap: 2rem;
 	margin-bottom: 2rem;
 	align-items: start;
@@ -46,17 +46,17 @@ const HeaderSection = styled.div`
 	}
 `;
 
-const MainInfo = styled.div`
-	border-right: 2px solid var(--tertiary-color);
-	padding-right: 2rem;
+const MainInfo = styled.div``;
+
+const SideInfo = styled.div`
+	border-left: 2px solid var(--tertiary-color);
+	padding-left: 2rem;
 
 	@media (max-width: 768px) {
-		border-right: none;
-		padding-right: 0;
+		border-left: none;
+		padding-left: 0;
 	}
 `;
-
-const SideInfo = styled.div``;
 
 const Title = styled.div`
 	color: var(--primary-color);
@@ -426,6 +426,48 @@ const JourneyDetail = () => {
 									<Description>
 										{journey.description}
 									</Description>
+
+									{journey.photos.length > 0 && (
+										<Section>
+											<SectionTitle>
+												Photo Gallery
+											</SectionTitle>
+											<PhotoGrid>
+												{journey.photos.map(
+													(photo, index) => (
+														<Photo
+															key={photo._id}
+															initial={{
+																opacity: 0,
+																y: 20,
+															}}
+															animate={{
+																opacity: 1,
+																y: 0,
+															}}
+															transition={{
+																delay:
+																	index * 0.1,
+															}}
+															href={
+																photo.profileLink
+															}
+														>
+															<img
+																src={photo.url}
+																alt={
+																	photo.caption
+																}
+															/>
+															<p>
+																{photo.caption}
+															</p>
+														</Photo>
+													),
+												)}
+											</PhotoGrid>
+										</Section>
+									)}
 								</MainInfo>
 
 								<SideInfo>
@@ -529,34 +571,26 @@ const JourneyDetail = () => {
 												</BuddyGrid>
 											</div>
 										)}
+
+										{journey.placesVisited?.length > 0 && (
+											<div className="detail-section">
+												<SectionSubTitle>
+													Places Explored
+												</SectionSubTitle>
+												<ul>
+													{journey.placesVisited.map(
+														(place, index) => (
+															<li key={index}>
+																{place}
+															</li>
+														),
+													)}
+												</ul>
+											</div>
+										)}
 									</JourneyDetails>
 								</SideInfo>
 							</HeaderSection>
-
-							{journey.photos.length > 0 && (
-								<Section>
-									<SectionTitle>Photo Gallery</SectionTitle>
-									<PhotoGrid>
-										{journey.photos.map((photo, index) => (
-											<Photo
-												key={photo._id}
-												initial={{ opacity: 0, y: 20 }}
-												animate={{ opacity: 1, y: 0 }}
-												transition={{
-													delay: index * 0.1,
-												}}
-												href={photo.profileLink}
-											>
-												<img
-													src={photo.url}
-													alt={photo.caption}
-												/>
-												<p>{photo.caption}</p>
-											</Photo>
-										))}
-									</PhotoGrid>
-								</Section>
-							)}
 						</Card>
 					</DetailContainer>
 					<div className="page-footer">
