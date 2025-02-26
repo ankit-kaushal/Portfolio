@@ -11,6 +11,7 @@ const INFO = {
 		github: "https://github.com/ankit-kaushal",
 		linkedin: "https://www.linkedin.com/in/ankit-kaushal/",
 		instagram: "https://www.instagram.com/imankitkaushal/",
+		travelJourney: "/travel-journey",
 	},
 
 	homepage: {

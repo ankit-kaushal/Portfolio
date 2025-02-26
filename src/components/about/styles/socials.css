@@ -12,26 +12,38 @@
 }
 
 .social-icon {
-	font-size: 15px;
 	color: var(--secondary-color);
+	font-size: 15px;
 }
 
 .social-text {
 	color: var(--secondary-color);
-	padding-left: 30px;
-	margin-top: -20px;
-	font-weight: 600;
 	font-size: 14px;
+	font-weight: 600;
+	margin-top: -20px;
+	padding-left: 30px;
 }
 
 .email::before {
+	border-top: 3px solid #f4f4f5;
 	content: "";
 	display: block;
-	padding-top: 20px;
-	border-top: 3px solid #f4f4f5;
 	margin-top: 20px;
+	padding-top: 20px;
 }
 
 .email-wrapper {
 	padding-top: 20px;
+}
+
+.journey-icon {
+	animation: float 2s ease-in-out infinite;
+	height: 24px;
+	margin-bottom: -4px;
+	width: 24px;
+}
+
+@keyframes float {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-4px); }
 }

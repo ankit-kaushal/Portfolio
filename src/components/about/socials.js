@@ -96,6 +96,23 @@ const Socials = ({ social = {} }) => {
 					</a>
 				</div>
 			</div>
+
+			<div className="social">
+				<a
+					href={INFO.socials.travelJourney}
+					target="_blank"
+					rel="noreferrer"
+				>
+					<div className="social-icon">
+						<img
+							src="/journey.png"
+							alt="Travel Route"
+							className="journey-icon"
+						/>
+					</div>
+					<div className="social-text">Explore my Travel Journey</div>
+				</a>
+			</div>
 		</div>
 	);
 };
