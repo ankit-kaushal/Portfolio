@@ -34,8 +34,8 @@ const TimelineList = styled.div`
 
 const TimelineItem = styled(motion.div)`
 	position: relative;
+	margin-bottom: 1rem;
 	width: 45%;
-	margin-bottom: 4rem;
 	${(props) => (props.isEven ? "margin-left: auto;" : "margin-right: auto;")}
 
 	&::before {
@@ -68,6 +68,7 @@ const JourneyCard = styled(motion.div)`
 const JourneyTitle = styled.h2`
 	color: ${(props) => props.color};
 	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
 	font-size: 1.5rem;
 `;
 
@@ -81,6 +82,11 @@ const JourneyDate = styled.p`
 const JourneyDescription = styled.p`
 	color: var(--primary-color);
 	line-height: 1.6;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const ReadMoreLink = styled(Link)`
@@ -140,6 +146,15 @@ const TravelJourney = () => {
 		},
 	};
 
+	const containerVariants = {
+		hidden: {},
+		visible: {
+			transition: {
+				staggerChildren: 0.2,
+			},
+		},
+	};
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -174,7 +189,12 @@ const TravelJourney = () => {
 								</div>
 
 								<TimelineContainer>
-									<TimelineList>
+									<TimelineList
+										as={motion.div}
+										variants={containerVariants}
+										initial="hidden"
+										animate="visible"
+									>
 										{journeys.map((journey, index) => (
 											<TimelineItem
 												key={journey._id}
@@ -188,7 +208,8 @@ const TravelJourney = () => {
 												whileInView="visible"
 												viewport={{
 													once: true,
-													margin: "-100px",
+													margin: "-50px",
+													amount: 0.3,
 												}}
 												variants={cardVariants}
 											>
