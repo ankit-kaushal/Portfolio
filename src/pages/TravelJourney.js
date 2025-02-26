@@ -30,6 +30,13 @@ const TimelineList = styled.div`
 		width: 3px;
 		background: linear-gradient(180deg, #ff6b6b, #4ecdc4, #45b7d1);
 	}
+
+	@media (max-width: 768px) {
+		&::before {
+			left: 0;
+			transform: none;
+		}
+	}
 `;
 
 const TimelineItem = styled(motion.div)`
@@ -50,6 +57,17 @@ const TimelineItem = styled(motion.div)`
 		border: 4px solid var(--elements-background-color);
 		box-shadow: 0 0 0 3px ${(props) => props.color}40;
 		z-index: 1;
+	}
+
+	@media (max-width: 768px) {
+		width: calc(100% - 40px);
+		margin-left: 40px;
+		margin-right: 0;
+
+		&::before {
+			left: -40px;
+			right: auto;
+		}
 	}
 `;
 

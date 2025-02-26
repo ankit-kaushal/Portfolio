@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import ReactGA from "react-ga4";
+import React, { Suspense, lazy } from "react";
 
 import Homepage from "./pages/homepage";
 import About from "./pages/about";
@@ -19,8 +20,9 @@ import { ThemeProvider } from "./components/context/themeContext";
 
 import { TRACKING_ID } from "./data/tracking";
 import "./app.css";
-import TravelJourney from "./pages/TravelJourney";
-import JourneyDetail from "./pages/JourneyDetail";
+
+const TravelJourney = lazy(() => import("./pages/TravelJourney"));
+const JourneyDetail = lazy(() => import("./pages/JourneyDetail"));
 
 function App() {
 	const loading = useSelector((state) => state.loading);
@@ -63,16 +65,24 @@ function App() {
 	return (
 		<div className="App">
 			<ThemeProvider>
-				<Routes>
-					<Route path="/" element={<Homepage />} />
-					<Route path="/about" element={<About />} />
-					<Route path="/projects" element={<Projects />} />
-					<Route path="/blogs" element={<Blogs />} />
-					<Route path="/contact" element={<Contact />} />
-					<Route path="/travel-journey" element={<TravelJourney />} />
-					<Route path="/journey/:id" element={<JourneyDetail />} />
-					<Route path="*" element={<Notfound />} />
-				</Routes>
+				<Suspense fallback={<div>Loading...</div>}>
+					<Routes>
+						<Route path="/" element={<Homepage />} />
+						<Route path="/about" element={<About />} />
+						<Route path="/projects" element={<Projects />} />
+						<Route path="/blogs" element={<Blogs />} />
+						<Route path="/contact" element={<Contact />} />
+						<Route
+							path="/travel-journey"
+							element={<TravelJourney />}
+						/>
+						<Route
+							path="/journey/:id"
+							element={<JourneyDetail />}
+						/>
+						<Route path="*" element={<Notfound />} />
+					</Routes>
+				</Suspense>
 			</ThemeProvider>
 		</div>
 	);
