@@ -47,7 +47,7 @@ const TimelineItem = styled(motion.div)`
 		height: 20px;
 		border-radius: 50%;
 		background: ${(props) => props.color};
-		border: 4px solid #fff;
+		border: 4px solid var(--elements-background-color);
 		box-shadow: 0 0 0 3px ${(props) => props.color}40;
 		z-index: 1;
 	}
@@ -55,7 +55,7 @@ const TimelineItem = styled(motion.div)`
 
 const JourneyCard = styled(motion.div)`
 	padding: 25px;
-	background: #fff;
+	background: var(--elements-background-color);
 	border-radius: 15px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 	transition: transform 0.3s ease;
@@ -72,14 +72,14 @@ const JourneyTitle = styled.h2`
 `;
 
 const JourneyDate = styled.p`
-	color: #666;
+	color: var(--secondary-color);
 	font-size: 0.9rem;
 	margin: 0.5rem 0;
 	font-weight: 500;
 `;
 
 const JourneyDescription = styled.p`
-	color: #444;
+	color: var(--primary-color);
 	line-height: 1.6;
 `;
 
