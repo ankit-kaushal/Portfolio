@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import "./styles/traveljourney.css";
+import { Helmet } from "react-helmet";
+
+import Footer from "../components/common/footer";
+import NavBar from "../components/common/navBar";
+
+import INFO from "../data/user";
+import SEO from "../data/seo";
+
+import { useSelector } from "react-redux";
 
 const TimelineContainer = styled.div`
 	padding: 2rem;
@@ -83,7 +93,13 @@ const formatDate = (dateString) => {
 };
 
 const TravelJourney = () => {
+	const data = useSelector((state) => state.data);
+
+	const { user = {} } = data || {};
+
 	const [journeys, setJourneys] = useState([]);
+
+	const currentSEO = SEO.find((item) => item.page === "home");
 
 	useEffect(() => {
 		const fetchJourneys = async () => {
@@ -102,26 +118,69 @@ const TravelJourney = () => {
 	}, []);
 
 	return (
-		<TimelineContainer>
-			<h1>My Travel Journey</h1>
-			<TimelineList>
-				{journeys.map((journey) => (
-					<TimelineItem key={journey._id}>
-						<JourneyTitle>{journey.title}</JourneyTitle>
-						<JourneyDate>
-							{formatDate(journey.duration.startDate)} -
-							{formatDate(journey.duration.endDate)}
-						</JourneyDate>
-						<JourneyDescription>
-							{journey.description}
-						</JourneyDescription>
-						<ReadMoreLink to={`/journey/${journey._id}`}>
-							Read more
-						</ReadMoreLink>
-					</TimelineItem>
-				))}
-			</TimelineList>
-		</TimelineContainer>
+		<React.Fragment>
+			<Helmet>
+				<title>{user?.name || INFO.main.title}</title>
+				<meta name="description" content={currentSEO.description} />
+				<meta
+					name="keywords"
+					content={currentSEO.keywords.join(", ")}
+				/>
+			</Helmet>
+
+			<div className="page-content">
+				<NavBar active="home" />
+				<div className="content-wrapper">
+					<div className="travel-journey-wrapper">
+						<div className="travel-journey-content">
+							<div className="travel-journey-main">
+								<div className="travel-journey-title">
+									<h1>Travel Journey</h1>
+									<div className="travel-journey-subtitle">
+										Documenting my adventures around the
+										world
+									</div>
+								</div>
+
+								<TimelineContainer>
+									<TimelineList>
+										{journeys.map((journey) => (
+											<TimelineItem key={journey._id}>
+												<JourneyTitle>
+													{journey.title}
+												</JourneyTitle>
+												<JourneyDate>
+													{formatDate(
+														journey.duration
+															.startDate,
+													)}{" "}
+													-{" "}
+													{formatDate(
+														journey.duration
+															.endDate,
+													)}
+												</JourneyDate>
+												<JourneyDescription>
+													{journey.description}
+												</JourneyDescription>
+												<ReadMoreLink
+													to={`/journey/${journey._id}`}
+												>
+													Read more →
+												</ReadMoreLink>
+											</TimelineItem>
+										))}
+									</TimelineList>
+								</TimelineContainer>
+							</div>
+						</div>
+					</div>
+					<div className="page-footer">
+						<Footer user={user} />
+					</div>
+				</div>
+			</div>
+		</React.Fragment>
 	);
 };
 

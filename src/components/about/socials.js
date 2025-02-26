@@ -98,11 +98,7 @@ const Socials = ({ social = {} }) => {
 			</div>
 
 			<div className="social">
-				<a
-					href={INFO.socials.travelJourney}
-					target="_blank"
-					rel="noreferrer"
-				>
+				<a href={INFO.socials.travelJourney} rel="noreferrer">
 					<div className="social-icon">
 						<img
 							src="/journey.png"
