@@ -244,7 +244,6 @@ const BuddyAvatar = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: fit-content;
 	margin-top: 0.5rem;
 
 	img {
