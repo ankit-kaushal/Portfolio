@@ -214,11 +214,15 @@ const TravelJourney = () => {
 															journey.duration
 																.startDate,
 														)}{" "}
-														-{" "}
-														{formatDate(
-															journey.duration
-																.endDate,
-														)}
+														{journey.duration
+															.endDate &&
+															"-"}{" "}
+														{journey.duration
+															.endDate &&
+															formatDate(
+																journey.duration
+																	.endDate,
+															)}
 													</JourneyDate>
 													<JourneyDescription>
 														{journey.description}

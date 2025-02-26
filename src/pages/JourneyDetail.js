@@ -129,6 +129,12 @@ const SectionTitle = styled.div`
 	}
 `;
 
+const SectionSubTitle = styled.div`
+	color: var(--primary-color);
+	font-size: 1rem;
+	font-weight: 600;
+`;
+
 const Tag = styled(motion.span)`
 	border: 1px solid var(--tertiary-color);
 	color: var(--primary-color);
@@ -172,6 +178,7 @@ const Photo = styled.div`
 	p {
 		margin-top: 0.5rem;
 		text-align: center;
+		color: var(--secondary-color);
 	}
 `;
 
@@ -186,9 +193,9 @@ const ModeIcon = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.8rem;
-	margin-bottom: 1rem;
-	font-size: 1.2rem;
+	font-size: 1rem;
 	color: var(--primary-color);
+	font-weight: 500;
 
 	.icon {
 		font-size: 1.5rem;
@@ -208,8 +215,8 @@ const JourneyDetails = styled(InfoBox)`
 	}
 
 	.detail-section {
-		margin-bottom: 2rem;
-		padding-bottom: 2rem;
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
 		border-bottom: 1px solid var(--tertiary-color);
 
 		&:last-child {
@@ -217,13 +224,19 @@ const JourneyDetails = styled(InfoBox)`
 			padding-bottom: 0;
 			border-bottom: none;
 		}
+
+		&.row-flex {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 1rem;
+		}
 	}
 `;
 
 const BuddyGrid = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-	gap: 1.5rem;
 	text-align: center;
 `;
 
@@ -231,7 +244,8 @@ const BuddyAvatar = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 0.5rem;
+	width: fit-content;
+	margin-top: 0.5rem;
 
 	img {
 		width: 50px;
@@ -241,8 +255,8 @@ const BuddyAvatar = styled.div`
 	}
 
 	.avatar-fallback {
-		width: 50px;
-		height: 50px;
+		width: 40px;
+		height: 40px;
 		border-radius: 50%;
 		background-color: var(--tertiary-color);
 		display: flex;
@@ -318,8 +332,6 @@ const JourneyDetail = () => {
 	const data = useSelector((state) => state.data);
 	const { user = {} } = data || {};
 	const [journey, setJourney] = useState(null);
-
-	console.log("journey", journey);
 
 	const currentSEO = SEO.find((item) => item.page === "home");
 
@@ -399,10 +411,11 @@ const JourneyDetail = () => {
 											{formatDate(
 												journey.duration.startDate,
 											)}{" "}
-											-
-											{formatDate(
-												journey.duration.endDate,
-											)}
+											{journey.duration.endDate && "-"}
+											{journey.duration.endDate &&
+												formatDate(
+													journey.duration.endDate,
+												)}
 										</DateRange>
 										{journey.rating > 0 && (
 											<StarRating
@@ -422,10 +435,10 @@ const JourneyDetail = () => {
 										</SectionTitle>
 
 										{journey.modeOfTravel?.length > 0 && (
-											<div className="detail-section">
-												<SectionTitle>
+											<div className="detail-section row-flex">
+												<SectionSubTitle>
 													Mode of Travel
-												</SectionTitle>
+												</SectionSubTitle>
 												{journey.modeOfTravel.map(
 													(mode, index) => (
 														<motion.div
@@ -447,13 +460,13 @@ const JourneyDetail = () => {
 										)}
 
 										{journey.expense?.amount && (
-											<div className="detail-section">
-												<SectionTitle>
+											<div className="detail-section row-flex">
+												<SectionSubTitle>
 													Expense
-												</SectionTitle>
+												</SectionSubTitle>
 												<div
 													style={{
-														fontSize: "1.2rem",
+														fontSize: "1rem",
 													}}
 												>
 													{journey.expense.amount}{" "}
@@ -464,9 +477,9 @@ const JourneyDetail = () => {
 
 										{journey.buddies?.length > 0 && (
 											<div className="detail-section">
-												<SectionTitle>
-													Travel Buddies
-												</SectionTitle>
+												<SectionSubTitle>
+													Travelled with:
+												</SectionSubTitle>
 												<BuddyGrid>
 													{journey.buddies.map(
 														(buddy) => (
@@ -532,6 +545,7 @@ const JourneyDetail = () => {
 												transition={{
 													delay: index * 0.1,
 												}}
+												href={photo.profileLink}
 											>
 												<img
 													src={photo.url}
