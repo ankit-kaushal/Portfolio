@@ -133,7 +133,8 @@
 	}
 
 	.about-after-title {
-		flex-direction: column;
+		align-items:normal;
+		flex-direction: column
 	}
 
 	.about-subtitle {
