@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "./styles/traveljourney.css";
 import { Helmet } from "react-helmet";
-
+import { motion } from "framer-motion";
 import Footer from "../components/common/footer";
 import NavBar from "../components/common/navBar";
-
 import INFO from "../data/user";
 import SEO from "../data/seo";
-
 import { useSelector } from "react-redux";
 
 const TimelineContainer = styled.div`
 	padding: 2rem;
-	max-width: 800px;
+	max-width: 1200px;
 	margin: 0 auto;
 `;
 
@@ -25,38 +23,50 @@ const TimelineList = styled.div`
 	&::before {
 		content: "";
 		position: absolute;
-		left: 0;
+		left: 50%;
+		transform: translateX(-50%);
 		top: 0;
 		height: 100%;
-		width: 2px;
-		background: #e0e0e0;
+		width: 3px;
+		background: linear-gradient(180deg, #ff6b6b, #4ecdc4, #45b7d1);
 	}
 `;
 
-const TimelineItem = styled.div`
+const TimelineItem = styled(motion.div)`
 	position: relative;
-	margin-left: 30px;
-	padding: 20px;
-	background: #fff;
-	border-radius: 8px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	margin-bottom: 2rem;
+	width: 45%;
+	margin-bottom: 4rem;
+	${(props) => (props.isEven ? "margin-left: auto;" : "margin-right: auto;")}
 
 	&::before {
 		content: "";
 		position: absolute;
-		left: -36px;
+		${(props) => (props.isEven ? "left: -42px;" : "right: -42px;")}
 		top: 24px;
-		width: 12px;
-		height: 12px;
+		width: 20px;
+		height: 20px;
 		border-radius: 50%;
-		background: #007bff;
-		border: 2px solid #fff;
+		background: ${(props) => props.color};
+		border: 4px solid #fff;
+		box-shadow: 0 0 0 3px ${(props) => props.color}40;
+		z-index: 1;
+	}
+`;
+
+const JourneyCard = styled(motion.div)`
+	padding: 25px;
+	background: #fff;
+	border-radius: 15px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease;
+
+	&:hover {
+		transform: translateY(-5px);
 	}
 `;
 
 const JourneyTitle = styled.h2`
-	color: #1a1a1a;
+	color: ${(props) => props.color};
 	margin-bottom: 0.5rem;
 	font-size: 1.5rem;
 `;
@@ -65,6 +75,7 @@ const JourneyDate = styled.p`
 	color: #666;
 	font-size: 0.9rem;
 	margin: 0.5rem 0;
+	font-weight: 500;
 `;
 
 const JourneyDescription = styled.p`
@@ -75,8 +86,9 @@ const JourneyDescription = styled.p`
 const ReadMoreLink = styled(Link)`
 	display: inline-block;
 	margin-top: 1rem;
-	color: #007bff;
+	color: ${(props) => props.color};
 	text-decoration: none;
+	font-weight: 600;
 
 	&:hover {
 		text-decoration: underline;
@@ -91,6 +103,8 @@ const formatDate = (dateString) => {
 		day: "numeric",
 	});
 };
+
+const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96c93d", "#e056fd"];
 
 const TravelJourney = () => {
 	const data = useSelector((state) => state.data);
@@ -117,6 +131,15 @@ const TravelJourney = () => {
 		fetchJourneys();
 	}, []);
 
+	const cardVariants = {
+		hidden: { opacity: 0, y: 50 },
+		visible: {
+			opacity: 1,
+			y: 0,
+			transition: { duration: 0.6, ease: "easeOut" },
+		},
+	};
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -129,14 +152,22 @@ const TravelJourney = () => {
 			</Helmet>
 
 			<div className="page-content">
-				<NavBar active="home" />
+				<NavBar active="about" />
 				<div className="content-wrapper">
 					<div className="travel-journey-wrapper">
 						<div className="travel-journey-content">
-							<div className="travel-journey-main">
-								<div className="travel-journey-title">
-									<h1>Travel Journey</h1>
-									<div className="travel-journey-subtitle">
+							<motion.div
+								className="travel-journey-main"
+								initial={{ opacity: 0, y: -20 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.8 }}
+							>
+								<div className="title-subtitle-container">
+									<div className="title travel-title">
+										Travel Journey
+									</div>
+
+									<div className="subtitle travel-subtitle">
 										Documenting my adventures around the
 										world
 									</div>
@@ -144,35 +175,71 @@ const TravelJourney = () => {
 
 								<TimelineContainer>
 									<TimelineList>
-										{journeys.map((journey) => (
-											<TimelineItem key={journey._id}>
-												<JourneyTitle>
-													{journey.title}
-												</JourneyTitle>
-												<JourneyDate>
-													{formatDate(
-														journey.duration
-															.startDate,
-													)}{" "}
-													-{" "}
-													{formatDate(
-														journey.duration
-															.endDate,
-													)}
-												</JourneyDate>
-												<JourneyDescription>
-													{journey.description}
-												</JourneyDescription>
-												<ReadMoreLink
-													to={`/journey/${journey._id}`}
+										{journeys.map((journey, index) => (
+											<TimelineItem
+												key={journey._id}
+												isEven={index % 2 === 1}
+												color={
+													colors[
+														index % colors.length
+													]
+												}
+												initial="hidden"
+												whileInView="visible"
+												viewport={{
+													once: true,
+													margin: "-100px",
+												}}
+												variants={cardVariants}
+											>
+												<JourneyCard
+													whileHover={{ scale: 1.02 }}
+													transition={{
+														type: "spring",
+														stiffness: 300,
+													}}
 												>
-													Read more →
-												</ReadMoreLink>
+													<JourneyTitle
+														color={
+															colors[
+																index %
+																	colors.length
+															]
+														}
+													>
+														{journey.title}
+													</JourneyTitle>
+													<JourneyDate>
+														{formatDate(
+															journey.duration
+																.startDate,
+														)}{" "}
+														-{" "}
+														{formatDate(
+															journey.duration
+																.endDate,
+														)}
+													</JourneyDate>
+													<JourneyDescription>
+														{journey.description}
+													</JourneyDescription>
+													<ReadMoreLink
+														to={`/journey/${journey._id}`}
+														color={
+															colors[
+																index %
+																	colors.length
+															]
+														}
+													>
+														Read more →
+													</ReadMoreLink>
+												</JourneyCard>
 											</TimelineItem>
 										))}
 									</TimelineList>
 								</TimelineContainer>
-							</div>
+							</motion.div>
 						</div>
 					</div>
 					<div className="page-footer">

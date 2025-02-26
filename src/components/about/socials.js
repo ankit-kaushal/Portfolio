@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import {
 	faTwitter,
 	faGithub,
@@ -98,7 +99,7 @@ const Socials = ({ social = {} }) => {
 			</div>
 
 			<div className="social">
-				<a href={INFO.socials.travelJourney} rel="noreferrer">
+				<Link to={INFO.socials.travelJourney}>
 					<div className="social-icon">
 						<img
 							src="/journey.png"
@@ -107,7 +108,7 @@ const Socials = ({ social = {} }) => {
 						/>
 					</div>
 					<div className="social-text">Explore my Travel Journey</div>
-				</a>
+				</Link>
 			</div>
 		</div>
 	);

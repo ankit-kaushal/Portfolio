@@ -1,11 +1,10 @@
 .travel-journey-wrapper {
     align-items: center;
-    background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 100vh;
-    padding: 2rem;
+    padding-top: 120px;
 }
 
 .travel-journey-content {
@@ -18,34 +17,23 @@
     width: 100%;
 }
 
-.travel-journey-title {
-    margin-bottom: 3rem;
-    text-align: center;
-}
+.title-subtitle-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-.travel-journey-title h1 {
-    color: #1a1a1a;
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
+    .travel-title {
+        width: auto;
+    }
 
-.travel-journey-subtitle {
-    color: #666;
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    .travel-subtitle {
+        width: auto;
+    }
 }
 
 @media (max-width: 600px) {
     .travel-journey-wrapper {
         padding: 1rem;
-    }
-
-    .travel-journey-title h1 {
-        font-size: 2rem;
-    }
-
-    .travel-journey-subtitle {
-        font-size: 1rem;
     }
 } 
