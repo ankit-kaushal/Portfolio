@@ -18,6 +18,7 @@ import {
 	faMotorcycle,
 	faPersonWalking,
 	faEllipsis,
+	faAutomobile,
 } from "@fortawesome/free-solid-svg-icons";
 import { startCase } from "lodash";
 
@@ -231,6 +232,13 @@ const JourneyDetails = styled(InfoBox)`
 			align-items: center;
 			gap: 1rem;
 		}
+
+		.mode-of-travel-icons {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+		}
 	}
 `;
 
@@ -254,8 +262,8 @@ const BuddyAvatar = styled.div`
 	}
 
 	.avatar-fallback {
-		width: 40px;
-		height: 40px;
+		width: 50px;
+		height: 50px;
 		border-radius: 50%;
 		background-color: var(--tertiary-color);
 		display: flex;
@@ -303,9 +311,11 @@ const getTravelModeIcon = (mode) => {
 		flight: faPlane,
 		train: faTrain,
 		bus: faBus,
+		auto: faAutomobile,
 		car: faCar,
 		bike: faMotorcycle,
 		walk: faPersonWalking,
+		metro: faTrain,
 		other: faEllipsis,
 	};
 
@@ -379,7 +389,12 @@ const JourneyDetail = () => {
 		},
 	};
 
-	if (!journey) return <div className="loader"></div>;
+	if (!journey)
+		return (
+			<div className="loading-wrap">
+				<div className="loader"></div>
+			</div>
+		);
 
 	return (
 		<React.Fragment>
@@ -480,23 +495,27 @@ const JourneyDetail = () => {
 												<SectionSubTitle>
 													Mode of Travel
 												</SectionSubTitle>
-												{journey.modeOfTravel.map(
-													(mode, index) => (
-														<motion.div
-															key={index}
-															whileHover={{
-																scale: 1.05,
-															}}
-															whileTap={{
-																scale: 0.95,
-															}}
-														>
-															{getTravelModeIcon(
-																startCase(mode),
-															)}
-														</motion.div>
-													),
-												)}
+												<div className="mode-of-travel-icons">
+													{journey.modeOfTravel.map(
+														(mode, index) => (
+															<motion.div
+																key={index}
+																whileHover={{
+																	scale: 1.05,
+																}}
+																whileTap={{
+																	scale: 0.95,
+																}}
+															>
+																{getTravelModeIcon(
+																	startCase(
+																		mode,
+																	),
+																)}
+															</motion.div>
+														),
+													)}
+												</div>
 											</div>
 										)}
 
