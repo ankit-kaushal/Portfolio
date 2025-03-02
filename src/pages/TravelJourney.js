@@ -8,7 +8,7 @@ import Footer from "../components/common/footer";
 import NavBar from "../components/common/navBar";
 import INFO from "../data/user";
 import SEO from "../data/seo";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const TimelineContainer = styled.div`
 	padding: 2rem;
@@ -130,29 +130,100 @@ const formatDate = (dateString) => {
 
 const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96c93d", "#e056fd"];
 
-const TravelJourney = () => {
-	const data = useSelector((state) => state.data);
+const SkeletonCard = styled(JourneyCard)`
+	background: var(--elements-background-color);
 
+	.skeleton-title,
+	.skeleton-date,
+	.skeleton-description {
+		background: linear-gradient(
+			90deg,
+			#f0f0f0 25%,
+			#e0e0e0 50%,
+			#f0f0f0 75%
+		);
+		background-size: 200% 100%;
+		animation: shimmer 1.5s infinite;
+		border-radius: 4px;
+	}
+
+	.skeleton-title {
+		height: 24px;
+		width: 70%;
+		margin-bottom: 8px;
+	}
+
+	.skeleton-date {
+		height: 16px;
+		width: 40%;
+		margin-bottom: 12px;
+	}
+
+	.skeleton-description {
+		height: 16px;
+		margin-bottom: 8px;
+		&:last-of-type {
+			width: 80%;
+		}
+	}
+
+	@keyframes shimmer {
+		0% {
+			background-position: -200% 0;
+		}
+		100% {
+			background-position: 200% 0;
+		}
+	}
+`;
+
+const TravelJourney = () => {
+	const dispatch = useDispatch();
+	const data = useSelector((state) => state.data);
 	const { user = {} } = data || {};
 
 	const [journeys, setJourneys] = useState([]);
-
+	const [isLoading, setIsLoading] = useState(true);
 	const currentSEO = SEO.find((item) => item.page === "home");
 
 	useEffect(() => {
+		const cachedJourneys = localStorage.getItem("travelJourneys");
+		const lastFetchTime = localStorage.getItem("journeysFetchTime");
+		const ONE_HOUR = 60 * 60 * 1000;
+
 		const fetchJourneys = async () => {
+			setIsLoading(true);
 			try {
 				const response = await fetch(
 					"https://www.api.ankitkaushal.in.net/travel-journeys",
 				);
 				const data = await response.json();
 				setJourneys(data);
+				localStorage.setItem("travelJourneys", JSON.stringify(data));
+				localStorage.setItem(
+					"journeysFetchTime",
+					Date.now().toString(),
+				);
 			} catch (error) {
 				console.error("Error fetching journeys:", error);
+				if (cachedJourneys) {
+					setJourneys(JSON.parse(cachedJourneys));
+				}
+			} finally {
+				setIsLoading(false);
 			}
 		};
 
-		fetchJourneys();
+		if (
+			cachedJourneys &&
+			lastFetchTime &&
+			Date.now() - parseInt(lastFetchTime) < ONE_HOUR
+		) {
+			setJourneys(JSON.parse(cachedJourneys));
+			setIsLoading(false);
+		} else {
+			fetchJourneys();
+		}
 	}, []);
 
 	const cardVariants = {
@@ -171,6 +242,26 @@ const TravelJourney = () => {
 				staggerChildren: 0.2,
 			},
 		},
+	};
+
+	const renderSkeletons = () => {
+		return Array(3)
+			.fill(null)
+			.map((_, index) => (
+				<TimelineItem
+					key={`skeleton-${index}`}
+					isEven={index % 2 === 1}
+					color={colors[index % colors.length]}
+				>
+					<SkeletonCard>
+						<div className="skeleton-title" />
+						<div className="skeleton-date" />
+						<div className="skeleton-description" />
+						<div className="skeleton-description" />
+						<div className="skeleton-description" />
+					</SkeletonCard>
+				</TimelineItem>
+			));
 	};
 
 	return (
@@ -213,73 +304,84 @@ const TravelJourney = () => {
 										initial="hidden"
 										animate="visible"
 									>
-										{journeys.map((journey, index) => (
-											<TimelineItem
-												key={journey._id}
-												isEven={index % 2 === 1}
-												color={
-													colors[
-														index % colors.length
-													]
-												}
-												initial="hidden"
-												whileInView="visible"
-												viewport={{
-													once: true,
-													margin: "-50px",
-													amount: 0.3,
-												}}
-												variants={cardVariants}
-											>
-												<JourneyCard
-													whileHover={{ scale: 1.02 }}
-													transition={{
-														type: "spring",
-														stiffness: 300,
-													}}
-												>
-													<JourneyTitle
+										{isLoading
+											? renderSkeletons()
+											: journeys.map((journey, index) => (
+													<TimelineItem
+														key={journey._id}
+														isEven={index % 2 === 1}
 														color={
 															colors[
 																index %
 																	colors.length
 															]
 														}
+														initial="hidden"
+														whileInView="visible"
+														viewport={{
+															once: true,
+															margin: "-50px",
+															amount: 0.3,
+														}}
+														variants={cardVariants}
 													>
-														{journey.title}
-													</JourneyTitle>
-													<JourneyDate>
-														{formatDate(
-															journey.duration
-																.startDate,
-														)}{" "}
-														{journey.duration
-															.endDate &&
-															"-"}{" "}
-														{journey.duration
-															.endDate &&
-															formatDate(
-																journey.duration
-																	.endDate,
-															)}
-													</JourneyDate>
-													<JourneyDescription>
-														{journey.description}
-													</JourneyDescription>
-													<ReadMoreLink
-														to={`/journey/${journey._id}`}
-														color={
-															colors[
-																index %
-																	colors.length
-															]
-														}
-													>
-														Read more →
-													</ReadMoreLink>
-												</JourneyCard>
-											</TimelineItem>
-										))}
+														<JourneyCard
+															whileHover={{
+																scale: 1.02,
+															}}
+															transition={{
+																type: "spring",
+																stiffness: 300,
+															}}
+														>
+															<JourneyTitle
+																color={
+																	colors[
+																		index %
+																			colors.length
+																	]
+																}
+															>
+																{journey.title}
+															</JourneyTitle>
+															<JourneyDate>
+																{formatDate(
+																	journey
+																		.duration
+																		.startDate,
+																)}{" "}
+																{journey
+																	.duration
+																	.endDate &&
+																	"-"}{" "}
+																{journey
+																	.duration
+																	.endDate &&
+																	formatDate(
+																		journey
+																			.duration
+																			.endDate,
+																	)}
+															</JourneyDate>
+															<JourneyDescription>
+																{
+																	journey.description
+																}
+															</JourneyDescription>
+															<ReadMoreLink
+																to={`/journey/${journey._id}`}
+																color={
+																	colors[
+																		index %
+																			colors.length
+																	]
+																}
+															>
+																Read more →
+															</ReadMoreLink>
+														</JourneyCard>
+													</TimelineItem>
+												))}
 									</TimelineList>
 								</TimelineContainer>
 							</motion.div>
