@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import ReactGA from "react-ga4";
 import React, { Suspense, lazy } from "react";
@@ -17,6 +17,7 @@ import {
 	fetchDataFailure,
 } from "./requests/actions";
 import { ThemeProvider } from "./components/context/themeContext";
+import { useLocation } from "react-router-dom";
 
 import { TRACKING_ID } from "./data/tracking";
 import "./app.css";
@@ -24,10 +25,14 @@ import "./app.css";
 const TravelJourney = lazy(() => import("./pages/TravelJourney"));
 const JourneyDetail = lazy(() => import("./pages/JourneyDetail"));
 
+const EXCLUDED_PATHS = ["/journey", "/travel-journey"];
+
 function App() {
 	const loading = useSelector((state) => state.loading);
 
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const hasFetched = useRef(false);
 
 	useEffect(() => {
 		if (TRACKING_ID !== "") {
@@ -36,6 +41,12 @@ function App() {
 	}, []);
 
 	useEffect(() => {
+		const isExcludedPath =
+			EXCLUDED_PATHS.includes(location.pathname) ||
+			location.pathname.startsWith("/journey/");
+
+		if (isExcludedPath || hasFetched.current) return;
+
 		const fetchData = async () => {
 			dispatch(fetchDataRequest());
 			try {
@@ -43,13 +54,14 @@ function App() {
 					"https://www.api.ankitkaushal.in.net/profile",
 				);
 				dispatch(fetchDataSuccess(response.data));
+				hasFetched.current = true;
 			} catch (error) {
 				dispatch(fetchDataFailure(error.message));
 			}
 		};
 
 		fetchData();
-	}, [dispatch]);
+	}, [dispatch, location.pathname]);
 
 	if (loading) {
 		return (

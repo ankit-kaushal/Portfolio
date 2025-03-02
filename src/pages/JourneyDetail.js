@@ -314,6 +314,7 @@ const getTravelModeIcon = (mode) => {
 		auto: faAutomobile,
 		car: faCar,
 		bike: faMotorcycle,
+		scooty: faMotorcycle,
 		walk: faPersonWalking,
 		metro: faTrain,
 		other: faEllipsis,
@@ -527,6 +528,7 @@ const JourneyDetail = () => {
 												<div
 													style={{
 														fontSize: "1rem",
+														color: "var(--primary-color)",
 													}}
 												>
 													{journey.expense.amount}{" "}
