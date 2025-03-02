@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import "./styles/traveljourney.css";
@@ -19,6 +19,7 @@ import {
 	faPersonWalking,
 	faEllipsis,
 	faAutomobile,
+	faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { startCase } from "lodash";
 
@@ -136,32 +137,6 @@ const SectionSubTitle = styled.div`
 	font-weight: 600;
 `;
 
-const Tag = styled(motion.span)`
-	border: 1px solid var(--tertiary-color);
-	color: var(--primary-color);
-	padding: 0.3rem 0.8rem;
-	border-radius: 16px;
-	margin-right: 0.5rem;
-	display: inline-block;
-	margin-bottom: 0.5rem;
-	cursor: pointer;
-	transition: all 0.3s ease;
-
-	a {
-		color: var(--primary-color);
-		text-decoration: none;
-
-		&:hover {
-			color: var(--link-color);
-		}
-	}
-
-	&:hover {
-		transform: scale(1.05);
-		border-color: var(--link-color);
-	}
-`;
-
 const PhotoGrid = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -169,12 +144,18 @@ const PhotoGrid = styled.div`
 	margin: 1.5rem 0;
 `;
 
-const Photo = styled.div`
+const Photo = styled(motion.div)`
+	cursor: pointer;
 	img {
 		width: 100%;
 		height: 200px;
 		object-fit: cover;
 		border-radius: 8px;
+		transition: transform 0.2s;
+
+		&:hover {
+			transform: scale(1.02);
+		}
 	}
 	p {
 		margin-top: 0.5rem;
@@ -288,6 +269,48 @@ const BuddyAvatar = styled.div`
 	}
 `;
 
+const BackButton = styled(motion.button)`
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: none;
+	border: none;
+	color: var(--primary-color);
+	font-size: 1rem;
+	cursor: pointer;
+	position: absolute;
+	top: 40px;
+
+	&:hover {
+		color: var(--link-color);
+	}
+
+	@media (max-width: 768px) {
+		top: 80px;
+		left: 40px;
+	}
+`;
+
+const PhotoModal = styled(motion.div)`
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	padding: 2rem;
+
+	img {
+		max-width: 90%;
+		max-height: 90vh;
+		object-fit: contain;
+	}
+`;
+
 const formatDate = (dateString) => {
 	const date = new Date(dateString);
 	return date.toLocaleDateString("en-US", {
@@ -342,6 +365,8 @@ const JourneyDetail = () => {
 	const data = useSelector((state) => state.data);
 	const { user = {} } = data || {};
 	const [journey, setJourney] = useState(null);
+	const navigate = useNavigate();
+	const [selectedPhoto, setSelectedPhoto] = useState(null);
 
 	const currentSEO = SEO.find((item) => item.page === "home");
 
@@ -390,6 +415,14 @@ const JourneyDetail = () => {
 		},
 	};
 
+	const handlePhotoClick = (photo) => {
+		setSelectedPhoto(photo);
+	};
+
+	const closeModal = () => {
+		setSelectedPhoto(null);
+	};
+
 	if (!journey)
 		return (
 			<div className="loading-wrap">
@@ -416,6 +449,13 @@ const JourneyDetail = () => {
 						animate="visible"
 						variants={containerVariants}
 					>
+						<BackButton
+							onClick={() => navigate(-1)}
+							whileHover={{ x: -5 }}
+							whileTap={{ scale: 0.95 }}
+						>
+							<FontAwesomeIcon icon={faArrowLeft} /> Back
+						</BackButton>
 						<Card variants={itemVariants}>
 							<HeaderSection>
 								<MainInfo>
@@ -464,8 +504,10 @@ const JourneyDetail = () => {
 																delay:
 																	index * 0.1,
 															}}
-															href={
-																photo.profileLink
+															onClick={() =>
+																handlePhotoClick(
+																	photo,
+																)
 															}
 														>
 															<img
@@ -618,6 +660,16 @@ const JourneyDetail = () => {
 					</div>
 				</div>
 			</div>
+			{selectedPhoto && (
+				<PhotoModal
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					onClick={closeModal}
+				>
+					<img src={selectedPhoto.url} alt={selectedPhoto.caption} />
+				</PhotoModal>
+			)}
 		</React.Fragment>
 	);
 };
