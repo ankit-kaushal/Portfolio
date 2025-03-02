@@ -10,7 +10,7 @@ function article_1() {
 			"Ankit K",
 			"Ankit Kaushal",
 		],
-		link: "https://medium.com/@ankit-kaushal/cracking-the-code-why-your-z-index-isnt-behaving-41b5ca4e617d"
+		link: "https://medium.com/@ankit-kaushal/cracking-the-code-why-your-z-index-isnt-behaving-41b5ca4e617d",
 	};
 }
 

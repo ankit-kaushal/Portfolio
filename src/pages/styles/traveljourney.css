@@ -1,0 +1,58 @@
+.travel-journey-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: 120px;
+}
+
+.travel-journey-content {
+    margin: 0 auto;
+    max-width: 900px;
+    width: 100%;
+}
+
+.travel-journey-main {
+    width: 100%;
+}
+
+.loader {
+    animation: l13 2s steps(8,jump-none) infinite;
+    background: conic-gradient(#000 0 0) -1ch/1ch 100% no-repeat text;
+    color: #0000;
+    font-family: monospace;
+    font-size: 40px;
+    font-weight: bold;
+    -webkit-text-stroke: 1px #000;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .loader::before {
+    content: "Loading";
+  }
+  @keyframes l13 {
+    to {background-position: 100%}
+  }
+
+.title-subtitle-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .travel-title {
+        width: auto;
+    }
+
+    .travel-subtitle {
+        width: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .travel-journey-wrapper {
+        padding-top: 120px;
+    }
+} 

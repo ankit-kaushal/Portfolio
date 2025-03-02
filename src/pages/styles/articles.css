@@ -9,7 +9,7 @@
 	position: fixed;
 	border: 1px solid white;
 	border-radius: 50%;
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
 	top: 4vh;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .articles-article {
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+	box-shadow: rgb(0 0 0 / 10%) 0 4px 12px;
 	background: var(--elements-background-color); 
 }
 

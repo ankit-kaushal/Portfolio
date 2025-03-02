@@ -17,7 +17,7 @@ import NavBar from "../components/common/navBar";
 import INFO from "../data/user";
 import SEO from "../data/seo";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 import "./styles/homepage.css";
 
@@ -26,13 +26,9 @@ const Homepage = () => {
 	const [logoSize, setLogoSize] = useState(80);
 	const [oldLogoSize, setOldLogoSize] = useState(80);
 	const [loadingImage, setLoadingImage] = useState(true);
-  	const [imageSrc, setImageSrc] = useState('');
+	const [imageSrc, setImageSrc] = useState("");
 
 	const data = useSelector((state) => state.data);
-
-	const state = useSelector((state) => state);
-
-	console.log("state",state);
 
 	const { user = {} } = data || {};
 
@@ -83,16 +79,16 @@ const Homepage = () => {
 
 	useEffect(() => {
 		const loadImage = () => {
-		  const img = new Image();
-		  img.src = `${user?.pictureUrl?.home || "my-pic.jpg"}`; 
-		  img.onload = () => {
-			setImageSrc(img.src);
-			setLoadingImage(false);
-		  };
+			const img = new Image();
+			img.src = `${user?.pictureUrl?.home || "my-pic.jpg"}`;
+			img.onload = () => {
+				setImageSrc(img.src);
+				setLoadingImage(false);
+			};
 		};
-		
+
 		loadImage();
-	  }, []);
+	}, []);
 
 	return (
 		<React.Fragment>
@@ -122,24 +118,25 @@ const Homepage = () => {
 								</div>
 
 								<div className="subtitle homepage-subtitle">
-									{user?.description || INFO.homepage.description}
+									{user?.description ||
+										INFO.homepage.description}
 								</div>
 							</div>
 
 							<div className="homepage-first-area-right-side">
 								<div className="homepage-image-container">
-								{loadingImage ?
-									(<div className="homepage-image-wrapper-loading">
-									</div>)
-								: (<div className="homepage-image-wrapper">
-										<div className="image-wrap-circle"></div>
-										<img
-											src={imageSrc}
-											alt="about"
-											className="homepage-image"
-										/>
-									</div>)
-								}
+									{loadingImage ? (
+										<div className="homepage-image-wrapper-loading"></div>
+									) : (
+										<div className="homepage-image-wrapper">
+											<div className="image-wrap-circle"></div>
+											<img
+												src={imageSrc}
+												alt="about"
+												className="homepage-image"
+											/>
+										</div>
+									)}
 								</div>
 							</div>
 						</div>
@@ -150,7 +147,9 @@ const Homepage = () => {
 
 						<div className="homepage-socials">
 							<a
-								href={socialObject?.github || INFO.socials.github}
+								href={
+									socialObject?.github || INFO.socials.github
+								}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -160,7 +159,10 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={socialObject?.linkedin || INFO.socials.linkedin}
+								href={
+									socialObject?.linkedin ||
+									INFO.socials.linkedin
+								}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -170,7 +172,10 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={socialObject?.twitter || INFO.socials.twitter}
+								href={
+									socialObject?.twitter ||
+									INFO.socials.twitter
+								}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -180,7 +185,10 @@ const Homepage = () => {
 								/>
 							</a>
 							<a
-								href={socialObject?.instagram || INFO.socials.instagram}
+								href={
+									socialObject?.instagram ||
+									INFO.socials.instagram
+								}
 								target="_blank"
 								rel="noreferrer"
 							>

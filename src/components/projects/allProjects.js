@@ -8,15 +8,19 @@ import LOGO_MAPPING from "./logo-mapping";
 
 import "./styles/allProjects.css";
 
-const AllProjects = ({ projects=[] }) => {
+const AllProjects = ({ projects = [] }) => {
 	return (
 		<div className="all-projects-container">
-			{projects.length ? 
+			{projects.length ? (
 				<>
 					{projects?.map((project, index) => (
 						<div className="all-projects-project" key={index}>
 							<Project
-								logo={LOGO_MAPPING[project?.mainStack.toLowerCase()]}
+								logo={
+									LOGO_MAPPING[
+										project?.mainStack.toLowerCase()
+									]
+								}
 								title={project?.projectName}
 								description={project?.projectDescription}
 								linkText="View Project"
@@ -24,7 +28,8 @@ const AllProjects = ({ projects=[] }) => {
 							/>
 						</div>
 					))}
-				</>: 
+				</>
+			) : (
 				<>
 					{INFO.projects.map((project, index) => (
 						<div className="all-projects-project" key={index}>
@@ -38,7 +43,7 @@ const AllProjects = ({ projects=[] }) => {
 						</div>
 					))}
 				</>
-			}
+			)}
 		</div>
 	);
 };
