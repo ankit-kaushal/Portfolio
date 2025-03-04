@@ -433,12 +433,41 @@ const JourneyDetail = () => {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{user?.name || INFO.main.title}</title>
-				<meta name="description" content={currentSEO.description} />
+				<title>
+					{journey.title} | {user?.name || INFO.main.title}
+				</title>
+				<meta name="description" content={journey.description} />
 				<meta
 					name="keywords"
 					content={currentSEO.keywords.join(", ")}
 				/>
+
+				<meta
+					property="og:title"
+					content={`${journey.title} | ${user?.name || INFO.main.title}`}
+				/>
+				<meta property="og:description" content={journey.description} />
+				{journey.photos && journey.photos.length > 0 && (
+					<meta property="og:image" content={journey.photos[0].url} />
+				)}
+				<meta property="og:type" content="article" />
+				<meta property="og:url" content={window.location.href} />
+
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta
+					name="twitter:title"
+					content={`${journey.title} | ${user?.name || INFO.main.title}`}
+				/>
+				<meta
+					name="twitter:description"
+					content={journey.description}
+				/>
+				{journey.photos && journey.photos.length > 0 && (
+					<meta
+						name="twitter:image"
+						content={journey.photos[0].url}
+					/>
+				)}
 			</Helmet>
 
 			<div className="page-content">
@@ -450,7 +479,9 @@ const JourneyDetail = () => {
 						variants={containerVariants}
 					>
 						<BackButton
-							onClick={() => navigate(-1)}
+							onClick={() => {
+								navigate("/travel-journey");
+							}}
 							whileHover={{ x: -5 }}
 							whileTap={{ scale: 0.95 }}
 						>
