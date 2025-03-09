@@ -217,7 +217,7 @@ const JourneyDetails = styled(InfoBox)`
 		.mode-of-travel-icons {
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: flex-start;
 			gap: 1rem;
 		}
 	}
@@ -673,7 +673,12 @@ const JourneyDetail = () => {
 												<ul>
 													{journey.placesVisited.map(
 														(place, index) => (
-															<li key={index}>
+															<li
+																key={index}
+																style={{
+																	color: "var(--primary-color)",
+																}}
+															>
 																{place}
 															</li>
 														),
