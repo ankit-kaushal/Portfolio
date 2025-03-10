@@ -5,7 +5,7 @@ import { useTheme } from "../context/themeContext";
 import "./styles/navBar.css";
 
 const NavBar = (props) => {
-	const { toggleTheme } = useTheme();
+	const { toggleTheme, theme } = useTheme();
 	const { active } = props;
 
 	return (
@@ -64,7 +64,12 @@ const NavBar = (props) => {
 				</nav>
 			</div>
 			<label id="switch" className="switch">
-				<input type="checkbox" onClick={toggleTheme} id="slider" />
+				<input
+					type="checkbox"
+					checked={theme === "dark"}
+					onClick={toggleTheme}
+					id="slider"
+				/>
 				<span className="slider round"></span>
 			</label>
 		</React.Fragment>
