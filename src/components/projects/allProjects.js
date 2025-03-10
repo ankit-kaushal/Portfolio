@@ -24,7 +24,9 @@ const AllProjects = ({ projects = [] }) => {
 								title={project?.projectName}
 								description={project?.projectDescription}
 								linkText="View Project"
-								link={project?.projectLink}
+								liveDemo={project?.projectLink}
+								githubLink={project?.projectGitHub}
+								projectPicture={project?.projectPicture}
 							/>
 						</div>
 					))}
@@ -38,7 +40,7 @@ const AllProjects = ({ projects = [] }) => {
 								title={project.title}
 								description={project.description}
 								linkText={project.linkText}
-								link={project.link}
+								liveDemo={project.link}
 							/>
 						</div>
 					))}

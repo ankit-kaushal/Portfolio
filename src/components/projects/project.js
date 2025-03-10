@@ -1,36 +1,66 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 import "./styles/project.css";
 
 const Project = (props) => {
-	const { logo, title, description, linkText, link } = props;
+	const {
+		logo,
+		title,
+		description,
+		projectPicture = "https://images.unsplash.com/photo-1587620962725-abab7fe55159", // default tech image
+		githubLink,
+		liveDemo,
+	} = props;
 
 	return (
-		<React.Fragment>
-			<div className="project">
-				<Link to={link}>
-					<div className="project-container">
-						<div className="project-header">
-							<div className="project-logo">
-								<img src={logo} alt="logo" />
-							</div>
-							<div className="project-title">{title}</div>
-						</div>
-						<div className="project-description">{description}</div>
-						<div className="project-link">
-							<div className="project-link-icon">
-								<FontAwesomeIcon icon={faLink} />
-							</div>
+		<div className="project">
+			<div className="project-container">
+				<div
+					className="project-background"
+					style={{ backgroundImage: `url(${projectPicture})` }}
+				/>
 
-							<div className="project-link-text">{linkText}</div>
+				<div className="project-content">
+					<div className="project-header">
+						<div className="project-logo">
+							<img src={logo} alt="logo" />
 						</div>
+						<div className="project-title">{title}</div>
 					</div>
-				</Link>
+					<div className="project-info">
+						<div className="project-description">{description}</div>
+					</div>
+
+					<div className="project-links">
+						{liveDemo && (
+							<a
+								href={liveDemo}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="project-link"
+							>
+								<FontAwesomeIcon icon={faExternalLinkAlt} />
+								<span>Live Demo</span>
+							</a>
+						)}
+						{githubLink && (
+							<a
+								href={githubLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="project-link"
+							>
+								<FontAwesomeIcon icon={faGithub} />
+								<span>GitHub</span>
+							</a>
+						)}
+					</div>
+				</div>
 			</div>
-		</React.Fragment>
+		</div>
 	);
 };
 
