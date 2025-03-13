@@ -169,7 +169,63 @@ const Rating = styled.div`
 	color: #ffd700;
 	font-size: 1.5rem;
 	letter-spacing: 2px;
+	display: flex;
+	gap: 2px;
+
+	svg {
+		width: 24px;
+		height: 24px;
+	}
 `;
+
+const Star = ({ filled, half = false }) => {
+	const fillColor = filled ? "#ffd700" : "none";
+	const strokeColor = "#ffd700";
+
+	return (
+		<svg
+			viewBox="0 0 24 24"
+			fill={fillColor}
+			stroke={strokeColor}
+			strokeWidth="1"
+		>
+			{half ? (
+				<>
+					<defs>
+						<linearGradient id="halfFill">
+							<stop offset="50%" stopColor="#ffd700" />
+							<stop offset="50%" stopColor="transparent" />
+						</linearGradient>
+					</defs>
+					<path
+						fill="url(#halfFill)"
+						d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+					/>
+				</>
+			) : (
+				<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+			)}
+		</svg>
+	);
+};
+
+const StarRating = ({ rating }) => {
+	const fullStars = Math.floor(rating);
+	const hasHalfStar = rating % 1 >= 0.5;
+	const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+	return (
+		<Rating>
+			{[...Array(fullStars)].map((_, i) => (
+				<Star key={`full-${i}`} filled={true} />
+			))}
+			{hasHalfStar && <Star half={true} filled={true} />}
+			{[...Array(emptyStars)].map((_, i) => (
+				<Star key={`empty-${i}`} filled={false} />
+			))}
+		</Rating>
+	);
+};
 
 const ModeIcon = styled.div`
 	display: flex;
@@ -318,15 +374,6 @@ const formatDate = (dateString) => {
 		month: "short",
 		day: "numeric",
 	});
-};
-
-const StarRating = ({ rating }) => {
-	return (
-		<Rating>
-			{"★".repeat(rating)}
-			{"☆".repeat(5 - rating)}
-		</Rating>
-	);
 };
 
 const getTravelModeIcon = (mode) => {
@@ -509,9 +556,11 @@ const JourneyDetail = () => {
 											/>
 										)}
 									</motion.div>
-									<Description>
-										{journey.description}
-									</Description>
+									<Description
+										dangerouslySetInnerHTML={{
+											__html: journey.description,
+										}}
+									/>
 
 									{journey.photos.length > 0 && (
 										<Section>
