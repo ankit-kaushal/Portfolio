@@ -363,11 +363,11 @@ const TravelJourney = () => {
 																			.endDate,
 																	)}
 															</JourneyDate>
-															<JourneyDescription>
-																{
-																	journey.description
-																}
-															</JourneyDescription>
+															<JourneyDescription
+																dangerouslySetInnerHTML={{
+																	__html: journey.description,
+																}}
+															/>
 															<ReadMoreLink
 																to={`/journey/${journey._id}`}
 																color={
