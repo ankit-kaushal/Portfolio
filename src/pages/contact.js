@@ -63,8 +63,7 @@ const Contact = () => {
 				setFormData({ name: "", email: "", message: "" });
 			})
 			.catch((error) => {
-				console.log("error", error);
-
+				console.error("error", error);
 				setStatus("error");
 			});
 	};
