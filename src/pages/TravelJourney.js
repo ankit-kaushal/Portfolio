@@ -8,7 +8,7 @@ import Footer from "../components/common/footer";
 import NavBar from "../components/common/navBar";
 import INFO from "../data/user";
 import SEO from "../data/seo";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const TimelineContainer = styled.div`
 	padding: 2rem;
@@ -105,11 +105,14 @@ const JourneyDescription = styled.p`
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
+
+	p {
+		margin: 0;
+	}
 `;
 
 const ReadMoreLink = styled(Link)`
 	display: inline-block;
-	margin-top: 1rem;
 	color: ${(props) => props.color};
 	text-decoration: none;
 	font-weight: 600;
@@ -178,7 +181,6 @@ const SkeletonCard = styled(JourneyCard)`
 `;
 
 const TravelJourney = () => {
-	const dispatch = useDispatch();
 	const data = useSelector((state) => state.data);
 	const { user = {} } = data || {};
 

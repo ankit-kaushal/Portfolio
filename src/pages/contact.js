@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import emailjs from "@emailjs/browser";
 
 import NavBar from "../components/common/navBar";
 import Footer from "../components/common/footer";
@@ -15,6 +16,12 @@ import "./styles/contact.css";
 
 const Contact = () => {
 	const data = useSelector((state) => state.data);
+	const [formData, setFormData] = useState({
+		name: "",
+		email: "",
+		message: "",
+	});
+	const [status, setStatus] = useState("");
 
 	const { user = {} } = data || {};
 
@@ -28,6 +35,39 @@ const Contact = () => {
 	}, []);
 
 	const currentSEO = SEO.find((item) => item.page === "contact");
+
+	const handleChange = (e) => {
+		setFormData({
+			...formData,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setStatus("sending");
+
+		emailjs
+			.send(
+				process.env.REACT_APP_EMAILJS_SERVICE_ID,
+				process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+				{
+					name: formData.name,
+					email: formData.email,
+					message: formData.message,
+				},
+				process.env.REACT_APP_EMAILJS_PUBLIC_KEY,
+			)
+			.then(() => {
+				setStatus("success");
+				setFormData({ name: "", email: "", message: "" });
+			})
+			.catch((error) => {
+				console.log("error", error);
+
+				setStatus("error");
+			});
+	};
 
 	return (
 		<React.Fragment>
@@ -84,10 +124,66 @@ const Contact = () => {
 						</div>
 					</div>
 
-					<div className="socials-container">
-						<div className="contact-socials">
-							<Socials social={social} />
+					<div className="flex-container">
+						<div className="socials-container">
+							<div className="contact-socials">
+								<Socials social={social} />
+							</div>
 						</div>
+
+						<form onSubmit={handleSubmit} className="contact-form">
+							<div className="form-group">
+								<input
+									type="text"
+									name="name"
+									placeholder="Your Name"
+									value={formData.name}
+									onChange={handleChange}
+									required
+									className="form-input"
+								/>
+							</div>
+							<div className="form-group">
+								<input
+									type="email"
+									name="email"
+									placeholder="Your Email"
+									value={formData.email}
+									onChange={handleChange}
+									required
+									className="form-input"
+								/>
+							</div>
+							<div className="form-group">
+								<textarea
+									name="message"
+									placeholder="Your Message"
+									value={formData.message}
+									onChange={handleChange}
+									required
+									className="form-textarea"
+								/>
+							</div>
+							<button
+								type="submit"
+								className="submit-button"
+								disabled={status === "sending"}
+							>
+								{status === "sending"
+									? "Sending..."
+									: "Send Message"}
+							</button>
+							{status === "success" && (
+								<p className="success-message">
+									Message sent successfully!
+								</p>
+							)}
+							{status === "error" && (
+								<p className="error-message">
+									Failed to send message. Please try again.
+								</p>
+							)}
+						</form>
 					</div>
 
 					<div className="page-footer">
