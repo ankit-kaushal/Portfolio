@@ -771,7 +771,6 @@ const JourneyDetail = () => {
 					exit={{ opacity: 0 }}
 					onClick={closeModal}
 				>
-					<img src={selectedPhoto.url} alt={selectedPhoto.caption} />
 					{selectedPhoto.url.match(/\.(mp4|webm|ogg|mov)$/) ? (
 						<video
 							src={selectedPhoto.url}
