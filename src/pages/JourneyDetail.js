@@ -146,7 +146,8 @@ const PhotoGrid = styled.div`
 
 const Photo = styled(motion.div)`
 	cursor: pointer;
-	img {
+	img,
+	video {
 		width: 100%;
 		height: 200px;
 		object-fit: cover;
@@ -360,7 +361,8 @@ const PhotoModal = styled(motion.div)`
 	z-index: 1000;
 	padding: 2rem;
 
-	img {
+	img,
+	video {
 		max-width: 90%;
 		max-height: 90vh;
 		object-fit: contain;
@@ -590,12 +592,29 @@ const JourneyDetail = () => {
 																)
 															}
 														>
-															<img
-																src={photo.url}
-																alt={
-																	photo.caption
-																}
-															/>
+															{photo.url.match(
+																/\.(mp4|webm|ogg|mov)$/,
+															) ? (
+																<video
+																	src={
+																		photo.url
+																	}
+																	autoPlay
+																	loop
+																	muted
+																	playsInline
+																	preload="metadata"
+																/>
+															) : (
+																<img
+																	src={
+																		photo.url
+																	}
+																	alt={
+																		photo.caption
+																	}
+																/>
+															)}
 															<p>
 																{photo.caption}
 															</p>
@@ -753,6 +772,18 @@ const JourneyDetail = () => {
 					onClick={closeModal}
 				>
 					<img src={selectedPhoto.url} alt={selectedPhoto.caption} />
+					{selectedPhoto.url.match(/\.(mp4|webm|ogg|mov)$/) ? (
+						<video
+							src={selectedPhoto.url}
+							controls
+							preload="metadata"
+						/>
+					) : (
+						<img
+							src={selectedPhoto.url}
+							alt={selectedPhoto.caption}
+						/>
+					)}
 				</PhotoModal>
 			)}
 		</React.Fragment>
