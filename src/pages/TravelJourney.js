@@ -290,7 +290,7 @@ const TravelJourney = () => {
 							>
 								<div className="title-subtitle-container">
 									<div className="title travel-title">
-										Travel Journey
+										Travel Journeys
 									</div>
 
 									<div className="subtitle travel-subtitle">
