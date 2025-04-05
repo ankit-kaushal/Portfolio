@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -7,13 +7,22 @@ import "./Chat.css";
 const Chat = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [message, setMessage] = useState("");
-	const [chatHistory, setChatHistory] = useState([
-		{
-			text: "Hi there👋 , I am Ankit, you can ask anything about me",
-			sender: "bot",
-		},
-	]);
+	const [chatHistory, setChatHistory] = useState(() => {
+		const savedChats = localStorage.getItem("chatHistory");
+		return savedChats
+			? JSON.parse(savedChats)
+			: [
+					{
+						text: "Hi there👋 , I am Ankit, you can ask anything about me",
+						sender: "bot",
+					},
+				];
+	});
 	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
+	}, [chatHistory]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
