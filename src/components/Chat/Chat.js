@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./Chat.css";
 
 const Chat = () => {
+	const messagesEndRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const [message, setMessage] = useState("");
 	const [chatHistory, setChatHistory] = useState(() => {
@@ -51,6 +52,16 @@ const Chat = () => {
 		}
 	};
 
+	const scrollToBottom = () => {
+		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+	};
+
+	useEffect(() => {
+		if (isOpen) {
+			scrollToBottom();
+		}
+	}, [isOpen, chatHistory]);
+
 	return (
 		<div className={`chat-widget ${isOpen ? "open" : ""}`}>
 			<button className="chat-toggle" onClick={() => setIsOpen(!isOpen)}>
@@ -76,6 +87,7 @@ const Chat = () => {
 								</div>
 							</div>
 						)}
+						<div ref={messagesEndRef} />
 					</div>
 					<form onSubmit={handleSubmit}>
 						<input
