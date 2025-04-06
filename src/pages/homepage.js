@@ -28,9 +28,7 @@ const Homepage = () => {
 	const [loadingImage, setLoadingImage] = useState(true);
 	const [imageSrc, setImageSrc] = useState("");
 
-	const data = useSelector((state) => state.data);
-
-	const { user = {} } = data || {};
+	const user = useSelector((state) => state.homeData);
 
 	const socialObject = user?.social?.reduce((acc, curr) => {
 		acc[curr.name] = curr.url;
