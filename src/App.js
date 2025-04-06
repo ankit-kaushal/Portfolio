@@ -29,7 +29,25 @@ const JourneyDetail = lazy(() => import("./pages/JourneyDetail"));
 const EXCLUDED_PATHS = ["/journey", "/travel-journey"];
 import Chat from "./components/Chat/Chat";
 
+const preloadCriticalCSS = () => {
+	const links = [
+		{ rel: "preload", href: "/styles/homepage.css", as: "style" },
+		{ rel: "preload", href: "/styles/app.css", as: "style" },
+	];
+
+	links.forEach(({ rel, href, as }) => {
+		const link = document.createElement("link");
+		link.rel = rel;
+		link.href = href;
+		link.as = as;
+		document.head.appendChild(link);
+	});
+};
+
 function App() {
+	useEffect(() => {
+		preloadCriticalCSS();
+	}, []);
 	const loading = useSelector((state) => state.loading);
 	const dispatch = useDispatch();
 	const location = useLocation();

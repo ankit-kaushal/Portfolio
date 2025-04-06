@@ -157,16 +157,44 @@ const Homepage = () => {
 		};
 	}, [user?.pictureUrl?.home]);
 
-	const loadImage = () => {
+	useEffect(() => {
+		const imageUrl = user?.pictureUrl?.home || "/my-pic.jpg";
+
+		const link = document.createElement("link");
+		link.rel = "preload";
+		link.as = "image";
+		link.href = imageUrl;
+		document.head.appendChild(link);
+
+		if (!user?.pictureUrl?.home) {
+			setImageSrc("/my-pic.jpg");
+			setLoadingImage(false);
+			return;
+		}
+
 		const img = new Image();
-		img.src = `${user?.pictureUrl?.home || "my-pic.jpg"}`;
-		img.onload = () => {
+		img.src = imageUrl;
+
+		const handleLoad = () => {
 			setImageSrc(img.src);
 			setLoadingImage(false);
 		};
-	};
 
-	loadImage();
+		const handleError = () => {
+			setImageSrc("/my-pic.jpg");
+			setLoadingImage(false);
+		};
+
+		img.addEventListener("load", handleLoad);
+		img.addEventListener("error", handleError);
+
+		return () => {
+			img.removeEventListener("load", handleLoad);
+			img.removeEventListener("error", handleError);
+			document.head.removeChild(link);
+		};
+	}, [user?.pictureUrl?.home]);
+
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -175,6 +203,14 @@ const Homepage = () => {
 				<meta
 					name="keywords"
 					content={currentSEO.keywords.join(", ")}
+				/>
+				<link
+					rel="preconnect"
+					href="https://www.api.ankitkaushal.in.net"
+				/>
+				<link
+					rel="dns-prefetch"
+					href="https://www.api.ankitkaushal.in.net"
 				/>
 			</Helmet>
 
@@ -219,7 +255,10 @@ const Homepage = () => {
 												src={imageSrc}
 												alt={`${user?.name || INFO.main.title}'s portrait`}
 												className="homepage-image"
-												loading="lazy"
+												width="400"
+												height="400"
+												fetchPriority="high"
+												decoding="async"
 											/>
 										</div>
 									)}
