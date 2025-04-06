@@ -24,44 +24,60 @@ import "./styles/homepage.css";
 const Homepage = () => {
 	const [stayLogo, setStayLogo] = useState(false);
 	const [logoSize, setLogoSize] = useState(80);
-	const [oldLogoSize, setOldLogoSize] = useState(80);
 	const [loadingImage, setLoadingImage] = useState(true);
 	const [imageSrc, setImageSrc] = useState("");
 
-	const user = useSelector((state) => state.homeData);
+	const user = useSelector(
+		(state) => state.homeData,
+		(prev, next) => JSON.stringify(prev) === JSON.stringify(next),
+	);
 
-	const socialObject = user?.social?.reduce((acc, curr) => {
-		acc[curr.name] = curr.url;
-		return acc;
-	}, {});
+	const socialObject = React.useMemo(() => {
+		return (
+			user?.social?.reduce((acc, curr) => {
+				acc[curr.name] = curr.url;
+				return acc;
+			}, {}) || {}
+		);
+	}, [user?.social]);
 
 	useEffect(() => {
-		window.scrollTo(0, 0);
+		const handleScroll = debounce(() => {
+			const scroll = Math.round(window.pageYOffset, 2);
+			const newLogoSize = Math.max(40, 80 - (scroll * 4) / 10);
+
+			setLogoSize(newLogoSize);
+			setStayLogo(newLogoSize <= 40);
+		}, 10);
+
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
 	useEffect(() => {
-		const handleScroll = () => {
-			let scroll = Math.round(window.pageYOffset, 2);
+		if (!user?.pictureUrl?.home) return;
 
-			let newLogoSize = 80 - (scroll * 4) / 10;
+		const img = new Image();
+		img.src = user.pictureUrl.home;
 
-			if (newLogoSize < oldLogoSize) {
-				if (newLogoSize > 40) {
-					setLogoSize(newLogoSize);
-					setOldLogoSize(newLogoSize);
-					setStayLogo(false);
-				} else {
-					setStayLogo(true);
-				}
-			} else {
-				setLogoSize(newLogoSize);
-				setStayLogo(false);
-			}
+		const handleLoad = () => {
+			setImageSrc(img.src);
+			setLoadingImage(false);
 		};
 
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, [logoSize, oldLogoSize]);
+		const handleError = () => {
+			setImageSrc("my-pic.jpg");
+			setLoadingImage(false);
+		};
+
+		img.addEventListener("load", handleLoad);
+		img.addEventListener("error", handleError);
+
+		return () => {
+			img.removeEventListener("load", handleLoad);
+			img.removeEventListener("error", handleError);
+		};
+	}, [user?.pictureUrl?.home]);
 
 	const currentSEO = SEO.find((item) => item.page === "home");
 
@@ -101,55 +117,65 @@ const Homepage = () => {
 
 			<div className="page-content">
 				<NavBar active="home" />
-				<div className="content-wrapper">
+				<main className="content-wrapper">
 					<div className="homepage-logo-container">
 						<div style={logoStyle}>
 							<Logo width={logoSize} user={user} link={false} />
 						</div>
 					</div>
-
 					<div className="homepage-container">
-						<div className="homepage-first-area">
+						<section
+							className="homepage-first-area"
+							aria-label="Introduction"
+						>
 							<div className="homepage-first-area-left-side">
-								<div className="title homepage-title">
+								<h1 className="title homepage-title">
 									{user?.name || INFO.homepage.title}
-								</div>
+								</h1>
 
-								<div className="subtitle homepage-subtitle">
+								<p className="subtitle homepage-subtitle">
 									{user?.description ||
 										INFO.homepage.description}
-								</div>
+								</p>
 							</div>
-
 							<div className="homepage-first-area-right-side">
 								<div className="homepage-image-container">
 									{loadingImage ? (
-										<div className="homepage-image-wrapper-loading"></div>
+										<div
+											className="homepage-image-wrapper-loading"
+											role="progressbar"
+											aria-label="Loading profile image"
+										></div>
 									) : (
 										<div className="homepage-image-wrapper">
-											<div className="image-wrap-circle"></div>
+											<div
+												className="image-wrap-circle"
+												aria-hidden="true"
+											></div>
 											<img
 												src={imageSrc}
-												alt="about"
+												alt={`${user?.name || INFO.main.title}'s portrait`}
 												className="homepage-image"
+												loading="lazy"
 											/>
 										</div>
 									)}
 								</div>
 							</div>
-						</div>
+						</section>
 
-						{/* <div className="homepage-tag">
-							Coder  •  Designer  •  Thinker
-						</div> */}
-
-						<div className="homepage-socials">
+						<nav
+							className="homepage-socials"
+							aria-label="Social media links"
+						>
+							{/* Social media links with improved accessibility */}
 							<a
 								href={
 									socialObject?.github || INFO.socials.github
 								}
 								target="_blank"
 								rel="noreferrer"
+								aria-label="GitHub Profile"
 							>
 								<FontAwesomeIcon
 									icon={faGithub}
@@ -205,16 +231,28 @@ const Homepage = () => {
 									className="homepage-social-icon"
 								/>
 							</a>
-						</div>
+						</nav>
 
-						<div className="page-footer">
+						<footer className="page-footer">
 							<Footer user={user} />
-						</div>
+						</footer>
 					</div>
-				</div>
+				</main>
 			</div>
 		</React.Fragment>
 	);
 };
 
-export default Homepage;
+const debounce = (func, wait) => {
+	let timeout;
+	return function executedFunction(...args) {
+		const later = () => {
+			clearTimeout(timeout);
+			func(...args);
+		};
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+	};
+};
+
+export default React.memo(Homepage);

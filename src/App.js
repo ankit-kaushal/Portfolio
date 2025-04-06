@@ -37,7 +37,11 @@ function App() {
 
 	useEffect(() => {
 		if (TRACKING_ID !== "") {
-			ReactGA.initialize(TRACKING_ID);
+			ReactGA.initialize(TRACKING_ID, {
+				gaOptions: {
+					siteSpeedSampleRate: 100,
+				},
+			});
 		}
 	}, []);
 
@@ -48,44 +52,72 @@ function App() {
 
 		if (isExcludedPath || hasFetched.current) return;
 
+		let isSubscribed = true;
+		const controller = new AbortController();
+
 		const fetchData = async () => {
 			dispatch(fetchDataRequest());
 			try {
 				if (location.pathname === "/") {
 					const homeResponse = await axios.get(
 						"https://www.api.ankitkaushal.in.net/home",
+						{ signal: controller.signal },
 					);
+					if (!isSubscribed) return;
 					dispatch(fetchHomeDataSuccess(homeResponse.data));
 					dispatch(fetchDataRequest(false));
+
 					const profileResponse = await axios.get(
 						"https://www.api.ankitkaushal.in.net/profile",
+						{ signal: controller.signal },
 					);
+					if (!isSubscribed) return;
 					dispatch(fetchDataSuccess(profileResponse.data));
 				} else {
 					const profileResponse = await axios.get(
 						"https://www.api.ankitkaushal.in.net/profile",
+						{ signal: controller.signal },
 					);
+					if (!isSubscribed) return;
 					dispatch(fetchDataSuccess(profileResponse.data));
 					dispatch(fetchDataRequest(false));
+
 					const homeResponse = await axios.get(
 						"https://www.api.ankitkaushal.in.net/home",
+						{ signal: controller.signal },
 					);
+					if (!isSubscribed) return;
 					dispatch(fetchHomeDataSuccess(homeResponse.data));
 				}
 				hasFetched.current = true;
 			} catch (error) {
-				dispatch(fetchDataFailure(error.message));
+				if (!isSubscribed) return;
+				if (axios.isCancel(error)) {
+					console.log("Request canceled");
+				} else {
+					dispatch(fetchDataFailure(error.message));
+				}
 			}
 		};
 
 		fetchData();
+
+		return () => {
+			isSubscribed = false;
+			controller.abort();
+		};
 	}, [dispatch, location.pathname]);
 
 	if (loading) {
 		return (
-			<div className="loading-wrap">
+			<div
+				className="loading-wrap"
+				role="alert"
+				aria-busy="true"
+				aria-label="Loading content"
+			>
 				<div>
-					<div className="bounceball"></div>
+					<div className="bounceball" aria-hidden="true"></div>
 					<div className="loading-text">PORTFOLIO LOADING...</div>
 				</div>
 			</div>
@@ -95,7 +127,17 @@ function App() {
 	return (
 		<div className="App">
 			<ThemeProvider>
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense
+					fallback={
+						<div
+							role="alert"
+							aria-busy="true"
+							aria-label="Loading page content"
+						>
+							Loading...
+						</div>
+					}
+				>
 					<Routes>
 						<Route path="/" element={<Homepage />} />
 						<Route path="/about" element={<About />} />
