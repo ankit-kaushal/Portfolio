@@ -15,6 +15,7 @@ import {
 	fetchDataRequest,
 	fetchDataSuccess,
 	fetchDataFailure,
+	fetchHomeDataSuccess,
 } from "./requests/actions";
 import { ThemeProvider } from "./components/context/themeContext";
 import { useLocation } from "react-router-dom";
@@ -30,7 +31,6 @@ import Chat from "./components/Chat/Chat";
 
 function App() {
 	const loading = useSelector((state) => state.loading);
-
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const hasFetched = useRef(false);
@@ -51,10 +51,27 @@ function App() {
 		const fetchData = async () => {
 			dispatch(fetchDataRequest());
 			try {
-				const response = await axios.get(
-					"https://www.api.ankitkaushal.in.net/profile",
-				);
-				dispatch(fetchDataSuccess(response.data));
+				if (location.pathname === "/") {
+					const homeResponse = await axios.get(
+						"https://www.api.ankitkaushal.in.net/home",
+					);
+					dispatch(fetchHomeDataSuccess(homeResponse.data));
+					dispatch(fetchDataRequest(false));
+					const profileResponse = await axios.get(
+						"https://www.api.ankitkaushal.in.net/profile",
+					);
+					dispatch(fetchDataSuccess(profileResponse.data));
+				} else {
+					const profileResponse = await axios.get(
+						"https://www.api.ankitkaushal.in.net/profile",
+					);
+					dispatch(fetchDataSuccess(profileResponse.data));
+					dispatch(fetchDataRequest(false));
+					const homeResponse = await axios.get(
+						"https://www.api.ankitkaushal.in.net/home",
+					);
+					dispatch(fetchHomeDataSuccess(homeResponse.data));
+				}
 				hasFetched.current = true;
 			} catch (error) {
 				dispatch(fetchDataFailure(error.message));

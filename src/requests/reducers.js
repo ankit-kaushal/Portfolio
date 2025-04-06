@@ -2,6 +2,7 @@ import {
 	FETCH_DATA_REQUEST,
 	FETCH_DATA_SUCCESS,
 	FETCH_DATA_FAILURE,
+	FETCH_HOME_DATA_SUCCESS,
 } from "./actions";
 
 const initialState = {
@@ -13,7 +14,7 @@ const rootReducer = (state = initialState, action) => {
 		case FETCH_DATA_REQUEST:
 			return {
 				...state,
-				loading: true,
+				loading: action.loading,
 				error: null,
 			};
 		case FETCH_DATA_SUCCESS:
@@ -27,6 +28,11 @@ const rootReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: action.payload,
+			};
+		case FETCH_HOME_DATA_SUCCESS:
+			return {
+				...state,
+				homeData: action.payload,
 			};
 		default:
 			return state;
