@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Helmet } from "react-helmet";
 
 import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +26,18 @@ const Homepage = () => {
 	const [logoSize, setLogoSize] = useState(80);
 	const [loadingImage, setLoadingImage] = useState(true);
 	const [imageSrc, setImageSrc] = useState("");
+
+	const debounce = useCallback((func, wait) => {
+		let timeout;
+		return function executedFunction(...args) {
+			const later = () => {
+				clearTimeout(timeout);
+				func(...args);
+			};
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+		};
+	}, []);
 
 	const user = useSelector(
 		(state) => state.homeData,
@@ -79,31 +91,82 @@ const Homepage = () => {
 		};
 	}, [user?.pictureUrl?.home]);
 
-	const currentSEO = SEO.find((item) => item.page === "home");
+	const currentSEO = React.useMemo(
+		() => SEO.find((item) => item.page === "home"),
+		[],
+	);
 
-	const logoStyle = {
-		display: "flex",
-		position: stayLogo ? "fixed" : "relative",
-		top: stayLogo ? "3vh" : "auto",
-		zIndex: 999,
-		border: stayLogo ? "1px solid white" : "none",
-		borderRadius: stayLogo ? "50%" : "none",
-		boxShadow: stayLogo ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none",
-	};
+	const logoStyle = React.useMemo(
+		() => ({
+			display: "flex",
+			position: stayLogo ? "fixed" : "relative",
+			top: stayLogo ? "3vh" : "auto",
+			zIndex: 999,
+			border: stayLogo ? "1px solid white" : "none",
+			borderRadius: stayLogo ? "50%" : "none",
+			boxShadow: stayLogo ? "0px 4px 10px rgba(0, 0, 0, 0.25)" : "none",
+		}),
+		[stayLogo],
+	);
 
 	useEffect(() => {
-		const loadImage = () => {
-			const img = new Image();
-			img.src = `${user?.pictureUrl?.home || "my-pic.jpg"}`;
-			img.onload = () => {
-				setImageSrc(img.src);
-				setLoadingImage(false);
-			};
+		let rafId;
+		const handleScroll = () => {
+			rafId = requestAnimationFrame(() => {
+				const scroll = Math.round(window.pageYOffset, 2);
+				const newLogoSize = Math.max(40, 80 - (scroll * 4) / 10);
+
+				setLogoSize(newLogoSize);
+				setStayLogo(newLogoSize <= 40);
+			});
 		};
 
-		loadImage();
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+			cancelAnimationFrame(rafId);
+		};
 	}, []);
 
+	useEffect(() => {
+		if (!user?.pictureUrl?.home) {
+			setImageSrc("my-pic.jpg");
+			setLoadingImage(false);
+			return;
+		}
+
+		const img = new Image();
+		img.src = user.pictureUrl.home;
+
+		const handleLoad = () => {
+			setImageSrc(img.src);
+			setLoadingImage(false);
+		};
+
+		const handleError = () => {
+			setImageSrc("my-pic.jpg");
+			setLoadingImage(false);
+		};
+
+		img.addEventListener("load", handleLoad);
+		img.addEventListener("error", handleError);
+
+		return () => {
+			img.removeEventListener("load", handleLoad);
+			img.removeEventListener("error", handleError);
+		};
+	}, [user?.pictureUrl?.home]);
+
+	const loadImage = () => {
+		const img = new Image();
+		img.src = `${user?.pictureUrl?.home || "my-pic.jpg"}`;
+		img.onload = () => {
+			setImageSrc(img.src);
+			setLoadingImage(false);
+		};
+	};
+
+	loadImage();
 	return (
 		<React.Fragment>
 			<Helmet>
@@ -241,18 +304,6 @@ const Homepage = () => {
 			</div>
 		</React.Fragment>
 	);
-};
-
-const debounce = (func, wait) => {
-	let timeout;
-	return function executedFunction(...args) {
-		const later = () => {
-			clearTimeout(timeout);
-			func(...args);
-		};
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-	};
 };
 
 export default React.memo(Homepage);
