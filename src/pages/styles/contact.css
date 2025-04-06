@@ -48,12 +48,15 @@
 }
 
 .contact-form {
+	display: flex;
+	flex-direction: column;
 	padding: 2rem;
 	width: 60%;
 }
 
 .form-group {
 	margin-bottom: 1.5rem;
+	width: 100%;
 }
 
 .form-input,
@@ -61,6 +64,7 @@
 	background: var(--background-color);
 	border: 1px solid var(--secondary-color);
 	border-radius: 5px;
+	box-sizing: border-box;
 	color: var(--primary-color);
 	font-size: 1rem;
 	padding: 0.8rem;
@@ -130,7 +134,7 @@
 	}
 
 	.contact-form {
-		padding: 3rem;
+		padding: 2rem 1rem;
 		width: auto;
 	}
 }
