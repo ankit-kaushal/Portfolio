@@ -17,12 +17,12 @@ const INFO = {
 	homepage: {
 		title: "Ankit Kaushal",
 		description:
-			"Frontend Software Developer with 1 years of experience specializing in creating dynamic and visually appealing web applications. Currently, I am a valuable member of the development team at Cogoport Pvt Ltd, where I contribute to the design and implementation of user interfaces.",
+			"Frontend Software Developer with over 2.5 years of experience in building dynamic and visually engaging web applications. Currently, I’m part of the development team at Silverlabs Pvt Ltd (also known as Rizzle), where I focus on designing and implementing seamless user interfaces. Previously, I contributed to frontend development at Cogoport Pvt Ltd. I hold a B.Tech degree in Computer Science and Engineering from IIIT Kalyani.",
 	},
 
 	about: {
 		title: "I'm Ankit Kaushal,",
-		description: `and I am delighted to introduce myself as a software engineer at Cogoport Pvt Ltd, located in the vibrant city of Gurgaon. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role.\n\n
+		description: `and I am delighted to introduce myself as a software engineer at Silverlabs India Pvt Ltd, located in the vibrant city of Hyderabad. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role.\n\n
 			I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures.
 			Throughout my academic journey, I actively engaged in coding competitions and collaborative projects, sharpening my skills and fostering a hands-on approach to software development.
 			\n`,
