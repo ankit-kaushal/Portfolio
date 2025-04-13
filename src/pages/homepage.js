@@ -170,7 +170,7 @@ const Homepage = () => {
 	return (
 		<React.Fragment>
 			<Helmet>
-				<title>{user?.name || INFO.main.title}</title>
+				<title>Ankit Kaushal</title>
 				<meta name="description" content={currentSEO.description} />
 				<meta
 					name="keywords"
@@ -193,7 +193,7 @@ const Homepage = () => {
 						>
 							<div className="homepage-first-area-left-side">
 								<h1 className="title homepage-title">
-									{user?.name || INFO.homepage.title}
+									Ankit Kaushal
 								</h1>
 
 								<p className="subtitle homepage-subtitle">
@@ -231,7 +231,6 @@ const Homepage = () => {
 							className="homepage-socials"
 							aria-label="Social media links"
 						>
-							{/* Social media links with improved accessibility */}
 							<a
 								href={
 									socialObject?.github || INFO.socials.github
