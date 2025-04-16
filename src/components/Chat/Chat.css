@@ -121,3 +121,35 @@ button:disabled {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
+
+
+.error-message {
+    align-items: center;
+    background-color: #fff3f3;
+    border: 1px solid #ffcdd2;
+    border-radius: 8px;
+    color: #d32f2f;
+    display: flex;
+    font-size: 12px;
+    gap: 10px;
+    margin: 10px;
+    padding: 6px;
+}
+
+.retry-button {
+    align-items: center;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #2196f3;
+    cursor: pointer;
+    display: flex;
+    font-size: 10px;
+    gap: 5px;
+    padding: 5px 10px;
+    transition: background-color 0.2s;
+}
+
+.retry-button:hover {
+    background-color: #e3f2fd;
+}

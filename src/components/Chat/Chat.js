@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComments, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faComments, faTimes, faRedo } from "@fortawesome/free-solid-svg-icons";
 import "./Chat.css";
 
 const Chat = () => {
@@ -20,6 +20,7 @@ const Chat = () => {
 				];
 	});
 	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
@@ -33,6 +34,7 @@ const Chat = () => {
 		setChatHistory([...chatHistory, userMessage]);
 		setMessage("");
 		setIsLoading(true);
+		setError(null);
 
 		try {
 			const response = await axios.post(
@@ -46,6 +48,35 @@ const Chat = () => {
 				{ text: response.data.reply, sender: "bot" },
 			]);
 		} catch (error) {
+			setError("Failed to send message. Please try again.");
+			console.error("Chat error:", error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const handleRetry = async () => {
+		setError(null);
+		setIsLoading(true);
+
+		const lastUserMessage = chatHistory.findLast(
+			(msg) => msg.sender === "user",
+		);
+		if (!lastUserMessage) return;
+
+		try {
+			const response = await axios.post(
+				"https://www.api.ankitkaushal.in.net/chat",
+				{
+					message: lastUserMessage.text,
+				},
+			);
+			setChatHistory((prev) => [
+				...prev,
+				{ text: response.data.reply, sender: "bot" },
+			]);
+		} catch (error) {
+			setError("Failed to send message. Please try again.");
 			console.error("Chat error:", error);
 		} finally {
 			setIsLoading(false);
@@ -85,6 +116,18 @@ const Chat = () => {
 									<span></span>
 									<span></span>
 								</div>
+							</div>
+						)}
+						{error && (
+							<div className="error-message">
+								<span>{error}</span>
+								<button
+									onClick={handleRetry}
+									className="retry-button"
+									aria-label="Retry sending message"
+								>
+									<FontAwesomeIcon icon={faRedo} /> Retry
+								</button>
 							</div>
 						)}
 						<div ref={messagesEndRef} />
