@@ -11,6 +11,7 @@ import INFO from "../data/user";
 import SEO from "../data/seo";
 
 import { useSelector } from "react-redux";
+import ShootingStars from "../components/common/ShootingStars";
 
 import "./styles/contact.css";
 
@@ -80,6 +81,7 @@ const Contact = () => {
 			</Helmet>
 
 			<div className="page-content">
+				<ShootingStars />
 				<NavBar active="contact" />
 				<div className="content-wrapper">
 					<div className="contact-logo-container">

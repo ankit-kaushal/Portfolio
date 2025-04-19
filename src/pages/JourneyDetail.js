@@ -22,6 +22,7 @@ import {
 	faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { startCase } from "lodash";
+import ShootingStars from "../components/common/ShootingStars";
 
 const DetailContainer = styled(motion.div)`
 	padding-top: 120px;
@@ -520,6 +521,7 @@ const JourneyDetail = () => {
 			</Helmet>
 
 			<div className="page-content">
+				<ShootingStars />
 				<NavBar active="about" />
 				<div className="content-wrapper">
 					<DetailContainer

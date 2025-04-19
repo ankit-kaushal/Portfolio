@@ -11,6 +11,8 @@ import SEO from "../data/seo";
 
 import { useSelector } from "react-redux";
 
+import ShootingStars from "../components/common/ShootingStars";
+
 import "./styles/projects.css";
 
 const Projects = () => {
@@ -36,6 +38,7 @@ const Projects = () => {
 			</Helmet>
 
 			<div className="page-content">
+				<ShootingStars />
 				<NavBar active="projects" />
 				<div className="content-wrapper">
 					<div className="projects-logo-container">

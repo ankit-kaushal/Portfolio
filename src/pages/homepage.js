@@ -21,6 +21,8 @@ import { useSelector } from "react-redux";
 
 import "./styles/homepage.css";
 
+import ShootingStars from "../components/common/ShootingStars";
+
 const Homepage = () => {
 	const [stayLogo, setStayLogo] = useState(false);
 	const [logoSize, setLogoSize] = useState(80);
@@ -179,6 +181,7 @@ const Homepage = () => {
 			</Helmet>
 
 			<div className="page-content">
+				<ShootingStars />
 				<NavBar active="home" />
 				<main className="content-wrapper">
 					<div className="homepage-logo-container">

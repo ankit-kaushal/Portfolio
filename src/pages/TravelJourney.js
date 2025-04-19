@@ -10,6 +10,8 @@ import INFO from "../data/user";
 import SEO from "../data/seo";
 import { useSelector } from "react-redux";
 
+import ShootingStars from "../components/common/ShootingStars";
+
 const TimelineContainer = styled.div`
 	padding: 2rem;
 	max-width: 1200px;
@@ -278,6 +280,7 @@ const TravelJourney = () => {
 			</Helmet>
 
 			<div className="page-content">
+				<ShootingStars />
 				<NavBar active="about" />
 				<div className="content-wrapper">
 					<div className="travel-journey-wrapper">
