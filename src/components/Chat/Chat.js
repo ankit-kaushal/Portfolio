@@ -38,7 +38,7 @@ const Chat = () => {
 
 		try {
 			const response = await axios.post(
-				"https://www.api.ankitkaushal.in.net/chat",
+				"https://www.api.ankitkaushal.in/chat",
 				{
 					message: message,
 				},
@@ -66,7 +66,7 @@ const Chat = () => {
 
 		try {
 			const response = await axios.post(
-				"https://www.api.ankitkaushal.in.net/chat",
+				"https://www.api.ankitkaushal.in/chat",
 				{
 					message: lastUserMessage.text,
 				},

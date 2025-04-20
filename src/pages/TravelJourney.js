@@ -199,7 +199,7 @@ const TravelJourney = () => {
 			setIsLoading(true);
 			try {
 				const response = await fetch(
-					"https://www.api.ankitkaushal.in.net/travel-journeys",
+					"https://www.api.ankitkaushal.in/travel-journeys",
 				);
 				const data = await response.json();
 				setJourneys(data);

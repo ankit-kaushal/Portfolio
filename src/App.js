@@ -60,7 +60,7 @@ function App() {
 			try {
 				if (location.pathname === "/") {
 					const homeResponse = await axios.get(
-						"https://www.api.ankitkaushal.in.net/home",
+						"https://www.api.ankitkaushal.in/home",
 						{ signal: controller.signal },
 					);
 					if (!isSubscribed) return;
@@ -68,14 +68,14 @@ function App() {
 					dispatch(fetchDataRequest(false));
 
 					const profileResponse = await axios.get(
-						"https://www.api.ankitkaushal.in.net/profile",
+						"https://www.api.ankitkaushal.in/profile",
 						{ signal: controller.signal },
 					);
 					if (!isSubscribed) return;
 					dispatch(fetchDataSuccess(profileResponse.data));
 				} else {
 					const profileResponse = await axios.get(
-						"https://www.api.ankitkaushal.in.net/profile",
+						"https://www.api.ankitkaushal.in/profile",
 						{ signal: controller.signal },
 					);
 					if (!isSubscribed) return;
@@ -83,7 +83,7 @@ function App() {
 					dispatch(fetchDataRequest(false));
 
 					const homeResponse = await axios.get(
-						"https://www.api.ankitkaushal.in.net/home",
+						"https://www.api.ankitkaushal.in/home",
 						{ signal: controller.signal },
 					);
 					if (!isSubscribed) return;

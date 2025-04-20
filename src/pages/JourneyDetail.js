@@ -424,7 +424,7 @@ const JourneyDetail = () => {
 		const fetchJourneyDetail = async () => {
 			try {
 				const response = await fetch(
-					`https://www.api.ankitkaushal.in.net/travel-journeys/${id}`,
+					`https://www.api.ankitkaushal.in/travel-journeys/${id}`,
 				);
 				const data = await response.json();
 				setJourney(data);

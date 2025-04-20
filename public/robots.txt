@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.ankitkaushal.in.net/sitemap.xml
+Sitemap: https://www.ankitkaushal.in/sitemap.xml

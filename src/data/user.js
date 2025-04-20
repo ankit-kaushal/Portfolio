@@ -40,7 +40,7 @@ const INFO = {
 				"This application simplifies the creation of Air Waybill (AWB) documents for the logistics and shipping industry. With a user-friendly interface, modular design, and seamless library integration, the app delivers a streamlined and efficient document generation experience. It reflects my expertise in React development, emphasizing modularity, responsiveness, and a commitment to enhancing industry processes.",
 			logo: "https://cogoport-production.sgp1.digitaloceanspaces.com/60f19d21e99a8e720647ba8a6bb4646a/react.png",
 			linkText: "View Project",
-			link: "https://www.docreator.in.net/",
+			link: "https://www.docreator.in/",
 		},
 
 		{
