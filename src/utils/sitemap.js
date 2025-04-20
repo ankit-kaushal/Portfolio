@@ -1,10 +1,6 @@
-import { create } from "xmlbuilder2";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { create } = require("xmlbuilder2");
+const fs = require("fs");
+const path = require("path");
 
 const baseUrl = "https://www.ankitkaushal.in";
 
@@ -45,4 +41,4 @@ const generateSitemap = () => {
 
 generateSitemap();
 
-export default generateSitemap;
+module.exports = generateSitemap;
