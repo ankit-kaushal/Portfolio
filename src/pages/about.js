@@ -72,14 +72,14 @@ const About = () => {
 					<div className="about-container">
 						<div className="about-main">
 							<div className="about-right-side">
-								<div className="title about-title">
+								<h1 className="title about-title">
 									{user?.aboutTitle || INFO.about.title}
-								</div>
+								</h1>
 
-								<div className="subtitle about-subtitle">
+								<p className="subtitle about-subtitle">
 									{user?.aboutDescription ||
 										INFO.about.description}
-								</div>
+								</p>
 							</div>
 
 							<div className="about-left-side">
