@@ -61,8 +61,9 @@ const SideInfo = styled.div`
 	}
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
 	color: var(--primary-color);
+	margin-top: 0;
 	margin-bottom: 1rem;
 	font-size: 2.5rem;
 	font-weight: 700;
@@ -73,8 +74,9 @@ const Title = styled.div`
 	}
 `;
 
-const Place = styled.div`
+const Place = styled.h2`
 	color: var(--primary-color);
+	margin-top: 0;
 	margin-bottom: 0.5rem;
 	font-size: 1.5rem;
 	font-weight: 600;
