@@ -59,10 +59,9 @@ function App() {
 			dispatch(fetchDataRequest());
 			try {
 				if (location.pathname === "/") {
-					const homeResponse = await axios.get(
-						"https://www.api.ankitkaushal.in/home",
-						{ signal: controller.signal },
-					);
+					const homeResponse = await axios.get("/data.json", {
+						signal: controller.signal,
+					});
 					if (!isSubscribed) return;
 					dispatch(fetchHomeDataSuccess(homeResponse.data));
 					dispatch(fetchDataRequest(false));
@@ -82,10 +81,9 @@ function App() {
 					dispatch(fetchDataSuccess(profileResponse.data));
 					dispatch(fetchDataRequest(false));
 
-					const homeResponse = await axios.get(
-						"https://www.api.ankitkaushal.in/home",
-						{ signal: controller.signal },
-					);
+					const homeResponse = await axios.get("/data.json", {
+						signal: controller.signal,
+					});
 					if (!isSubscribed) return;
 					dispatch(fetchHomeDataSuccess(homeResponse.data));
 				}
