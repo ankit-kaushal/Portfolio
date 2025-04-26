@@ -9,7 +9,6 @@ async function updateData() {
 		const response = await axios.get("https://api.ankitkaushal.in/home");
 		const newData = {
 			...response.data,
-			lastUpdated: new Date().toISOString(),
 		};
 
 		fs.writeFileSync(DATA_FILE, JSON.stringify(newData, null, 2));
