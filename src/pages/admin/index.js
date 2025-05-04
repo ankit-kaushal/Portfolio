@@ -136,7 +136,11 @@ const Admin = () => {
 										? item.onClick()
 										: setActiveSection(item.id);
 								}}
-								className={`${item.className} ${activeSection === item.id ? styles.active : ""}`}
+								className={`${item.className || ""} ${
+									activeSection === item.id
+										? styles.active
+										: ""
+								}`}
 							>
 								<FontAwesomeIcon icon={item.icon} />
 								<span className={styles.menuText}>

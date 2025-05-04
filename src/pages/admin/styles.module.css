@@ -67,13 +67,17 @@
     display: flex;
     gap: 1rem;
     margin: 0.2rem 0.8rem;
-    padding: 0.8rem;
+    padding: 0.8rem 0.8rem 0.8rem 0.6rem;
     transition: all 0.2s ease;
 }
 
-.sidebar li:hover {
+.sidebar li.active {
     background: var(--quaternary-color);
     color: var(--link-color);
+}
+
+.sidebar li.active:hover {
+    background: var(--quaternary-color);
 }
 
 .menuText {
