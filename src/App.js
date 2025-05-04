@@ -11,6 +11,7 @@ import Contact from "./pages/contact";
 import Notfound from "./pages/404";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Admin from "./pages/admin";
 import {
 	fetchDataRequest,
 	fetchDataSuccess,
@@ -151,6 +152,7 @@ function App() {
 							element={<JourneyDetail />}
 						/>
 						<Route path="*" element={<Notfound />} />
+						<Route path="/admin" element={<Admin />} />
 					</Routes>
 					<Chat />
 				</Suspense>
