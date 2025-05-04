@@ -1,9 +1,8 @@
 .adminContainer {
     background-color: var(--background-color);
-    display: grid;
-    grid-template-columns: 60px 1fr;
+    display: flex;
     min-height: 100vh;
-    transition: all 0.3s ease;
+    width: 100%;
 }
 
 .sidebarExpanded {
@@ -94,15 +93,20 @@
 }
 
 .mainContent {
+    flex: 1;
     margin-left: 60px;
     padding: 2rem;
     transition: all 0.3s ease;
-    width: calc(100vw - 60px);
 }
 
 .sidebarExpanded .mainContent {
     margin-left: 200px;
-    width: calc(100vw - 200px);
+}
+
+@media (max-width: 768px) {
+    .mainContent {
+        padding: 1rem;
+    }
 }
 
 .contentArea {
@@ -110,7 +114,7 @@
     border-radius: 8px;
     margin: 0 auto;
     max-width: 1200px;
-    padding: 2rem;
+    padding: 0;
     width: 100%;
 }
 
@@ -118,15 +122,12 @@
     .mainContent {
         margin-left: 60px;
         padding: 1rem;
-        width: calc(100vw - 100px);
+        width: calc(100% - 60px);
     }
 
     .sidebarExpanded .mainContent {
         margin-left: 60px;
-        width: calc(100vw - 60px);
+        width: calc(100% - 60px);
     }
-
-    .contentArea {
-        padding: 0;
-    }    
 }
+

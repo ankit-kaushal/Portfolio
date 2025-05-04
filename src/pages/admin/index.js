@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 import AboutEdit from "./components/AboutEdit";
+import ProjectsEdit from "./components/ProjectsEdit";
 
 const Admin = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,6 +66,8 @@ const Admin = () => {
 		switch (activeSection) {
 			case "about":
 				return <AboutEdit />;
+			case "projects":
+				return <ProjectsEdit />;
 			default:
 				return <h3>Welcome to Admin Dashboard</h3>;
 		}
