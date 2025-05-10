@@ -12,11 +12,14 @@ import {
 import styles from "./styles.module.css";
 import AboutEdit from "./components/AboutEdit";
 import ProjectsEdit from "./components/ProjectsEdit";
+import axios from "axios";
+import OTPInput from "./components/OTPInput";
 
 const Admin = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+	const [activeSection, setActiveSection] = useState("overview");
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -34,17 +37,33 @@ const Admin = () => {
 		password: "",
 	});
 
-	const handleLogin = (e) => {
+	const [token, setToken] = useState("");
+	const [error, setError] = useState("");
+
+	const handleLogin = async (e) => {
 		e.preventDefault();
-		if (
-			credentials.username === process.env.REACT_APP_ADMIN_USER &&
-			credentials.password === process.env.REACT_APP_ADMIN_PASS
-		) {
-			setIsAuthenticated(true);
+		try {
+			const response = await axios.post(
+				"https://api.ankitkaushal.in/validate",
+				{
+					token: token,
+				},
+				{
+					headers: {
+						Authorization: process.env.REACT_APP_AUTHKEY,
+					},
+				},
+			);
+
+			if (response.status === 200) {
+				setIsAuthenticated(true);
+				setError("");
+				setToken("");
+			}
+		} catch (error) {
+			setError("Invalid authentication code");
 		}
 	};
-
-	const [activeSection, setActiveSection] = useState("overview");
 
 	const menuItems = [
 		{ icon: faChartLine, text: "Overview", id: "overview" },
@@ -73,39 +92,40 @@ const Admin = () => {
 		}
 	};
 
+	const handleOTPComplete = async (code) => {
+		try {
+			const response = await axios.post(
+				"https://api.ankitkaushal.in/validate",
+				{
+					token: code,
+				},
+				{
+					headers: {
+						Authorization: process.env.REACT_APP_AUTHKEY,
+					},
+				},
+			);
+
+			if (response.status === 200) {
+				setIsAuthenticated(true);
+				setError("");
+			}
+		} catch (error) {
+			setError("Invalid authentication code");
+		}
+	};
+
 	if (!isAuthenticated) {
 		return (
 			<div className={styles.loginContainer}>
-				<form className={styles.loginForm} onSubmit={handleLogin}>
-					<h2>Welcome Back</h2>
-					<div className={styles.inputGroup}>
-						<input
-							type="text"
-							placeholder="Username"
-							value={credentials.username}
-							onChange={(e) =>
-								setCredentials({
-									...credentials,
-									username: e.target.value,
-								})
-							}
-						/>
-					</div>
-					<div className={styles.inputGroup}>
-						<input
-							type="password"
-							placeholder="Password"
-							value={credentials.password}
-							onChange={(e) =>
-								setCredentials({
-									...credentials,
-									password: e.target.value,
-								})
-							}
-						/>
-					</div>
-					<button type="submit">Login</button>
-				</form>
+				<div className={styles.loginForm}>
+					<h2>Two-Factor Authentication</h2>
+					<p className={styles.loginText}>
+						Enter the code from your authenticator app
+					</p>
+					{error && <p className={styles.errorMessage}>{error}</p>}
+					<OTPInput onComplete={handleOTPComplete} />
+				</div>
 			</div>
 		);
 	}

@@ -1,0 +1,39 @@
+.otpContainer {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.otpInput {
+    background: var(--background-color);
+    border: 2px solid var(--quaternary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 20px;
+    height: 40px;
+    padding: 0;
+    text-align: center;
+    transition: all 0.2s ease;
+    width: 40px;
+}
+
+@media (max-width: 400px) {
+    .otpInput {
+        font-size: 18px;
+        height: 35px;
+        width: 35px;
+    }
+}
+
+.otpInput:focus {
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 2px rgb(var(--link-color-rgb) 0.2);
+    outline: none;
+}
+
+.otpInput::-webkit-outer-spin-button,
+.otpInput::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
