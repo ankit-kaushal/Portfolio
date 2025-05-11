@@ -8,18 +8,21 @@ import {
 	faUser,
 	faSignOutAlt,
 	faChartLine,
+	faMountainCity,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 import AboutEdit from "./components/AboutEdit";
 import ProjectsEdit from "./components/ProjectsEdit";
 import axios from "axios";
 import OTPInput from "./components/OTPInput";
+import TravelJourney from "./components/TravelJourney";
 
 const Admin = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 	const [activeSection, setActiveSection] = useState("overview");
+	const [error, setError] = useState("");
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -32,43 +35,11 @@ const Admin = () => {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	const [credentials, setCredentials] = useState({
-		username: "",
-		password: "",
-	});
-
-	const [token, setToken] = useState("");
-	const [error, setError] = useState("");
-
-	const handleLogin = async (e) => {
-		e.preventDefault();
-		try {
-			const response = await axios.post(
-				"https://api.ankitkaushal.in/validate",
-				{
-					token: token,
-				},
-				{
-					headers: {
-						Authorization: process.env.REACT_APP_AUTHKEY,
-					},
-				},
-			);
-
-			if (response.status === 200) {
-				setIsAuthenticated(true);
-				setError("");
-				setToken("");
-			}
-		} catch (error) {
-			setError("Invalid authentication code");
-		}
-	};
-
 	const menuItems = [
 		{ icon: faChartLine, text: "Overview", id: "overview" },
 		{ icon: faUser, text: "About", id: "about" },
 		{ icon: faProjectDiagram, text: "Projects", id: "projects" },
+		{ icon: faMountainCity, text: "Travel", id: "travel" },
 		{ icon: faBlog, text: "Blog Posts", id: "blogs" },
 		{ icon: faEnvelope, text: "Messages", id: "messages" },
 		{ icon: faCog, text: "Settings", id: "settings" },
@@ -87,6 +58,8 @@ const Admin = () => {
 				return <AboutEdit />;
 			case "projects":
 				return <ProjectsEdit />;
+			case "travel":
+				return <TravelJourney />;
 			default:
 				return <h3>Welcome to Admin Dashboard</h3>;
 		}
