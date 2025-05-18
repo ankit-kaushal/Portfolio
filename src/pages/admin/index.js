@@ -16,6 +16,7 @@ import ProjectsEdit from "./components/ProjectsEdit";
 import axios from "axios";
 import OTPInput from "./components/OTPInput";
 import TravelJourney from "./components/TravelJourney";
+import Overview from "./components/Overview";
 
 const Admin = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -54,6 +55,8 @@ const Admin = () => {
 
 	const renderContent = () => {
 		switch (activeSection) {
+			case "overview":
+				return <Overview />;
 			case "about":
 				return <AboutEdit />;
 			case "projects":
