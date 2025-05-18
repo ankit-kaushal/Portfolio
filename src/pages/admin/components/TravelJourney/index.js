@@ -32,7 +32,7 @@ const TravelJourney = () => {
 		modeOfTravel: [],
 		placesVisited: [],
 		photos: [],
-		rating: undefined,
+		rating: 0,
 	});
 	const [isEditing, setIsEditing] = useState(false);
 	const [editingId, setEditingId] = useState(null);
@@ -74,6 +74,7 @@ const TravelJourney = () => {
 					message: "Journey updated successfully!",
 					type: "success",
 				});
+				closeModal();
 			} else {
 				await axios.post(
 					"https://api.ankitkaushal.in/travel-journeys",
@@ -89,6 +90,7 @@ const TravelJourney = () => {
 					message: "New journey added successfully!",
 					type: "success",
 				});
+				closeModal();
 			}
 			fetchJourneys();
 			resetForm();

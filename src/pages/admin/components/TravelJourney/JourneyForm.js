@@ -78,6 +78,10 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 							true,
 						),
 					},
+					rating:
+						Number(formData.rating) > 0
+							? Number(formData.rating)
+							: undefined,
 				};
 				onSubmit(e, formattedData);
 			}}
@@ -157,7 +161,6 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 							})
 						}
 						placeholder="Amount"
-						required
 					/>
 				</div>
 				<div className={styles.inputGroup}>
@@ -171,27 +174,42 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 				</div>
 				<div className={styles.inputGroup}>
 					<label>Mode of Travel</label>
-					<select
-						multiple
-						value={formData.modeOfTravel}
-						onChange={(e) => {
-							const selectedModes = Array.from(
-								e.target.selectedOptions,
-								(option) => option.value,
-							);
+					<AsyncSelect
+						value={formData.modeOfTravel.map((mode) => ({
+							value: mode,
+							label: mode,
+						}))}
+						onChange={(selected) => {
+							const selectedModes = selected
+								? selected.map((option) => option.value)
+								: [];
 							setFormData({
 								...formData,
 								modeOfTravel: selectedModes,
 							});
 						}}
-						className={styles.multiSelect}
-					>
-						{travelModes.map((mode) => (
-							<option key={mode} value={mode}>
-								{mode}
-							</option>
-						))}
-					</select>
+						loadOptions={(inputValue) => {
+							return new Promise((resolve) => {
+								const filtered = travelModes
+									.filter((mode) =>
+										mode
+											.toLowerCase()
+											.includes(inputValue.toLowerCase()),
+									)
+									.map((mode) => ({
+										value: mode,
+										label: mode,
+									}));
+								resolve(filtered);
+							});
+						}}
+						isMulti
+						placeholder="Select modes of travel..."
+						defaultOptions={travelModes.map((mode) => ({
+							value: mode,
+							label: mode,
+						}))}
+					/>
 				</div>
 				<div className={styles.inputGroup}>
 					<label>Places Visited</label>
