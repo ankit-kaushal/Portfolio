@@ -15,6 +15,31 @@
     gap: 1rem;
     margin-bottom: 1rem;
     padding: 1rem;
+    position: relative;
+}
+
+.cardActions {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    z-index: 1;
+}
+
+.editButton,
+.deleteButton {
+    align-items: center;
+    background: var(--elements-background-color);
+    border: none;
+    border-radius: 4px;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    padding: 8px;
+    width: 32px;
 }
 
 .projectLogo {
@@ -151,6 +176,7 @@
     cursor: pointer;
     margin-top: 1rem;
     padding: 0.8rem;
+    padding: 8px 16px;
     width: 100%;
 }
 
@@ -158,6 +184,10 @@
 .deleteButton:hover,
 .cancelButton:hover {
     opacity: 0.9;
+}
+
+.deleteButton:hover {
+    color: var(--error-color);
 }
 
 .header {
@@ -179,3 +209,10 @@
 .addButton:hover {
     opacity: 0.9;
 }
+
+.editButton:hover {
+    color: var(--accent-color);
+}
+
+
+

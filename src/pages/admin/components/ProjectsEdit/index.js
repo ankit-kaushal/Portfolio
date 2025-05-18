@@ -4,6 +4,9 @@ import axios from "axios";
 import styles from "./styles.module.css";
 import Toast from "../../../../components/toast";
 import ProjectFormModal from "./ProjectFormModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../../../../components/common/Modal";
 
 const ProjectsEdit = () => {
 	const data = useSelector((state) => state.data);
@@ -177,6 +180,19 @@ const ProjectsEdit = () => {
 		setIsModalOpen(true);
 	};
 
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [deleteId, setDeleteId] = useState(null);
+
+	const handleDeleteClick = (id) => {
+		setDeleteId(id);
+		setShowDeleteModal(true);
+	};
+
+	const confirmDelete = async () => {
+		await handleDelete(deleteId);
+		setShowDeleteModal(false);
+	};
+
 	return (
 		<div className={styles.projectsContainer}>
 			<div className={styles.header}>
@@ -185,7 +201,6 @@ const ProjectsEdit = () => {
 					Add New Project
 				</button>
 			</div>
-
 			<div className={styles.projectsList}>
 				{projects.map((project) => (
 					<div key={project._id} className={styles.projectCard}>
@@ -228,22 +243,23 @@ const ProjectsEdit = () => {
 								)}
 							</div>
 						</div>
-						<button
-							onClick={() => handleEdit(project)}
-							className={styles.editButton}
-						>
-							Edit
-						</button>
-						<button
-							onClick={() => handleDelete(project._id)}
-							className={styles.deleteButton}
-						>
-							Delete
-						</button>
+						<div className={styles.cardActions}>
+							<button
+								onClick={() => handleEdit(project)}
+								className={styles.editButton}
+							>
+								<FontAwesomeIcon icon={faEdit} />
+							</button>
+							<button
+								onClick={() => handleDeleteClick(project._id)}
+								className={styles.deleteButton}
+							>
+								<FontAwesomeIcon icon={faTrash} />
+							</button>
+						</div>
 					</div>
 				))}
 			</div>
-
 			<ProjectFormModal
 				isOpen={isModalOpen}
 				onClose={handleCloseModal}
@@ -253,6 +269,29 @@ const ProjectsEdit = () => {
 				isLoading={isLoading}
 				editMode={editMode}
 			/>
+			<Modal
+				isOpen={showDeleteModal}
+				onClose={() => setShowDeleteModal(false)}
+				title="Confirm Delete"
+				actions={
+					<>
+						<button
+							className={styles.cancelButton}
+							onClick={() => setShowDeleteModal(false)}
+						>
+							Cancel
+						</button>
+						<button
+							className={styles.deleteButton}
+							onClick={confirmDelete}
+						>
+							Delete
+						</button>
+					</>
+				}
+			>
+				<p>Are you sure you want to delete this project?</p>
+			</Modal>
 		</div>
 	);
 };
