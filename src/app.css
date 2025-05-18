@@ -1,20 +1,20 @@
 @import url("/src/data/styles.css");
 
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: #f1f1f1;
+    background: var(--background-color);
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #383636;
+    background: var(--quaternary-color);
 	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: rgb(0 0 0);
+    background: var(--secondary-color);
 }
 
 .page-content {
