@@ -32,7 +32,7 @@ const TravelJourney = () => {
 		modeOfTravel: [],
 		placesVisited: [],
 		photos: [],
-		rating: 0,
+		rating: undefined,
 	});
 	const [isEditing, setIsEditing] = useState(false);
 	const [editingId, setEditingId] = useState(null);
@@ -56,13 +56,13 @@ const TravelJourney = () => {
 		}
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e, formattedData) => {
 		e.preventDefault();
 		try {
 			if (isEditing) {
 				await axios.put(
 					`https://api.ankitkaushal.in/travel-journeys/${editingId}`,
-					formData,
+					formattedData,
 					{
 						headers: {
 							Authorization: process.env.REACT_APP_AUTHKEY,
@@ -77,7 +77,7 @@ const TravelJourney = () => {
 			} else {
 				await axios.post(
 					"https://api.ankitkaushal.in/travel-journeys",
-					formData,
+					formattedData,
 					{
 						headers: {
 							Authorization: process.env.REACT_APP_AUTHKEY,
@@ -295,7 +295,9 @@ const TravelJourney = () => {
 								</button>
 								<button
 									className={styles.deleteButton}
-									onClick={() => handleDelete(journey._id)}
+									onClick={() =>
+										handleDeleteClick(journey._id)
+									}
 								>
 									<FontAwesomeIcon icon={faTrash} />
 								</button>
@@ -317,8 +319,9 @@ const TravelJourney = () => {
 							Cancel
 						</button>
 						<button
-							className={styles.deleteButton}
+							className={styles.submitButton}
 							onClick={confirmDelete}
+							style={{ background: "#dc2626" }}
 						>
 							Delete
 						</button>

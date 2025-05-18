@@ -47,13 +47,40 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 
 	const formatDate = (dateString) => {
 		if (!dateString) return "";
-		return new Date(dateString).toISOString().slice(0, 16);
+		return new Date(dateString).toISOString().slice(0, 10);
+	};
+
+	const formatDateForSubmit = (date, isEndDate) => {
+		if (!date) return "";
+		const baseDate = new Date(date);
+		if (isEndDate) {
+			baseDate.setHours(23, 59, 59, 999);
+		} else {
+			baseDate.setHours(0, 1, 0, 0);
+		}
+		return baseDate.toISOString();
 	};
 
 	return (
 		<form
 			className={styles.journeyForm}
-			onSubmit={onSubmit}
+			onSubmit={(e) => {
+				e.preventDefault();
+				const formattedData = {
+					...formData,
+					duration: {
+						startDate: formatDateForSubmit(
+							formData.duration.startDate,
+							false,
+						),
+						endDate: formatDateForSubmit(
+							formData.duration.endDate,
+							true,
+						),
+					},
+				};
+				onSubmit(e, formattedData);
+			}}
 			id="journeyForm"
 		>
 			<div className={styles.formGrid}>
@@ -84,7 +111,7 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 				<div className={styles.inputGroup}>
 					<label>Start Date</label>
 					<input
-						type="datetime-local"
+						type="date"
 						value={formatDate(formData.duration.startDate)}
 						onChange={(e) =>
 							setFormData({
@@ -101,7 +128,7 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 				<div className={styles.inputGroup}>
 					<label>End Date</label>
 					<input
-						type="datetime-local"
+						type="date"
 						value={formatDate(formData.duration.endDate)}
 						onChange={(e) =>
 							setFormData({
