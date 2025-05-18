@@ -25,6 +25,8 @@
     background: var(--elements-background-color);
     border: none;
     border-radius: 12px;
+    display: flex;
+    gap: 24px;
     margin-bottom: 30px;
     padding: 24px;
 }

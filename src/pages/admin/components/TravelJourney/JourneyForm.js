@@ -4,6 +4,7 @@ import AsyncSelect from "../../../../components/common/AsyncSelect";
 import "react-quill/dist/quill.snow.css";
 import styles from "./styles.module.css";
 import StarRating from "../../../../components/common/StarRating";
+import PhotoUpload from "../../../../components/common/PhotoUpload";
 
 const travelModes = [
 	"flight",
@@ -199,16 +200,27 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 					/>
 				</div>
 			</div>
-			<div className={styles.inputGroup}>
-				<label>Description</label>
-				<ReactQuill
-					value={formData.description}
-					onChange={(content) =>
-						setFormData({ ...formData, description: content })
-					}
-					modules={modules}
-					placeholder="Write about your journey..."
-				/>
+			<div className={styles.formGrid}>
+				<div className={styles.inputGroup}>
+					<label>Description</label>
+					<ReactQuill
+						value={formData.description}
+						onChange={(content) =>
+							setFormData({ ...formData, description: content })
+						}
+						modules={modules}
+						placeholder="Write about your journey..."
+					/>
+				</div>
+				<div className={styles.inputGroup}>
+					<label>Photos</label>
+					<PhotoUpload
+						photos={formData.photos}
+						onChange={(photos) =>
+							setFormData({ ...formData, photos })
+						}
+					/>
+				</div>
 			</div>
 		</form>
 	);
