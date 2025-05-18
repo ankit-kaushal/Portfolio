@@ -10,9 +10,11 @@ import axios from "axios";
 import styles from "./styles.module.css";
 import Modal from "../../../../components/common/Modal";
 import JourneyForm from "./JourneyForm";
+import JourneySkeleton from "./JourneySkeleton";
 
 const TravelJourney = () => {
 	const [journeys, setJourneys] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	const [formData, setFormData] = useState({
 		title: "",
 		description: "",
@@ -39,6 +41,7 @@ const TravelJourney = () => {
 	}, []);
 
 	const fetchJourneys = async () => {
+		setIsLoading(true);
 		try {
 			const response = await axios.get(
 				"https://api.ankitkaushal.in/travel-journeys",
@@ -46,6 +49,8 @@ const TravelJourney = () => {
 			setJourneys(response.data);
 		} catch (error) {
 			console.error("Error fetching journeys:", error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -209,58 +214,68 @@ const TravelJourney = () => {
 			</Modal>
 
 			<div className={styles.journeyList}>
-				{journeys.map((journey) => (
-					<div key={journey._id} className={styles.journeyCard}>
-						{journey.photos[0] && (
-							<img
-								src={journey.photos[0].url}
-								alt={journey.title}
-							/>
-						)}
-						<div className={styles.journeyContent}>
-							<h3>{journey.title}</h3>
-							<p className={styles.location}>{journey.place}</p>
-							<p className={styles.date}>
-								{new Date(
-									journey.duration.startDate,
-								).toLocaleDateString()}{" "}
-								-
-								{new Date(
-									journey.duration.endDate,
-								).toLocaleDateString()}
-							</p>
-							<p className={styles.expense}>
-								Expense: {journey.expense.amount}{" "}
-								{journey.expense.currency}
-							</p>
-							<p className={styles.description}>
-								{journey.description}
-							</p>
+				{isLoading ? (
+					<>
+						<JourneySkeleton />
+						<JourneySkeleton />
+						<JourneySkeleton />
+					</>
+				) : (
+					journeys.map((journey) => (
+						<div key={journey._id} className={styles.journeyCard}>
+							{journey.photos[0] && (
+								<img
+									src={journey.photos[0].url}
+									alt={journey.title}
+								/>
+							)}
+							<div className={styles.journeyContent}>
+								<h3>{journey.title}</h3>
+								<p className={styles.location}>
+									{journey.place}
+								</p>
+								<p className={styles.date}>
+									{new Date(
+										journey.duration.startDate,
+									).toLocaleDateString()}{" "}
+									-
+									{new Date(
+										journey.duration.endDate,
+									).toLocaleDateString()}
+								</p>
+								<p className={styles.expense}>
+									Expense: {journey.expense.amount}{" "}
+									{journey.expense.currency}
+								</p>
+								<p className={styles.description}>
+									{journey.description}
+								</p>
+							</div>
+							<div className={styles.cardActions}>
+								<a
+									href={`/journey/${journey._id}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles.redirectButton}
+								>
+									<FontAwesomeIcon icon={faExternalLinkAlt} />
+								</a>
+								<button
+									className={styles.editButton}
+									onClick={() => openModal(journey)}
+								>
+									<FontAwesomeIcon icon={faEdit} />
+								</button>
+								<button
+									className={styles.deleteButton}
+									onClick={() => handleDelete(journey._id)}
+								>
+									<FontAwesomeIcon icon={faTrash} />
+								</button>
+							</div>
 						</div>
-						<div className={styles.cardActions}>
-							<a
-								href={`/journey/${journey._id}`}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles.redirectButton}
-							>
-								<FontAwesomeIcon icon={faExternalLinkAlt} />
-							</a>
-							<button
-								className={styles.editButton}
-								onClick={() => openModal(journey)}
-							>
-								<FontAwesomeIcon icon={faEdit} />
-							</button>
-							<button
-								className={styles.deleteButton}
-								onClick={() => handleDelete(journey._id)}
-							>
-								<FontAwesomeIcon icon={faTrash} />
-							</button>
-						</div>
-					</div>
-				))}
+					))
+				)}
 			</div>
 			<Modal
 				isOpen={showDeleteModal}
