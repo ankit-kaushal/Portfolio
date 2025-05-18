@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import AsyncSelect from "../../../../components/common/AsyncSelect";
 import "react-quill/dist/quill.snow.css";
 import styles from "./styles.module.css";
+import StarRating from "../../../../components/common/StarRating";
 
 const travelModes = [
 	"flight",
@@ -133,15 +134,11 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 				</div>
 				<div className={styles.inputGroup}>
 					<label>Rating</label>
-					<input
-						type="number"
-						min="1"
-						max="5"
-						value={formData.rating}
-						onChange={(e) =>
-							setFormData({ ...formData, rating: e.target.value })
+					<StarRating
+						rating={Number(formData.rating)}
+						onRatingChange={(value) =>
+							setFormData({ ...formData, rating: value })
 						}
-						required
 					/>
 				</div>
 				<div className={styles.inputGroup}>

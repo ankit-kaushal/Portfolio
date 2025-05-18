@@ -1,0 +1,22 @@
+.starRating {
+    align-items: center;
+    display: flex;
+    gap: 4px;
+}
+
+.star {
+    color: var(--quaternary-color);
+    cursor: pointer;
+    font-size: 24px;
+    width: 24px;
+}
+
+.star .filled {
+    color: #ffd700;
+}
+
+.ratingValue {
+    color: var(--primary-color);
+    margin-left: 8px;
+    min-width: 32px;
+}
