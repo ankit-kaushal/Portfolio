@@ -23,6 +23,7 @@
 
 .journeyForm {
     background: var(--elements-background-color);
+    border: none;
     border-radius: 12px;
     margin-bottom: 30px;
     padding: 24px;
@@ -61,7 +62,6 @@
     color: white;
     cursor: pointer;
     flex: 1;
-    margin-top: 20px;
     padding: 12px 24px;
     width: 100%;
 }
@@ -311,5 +311,44 @@
     100% {
         background-position: -200% 0;
     }
+}
+
+.multiSelect {
+    background: var(--elements-background-color);
+    border: 1px solid var(--quaternary-color);
+    border-radius: 4px;
+    color: var(--primary-color);
+    min-height: 120px;
+    padding: 8px;
+}
+
+/* Add these new styles for custom scrollbar */
+.multiSelect::-webkit-scrollbar {
+    width: 8px;
+}
+
+.multiSelect::-webkit-scrollbar-track {
+    background: var(--background-color);
+    border-radius: 4px;
+}
+
+.multiSelect::-webkit-scrollbar-thumb {
+    background: var(--quaternary-color);
+    border-radius: 4px;
+}
+
+.multiSelect::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+.multiSelect option {
+    border-radius: 4px;
+    margin: 2px 0;
+    padding: 8px;
+}
+
+.multiSelect option:checked {
+    background: var(--quaternary-color);
+    color: var(--primary-color);
 }
 

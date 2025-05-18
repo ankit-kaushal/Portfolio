@@ -4,6 +4,19 @@ import AsyncSelect from "../../../../components/common/AsyncSelect";
 import "react-quill/dist/quill.snow.css";
 import styles from "./styles.module.css";
 
+const travelModes = [
+	"flight",
+	"train",
+	"bus",
+	"car",
+	"auto",
+	"bike",
+	"scooty",
+	"metro",
+	"walk",
+	"other",
+];
+
 const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 	const modules = {
 		toolbar: [
@@ -133,19 +146,27 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 				</div>
 				<div className={styles.inputGroup}>
 					<label>Mode of Travel</label>
-					<input
-						type="text"
-						value={formData.modeOfTravel.join(", ")}
-						onChange={(e) =>
+					<select
+						multiple
+						value={formData.modeOfTravel}
+						onChange={(e) => {
+							const selectedModes = Array.from(
+								e.target.selectedOptions,
+								(option) => option.value,
+							);
 							setFormData({
 								...formData,
-								modeOfTravel: e.target.value
-									.split(",")
-									.map((item) => item.trim()),
-							})
-						}
-						placeholder="Enter modes separated by commas"
-					/>
+								modeOfTravel: selectedModes,
+							});
+						}}
+						className={styles.multiSelect}
+					>
+						{travelModes.map((mode) => (
+							<option key={mode} value={mode}>
+								{mode}
+							</option>
+						))}
+					</select>
 				</div>
 				<div className={styles.inputGroup}>
 					<label>Places Visited</label>
