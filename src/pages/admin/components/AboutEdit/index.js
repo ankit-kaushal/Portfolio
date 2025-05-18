@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import styles from "./styles.module.css";
-import Toast from "../../../../components/toast";
+import Toast from "../../../../components/common/Toast";
 
 const AboutEdit = () => {
 	const data = useSelector((state) => state.data);

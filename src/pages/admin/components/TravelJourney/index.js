@@ -11,6 +11,7 @@ import styles from "./styles.module.css";
 import Modal from "../../../../components/common/Modal";
 import JourneyForm from "./JourneyForm";
 import JourneySkeleton from "./JourneySkeleton";
+import Toast from "../../../../components/common/Toast";
 
 const TravelJourney = () => {
 	const [journeys, setJourneys] = useState([]);
@@ -35,6 +36,7 @@ const TravelJourney = () => {
 	});
 	const [isEditing, setIsEditing] = useState(false);
 	const [editingId, setEditingId] = useState(null);
+	const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
 	useEffect(() => {
 		fetchJourneys();
@@ -67,6 +69,11 @@ const TravelJourney = () => {
 						},
 					},
 				);
+				setToast({
+					show: true,
+					message: "Journey updated successfully!",
+					type: "success",
+				});
 			} else {
 				await axios.post(
 					"https://api.ankitkaushal.in/travel-journeys",
@@ -77,11 +84,21 @@ const TravelJourney = () => {
 						},
 					},
 				);
+				setToast({
+					show: true,
+					message: "New journey added successfully!",
+					type: "success",
+				});
 			}
 			fetchJourneys();
 			resetForm();
 		} catch (error) {
 			console.error("Error saving journey:", error);
+			setToast({
+				show: true,
+				message: "Failed to save journey. Please try again.",
+				type: "error",
+			});
 		}
 	};
 
@@ -112,9 +129,19 @@ const TravelJourney = () => {
 					},
 				},
 			);
+			setToast({
+				show: true,
+				message: "Journey deleted successfully!",
+				type: "success",
+			});
 			fetchJourneys();
 		} catch (error) {
 			console.error("Error deleting journey:", error);
+			setToast({
+				show: true,
+				message: "Failed to delete journey. Please try again.",
+				type: "error",
+			});
 		}
 	};
 
@@ -300,6 +327,15 @@ const TravelJourney = () => {
 			>
 				<p>Are you sure you want to delete this journey?</p>
 			</Modal>
+			{toast.show && (
+				<Toast
+					message={toast.message}
+					type={toast.type}
+					onClose={() =>
+						setToast({ show: false, message: "", type: "" })
+					}
+				/>
+			)}
 		</div>
 	);
 };

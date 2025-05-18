@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import styles from "./styles.module.css";
-import Toast from "../../../../components/toast";
+import Toast from "../../../../components/common/Toast";
 import ProjectFormModal from "./ProjectFormModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -26,17 +26,14 @@ const ProjectsEdit = () => {
 	const [projects, setProjects] = useState(projectsData);
 	const [isLoading, setIsLoading] = useState(false);
 	const [toast, setToast] = useState({ show: false, message: "", type: "" });
+	const [editMode, setEditMode] = useState(false);
+	const [editingId, setEditingId] = useState(null);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
-	// Add new state for edit mode
-	const [editMode, setEditMode] = useState(false);
-	const [editingId, setEditingId] = useState(null);
-
-	// Update handleSubmit to handle both create and edit
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
@@ -87,7 +84,6 @@ const ProjectsEdit = () => {
 				}
 			}
 
-			// Reset form
 			setFormData({
 				projectName: "",
 				projectDescription: "",
@@ -161,7 +157,6 @@ const ProjectsEdit = () => {
 		});
 	};
 
-	// Update handleEdit
 	const handleEdit = (project) => {
 		setFormData({
 			projectName: project.projectName,
@@ -292,6 +287,15 @@ const ProjectsEdit = () => {
 			>
 				<p>Are you sure you want to delete this project?</p>
 			</Modal>
+			{toast.show && (
+				<Toast
+					message={toast.message}
+					type={toast.type}
+					onClose={() =>
+						setToast({ show: false, message: "", type: "" })
+					}
+				/>
+			)}
 		</div>
 	);
 };
