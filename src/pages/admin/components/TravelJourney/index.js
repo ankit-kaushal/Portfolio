@@ -60,7 +60,7 @@ const TravelJourney = () => {
 		e.preventDefault();
 		try {
 			if (isEditing) {
-				await axios.put(
+				await axios.patch(
 					`https://api.ankitkaushal.in/travel-journeys/${editingId}`,
 					formattedData,
 					{
