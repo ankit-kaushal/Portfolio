@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faProjectDiagram,
-	faBlog,
-	faEnvelope,
-	faCog,
 	faUser,
 	faSignOutAlt,
 	faChartLine,
@@ -41,9 +38,6 @@ const Admin = () => {
 		{ icon: faUser, text: "About", id: "about" },
 		{ icon: faProjectDiagram, text: "Projects", id: "projects" },
 		{ icon: faMountainCity, text: "Travel", id: "travel" },
-		{ icon: faBlog, text: "Blog Posts", id: "blogs" },
-		{ icon: faEnvelope, text: "Messages", id: "messages" },
-		{ icon: faCog, text: "Settings", id: "settings" },
 		{
 			icon: faSignOutAlt,
 			text: "Logout",
