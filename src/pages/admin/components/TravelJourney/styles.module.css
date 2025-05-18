@@ -44,6 +44,11 @@
     gap: 8px;
 }
 
+/* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+.inputGroup :global(.ql-container.ql-snow) {
+    height: fit-content;
+}
+
 .inputGroup label {
     color: var(--secondary-color);
     font-size: 0.9rem;
@@ -241,7 +246,6 @@
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
-
 
 .skeleton {
     animation: loading 2.5s ease-in-out infinite;

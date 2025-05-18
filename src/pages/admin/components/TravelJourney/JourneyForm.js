@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import AsyncSelect from "../../../../components/common/AsyncSelect";
 import "react-quill/dist/quill.snow.css";
@@ -19,24 +19,32 @@ const travelModes = [
 	"other",
 ];
 
-const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
-	const modules = {
-		toolbar: [
-			[{ header: [1, 2, false] }],
-			["bold", "italic", "underline", "strike"],
-			[{ list: "ordered" }, { list: "bullet" }],
-			["link", "image"],
-			["clean"],
-		],
-	};
+const modules = {
+	toolbar: [
+		[{ header: [1, 2, false] }],
+		["bold", "italic", "underline", "strike"],
+		[{ list: "ordered" }, { list: "bullet" }],
+		["link", "image"],
+		["clean"],
+	],
+};
+
+const JourneyForm = ({ formData, setFormData, onSubmit }) => {
+	const [friendsCache, setFriendsCache] = useState([]);
 
 	const loadFriends = async (search) => {
 		try {
-			const response = await fetch(
-				"https://www.api.ankitkaushal.in/friends",
-			);
-			const data = await response.json();
-			return data.filter((friend) =>
+			if (friendsCache.length === 0) {
+				const response = await fetch(
+					"https://www.api.ankitkaushal.in/friends",
+				);
+				const data = await response.json();
+				setFriendsCache(data);
+				return data.filter((friend) =>
+					friend.name.toLowerCase().includes(search.toLowerCase()),
+				);
+			}
+			return friendsCache.filter((friend) =>
 				friend.name.toLowerCase().includes(search.toLowerCase()),
 			);
 		} catch (error) {
@@ -82,6 +90,7 @@ const JourneyForm = ({ formData, setFormData, onSubmit, isEditing }) => {
 						Number(formData.rating) > 0
 							? Number(formData.rating)
 							: undefined,
+					buddies: formData.buddies.map((buddy) => buddy._id),
 				};
 				onSubmit(e, formattedData);
 			}}
