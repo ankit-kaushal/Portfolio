@@ -6,6 +6,7 @@ import {
 	faSignOutAlt,
 	faChartLine,
 	faMountainCity,
+	faBook,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 import AboutEdit from "./components/AboutEdit";
@@ -14,6 +15,7 @@ import axios from "axios";
 import OTPInput from "./components/OTPInput";
 import TravelJourney from "./components/TravelJourney";
 import Overview from "./components/Overview";
+import DiaryEdit from "./components/DiaryEdit";
 
 const Admin = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,6 +40,7 @@ const Admin = () => {
 		{ icon: faUser, text: "About", id: "about" },
 		{ icon: faProjectDiagram, text: "Projects", id: "projects" },
 		{ icon: faMountainCity, text: "Travel", id: "travel" },
+		{ icon: faBook, text: "Diary", id: "diary" },
 		{
 			icon: faSignOutAlt,
 			text: "Logout",
@@ -57,6 +60,8 @@ const Admin = () => {
 				return <ProjectsEdit />;
 			case "travel":
 				return <TravelJourney />;
+			case "diary":
+				return <DiaryEdit />;
 			default:
 				return <h3>Welcome to Admin Dashboard</h3>;
 		}

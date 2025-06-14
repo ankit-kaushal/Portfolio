@@ -26,6 +26,10 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+
+    h3 {
+        margin: 0;
+    }
 }
 
 .closeButton {
