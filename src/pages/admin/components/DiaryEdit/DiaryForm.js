@@ -7,6 +7,15 @@ const moodOptions = [
 	{ label: "Excited", emoji: "🤩" },
 	{ label: "Tired", emoji: "😴" },
 	{ label: "Neutral", emoji: "😐" },
+	{ label: "Exhausted", emoji: "😴" },
+	{ label: "Stressed", emoji: "😰" },
+	{ label: "Relaxed", emoji: "😌" },
+	{ label: "Anxious", emoji: "😰" },
+	{ label: "Frustrated", emoji: "😫" },
+	{ label: "Bored", emoji: "😐" },
+	{ label: "Energetic", emoji: "⚡" },
+	{ label: "Worried", emoji: "😰" },
+	{ label: "Angry", emoji: "😡" },
 	{ label: "Other", emoji: "🤔" },
 ];
 
@@ -154,6 +163,9 @@ const DiaryForm = ({ onSubmit, initialValues = null, existingTags = [] }) => {
 					)}
 				</div>
 			</div>
+			<button type="submit" className={styles.submitButton}>
+				{initialValues ? "Update Entry" : "Add Entry"}
+			</button>
 		</form>
 	);
 };

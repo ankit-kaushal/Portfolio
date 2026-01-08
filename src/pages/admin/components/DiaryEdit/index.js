@@ -43,15 +43,15 @@ const DiaryEdit = () => {
 		}
 	};
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+	const handleSubmit = async (formData) => {
 		try {
 			await axios.post(
 				"https://api.ankitkaushal.in/diary",
 				{
-					...newEntry,
-					tags: newEntry.tags.split(",").map((tag) => tag.trim()),
-					date: new Date().toISOString(),
+					content: formData.content,
+					mood: formData.mood,
+					tags: formData.tags,
+					date: formData.date,
 				},
 				{
 					headers: {
@@ -60,7 +60,6 @@ const DiaryEdit = () => {
 				},
 			);
 			fetchEntries();
-			setNewEntry({ content: "", mood: "", tags: "", images: [] });
 			setShowAddModal(false);
 		} catch (error) {
 			console.error("Error creating entry:", error);

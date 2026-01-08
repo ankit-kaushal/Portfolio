@@ -229,21 +229,58 @@
 }
 
 .entryPreview {
-    background-color: var(--secondary-color);
-    border-radius: 4px;
+    background-color: var(--primary-color);
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
     color: white;
     font-size: 0.9rem;
     margin-top: 4px;
     overflow: hidden;
-    padding: 4px 8px;
+    padding: 6px 12px;
     text-overflow: ellipsis;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
     white-space: nowrap;
 }
 
+.entryPreview:nth-child(5n+1) {
+    background-color: #FF6B6B;
+}
+
+.entryPreview:nth-child(5n+2) {
+    background-color: #4ECDC4;
+}
+
+.entryPreview:nth-child(5n+3) {
+    background-color: #45B7D1;
+}
+
+.entryPreview:nth-child(5n+4) {
+    background-color: #96CEB4;
+}
+
+.entryPreview:nth-child(5n+5) {
+    background-color: #FF8F56;
+}
+
 .entryPreview:hover {
+    box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.entryPreview:nth-child(3n+1) {
     background-color: var(--primary-color);
 }
+
+.entryPreview:nth-child(3n+2) {
+    background-color: var(--secondary-color);
+}
+
+.entryPreview:nth-child(3n+3) {
+    background-color: var(--tertiary-color);
+}
+
 
 .modalButtons {
     display: flex;
