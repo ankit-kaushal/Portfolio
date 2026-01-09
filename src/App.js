@@ -28,7 +28,7 @@ const TravelJourney = lazy(() => import("./pages/TravelJourney"));
 const JourneyDetail = lazy(() => import("./pages/JourneyDetail"));
 
 const EXCLUDED_PATHS = ["/journey", "/travel-journey"];
-import Chat from "./components/Chat/Chat";
+// import Chat from "./components/Chat/Chat";
 
 function App() {
 	const loading = useSelector((state) => state.loading);
@@ -154,7 +154,7 @@ function App() {
 						<Route path="*" element={<Notfound />} />
 						<Route path="/admin" element={<Admin />} />
 					</Routes>
-					<Chat />
+					{/* <Chat /> */}
 				</Suspense>
 			</ThemeProvider>
 		</div>
