@@ -18,7 +18,6 @@ import NavBar from "@/components/common/navBar";
 import ShootingStars from "@/components/common/ShootingStars";
 import layoutStyles from "@/components/layout/layout.module.css";
 import INFO from "@/data/user";
-import SEO from "@/data/seo";
 
 import styles from "./homepage.module.css";
 
@@ -88,8 +87,6 @@ export default function HomepageView() {
 			img.removeEventListener("error", handleError);
 		};
 	}, [user?.pictureUrl?.home]);
-
-	const currentSEO = useMemo(() => SEO.find((item) => item.page === "home"), []);
 
 	const logoStyle = useMemo(
 		() => ({
@@ -226,8 +223,3 @@ export default function HomepageView() {
 		</div>
 	);
 }
-
-export const homepageMetadata = {
-	title: "Ankit Kaushal",
-	description: SEO.find((item) => item.page === "home")?.description,
-};

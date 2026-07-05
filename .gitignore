@@ -12,6 +12,7 @@
 /build
 /.next
 /out
+/export
 
 # misc
 .DS_Store
