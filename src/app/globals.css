@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Roboto:wght@500&display=swap");
+
+:root {
+	--primary-color: #27272a;
+	--secondary-color: #65656d;
+	--tertiary-color: #acacb4;
+	--quaternary-color: #e4e4e7;
+	--link-color: #089669;
+	--background-color: #fff;
+	--side-background-color: #fafafa;
+	--elements-background-color: #fff;
+	--primary-font: "Heebo", sans-serif;
+	--secondary-font: "Roboto", sans-serif;
+}
+
+[data-theme="dark"] {
+	--primary-color: #fff;
+	--secondary-color: #fff;
+	--quaternary-color: #333;
+	--background-color: #121212;
+	--side-background-color: #292929;
+	--elements-background-color: #292929;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: var(--background-color);
+	font-family: var(--primary-font);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
+}
+
+::-webkit-scrollbar {
+	width: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--quaternary-color);
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--secondary-color);
+}

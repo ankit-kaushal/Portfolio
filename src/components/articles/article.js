@@ -1,9 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FaIcon from "@/components/common/FaIcon";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import "./style/article.css";
+import styles from "./article.module.css";
 
 const formatDate = (dateString) => {
 	const date = new Date(dateString);
@@ -39,37 +37,35 @@ const formatDate = (dateString) => {
 	return `${day}${suffix} ${month} ${year}`;
 };
 
-const Article = (props) => {
-	const { date, title, description, link, image } = props;
-
+export default function Article({ date, title, description, link, image }) {
 	return (
-		<React.Fragment>
-			<div className="article">
-				<Link to={link}>
-					<div className="article-right-side">
+		<div className={styles.article}>
+			<a href={link} target="_blank" rel="noreferrer">
+				<div className={styles.articleRightSide}>
+					{image && (
 						<div
-							className="article-image"
+							className={styles.articleImage}
 							style={{ backgroundImage: `url(${image})` }}
-						></div>
-						<div className="article-title">{title}</div>
-						<div className="article-description">{description}</div>
-						<div className="article-flex">
-							<div className="article-link">
-								Read Article{" "}
-								<FontAwesomeIcon
-									style={{ fontSize: "10px" }}
-									icon={faChevronRight}
-								/>
-							</div>
-							<div className="article-date">
-								{formatDate(date)}
-							</div>
+						/>
+					)}
+					<div className={styles.articleTitle}>{title}</div>
+					<div className={styles.articleDescription}>
+						{description}
+					</div>
+					<div className={styles.articleFlex}>
+						<div className={styles.articleLink}>
+							Read Article{" "}
+							<FaIcon
+								style={{ fontSize: "10px" }}
+								icon={faChevronRight}
+							/>
+						</div>
+						<div className={styles.articleDate}>
+							{formatDate(date)}
 						</div>
 					</div>
-				</Link>
-			</div>
-		</React.Fragment>
+				</div>
+			</a>
+		</div>
 	);
-};
-
-export default Article;
+}

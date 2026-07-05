@@ -1,7 +1,9 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import FaIcon from "@/components/common/FaIcon";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import {
 	faTwitter,
 	faGithub,
@@ -9,109 +11,98 @@ import {
 	faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 
-import INFO from "../../data/user";
+import INFO from "@/data/user";
 
-import "./styles/socials.css";
+import styles from "./socials.module.css";
 
-const Socials = ({ social = {} }) => {
+export default function Socials({ social = {} }) {
 	return (
-		<div className="socials">
-			<div className="social">
+		<div className={styles.socials}>
+			<div className={styles.social}>
 				<a
 					href={social?.twitter || INFO.socials.twitter}
 					target="_blank"
 					rel="noreferrer"
 				>
-					<div className="social-icon">
-						<FontAwesomeIcon
-							icon={faTwitter}
-							className="social-icon"
-						/>
+					<div className={styles.socialIcon}>
+						<FaIcon icon={faTwitter} />
 					</div>
-					<div className="social-text">Follow on Twitter</div>
+					<div className={styles.socialText}>Follow on Twitter</div>
 				</a>
 			</div>
 
-			<div className="social">
+			<div className={styles.social}>
 				<a
 					href={social?.github || INFO.socials.github}
 					target="_blank"
 					rel="noreferrer"
 				>
-					<div className="social-icon">
-						<FontAwesomeIcon
-							icon={faGithub}
-							className="social-icon"
-						/>
+					<div className={styles.socialIcon}>
+						<FaIcon icon={faGithub} />
 					</div>
-					<div className="social-text">Follow on GitHub</div>
+					<div className={styles.socialText}>Follow on GitHub</div>
 				</a>
 			</div>
 
-			<div className="social">
+			<div className={styles.social}>
 				<a
 					href={social?.linkedin || INFO.socials.linkedin}
 					target="_blank"
 					rel="noreferrer"
 				>
-					<div className="social-icon">
-						<FontAwesomeIcon
-							icon={faLinkedin}
-							className="social-icon"
-						/>
+					<div className={styles.socialIcon}>
+						<FaIcon icon={faLinkedin} />
 					</div>
-					<div className="social-text">Follow on LinkedIn</div>
+					<div className={styles.socialText}>Follow on LinkedIn</div>
 				</a>
 			</div>
 
-			<div className="social">
+			<div className={styles.social}>
 				<a
 					href={social?.instagram || INFO.socials.instagram}
 					target="_blank"
 					rel="noreferrer"
 				>
-					<div className="social-icon">
-						<FontAwesomeIcon
-							icon={faInstagram}
-							className="social-icon"
-						/>
+					<div className={styles.socialIcon}>
+						<FaIcon icon={faInstagram} />
 					</div>
-					<div className="social-text">Follow on Instagram</div>
+					<div className={styles.socialText}>Follow on Instagram</div>
 				</a>
 			</div>
 
-			<div className="email">
-				<div className="email-wrapper">
+			<div className={styles.email}>
+				<div className={styles.emailWrapper}>
 					<a
 						href={`mailto:${social?.email || INFO.main.email}`}
 						target="_blank"
 						rel="noreferrer"
 					>
-						<div className="social-icon">
-							<FontAwesomeIcon icon={faEnvelope} />
+						<div className={styles.socialIcon}>
+							<FaIcon icon={faEnvelope} />
 						</div>
-
-						<div className="social-text">
+						<div className={styles.socialText}>
 							{social?.email || INFO.main.email}
 						</div>
 					</a>
 				</div>
 			</div>
 
-			<div className="social">
-				<Link to={INFO.socials.travelJourney}>
-					<div className="social-icon">
-						<img
+			<div className={styles.social}>
+				<Link href={INFO.socials.travelJourney}>
+					<div className={styles.socialIcon}>
+						<Image
 							src="/journey.png"
 							alt="Travel Route"
-							className="journey-icon"
+							className={styles.journeyIcon}
+							width={24}
+							height={24}
 						/>
 					</div>
-					<div className="social-text">Explore my Travel Journey</div>
+					<div className={styles.socialText}>
+						Explore my Travel Journey
+					</div>
 				</Link>
 			</div>
 		</div>
 	);
-};
-
-export default Socials;
+}

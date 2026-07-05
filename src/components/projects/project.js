@@ -1,48 +1,54 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FaIcon from "@/components/common/FaIcon";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
-import "./styles/project.css";
+import styles from "./project.module.css";
 
-const Project = (props) => {
-	const {
-		logo,
-		title,
-		description,
-		projectPicture = "https://images.unsplash.com/photo-1587620962725-abab7fe55159", // default tech image
-		githubLink,
-		liveDemo,
-	} = props;
-
+export default function Project({
+	logo,
+	title,
+	description,
+	projectPicture = "https://images.unsplash.com/photo-1587620962725-abab7fe55159",
+	githubLink,
+	liveDemo,
+}) {
 	return (
-		<div className="project">
-			<div className="project-container">
+		<div className={styles.project}>
+			<div className={styles.projectContainer}>
 				<div
-					className="project-background"
+					className={styles.projectBackground}
 					style={{ backgroundImage: `url(${projectPicture})` }}
 				/>
 
-				<div className="project-content">
-					<div className="project-header">
-						<div className="project-logo">
-							<img src={logo} alt="logo" />
+				<div className={styles.projectContent}>
+					<div className={styles.projectHeader}>
+						<div className={styles.projectLogo}>
+							<Image
+								src={logo}
+								alt="logo"
+								width={30}
+								height={30}
+								unoptimized
+							/>
 						</div>
-						<div className="project-title">{title}</div>
+						<div className={styles.projectTitle}>{title}</div>
 					</div>
-					<div className="project-info">
-						<div className="project-description">{description}</div>
+					<div className={styles.projectInfo}>
+						<div className={styles.projectDescription}>
+							{description}
+						</div>
 					</div>
 
-					<div className="project-links">
+					<div className={styles.projectLinks}>
 						{liveDemo && (
 							<a
 								href={liveDemo}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="project-link"
+								className={styles.projectLink}
 							>
-								<FontAwesomeIcon icon={faExternalLinkAlt} />
+								<FaIcon icon={faExternalLinkAlt} />
 								<span>Live Demo</span>
 							</a>
 						)}
@@ -51,9 +57,9 @@ const Project = (props) => {
 								href={githubLink}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="project-link"
+								className={styles.projectLink}
 							>
-								<FontAwesomeIcon icon={faGithub} />
+								<FaIcon icon={faGithub} />
 								<span>GitHub</span>
 							</a>
 						)}
@@ -62,6 +68,4 @@ const Project = (props) => {
 			</div>
 		</div>
 	);
-};
-
-export default Project;
+}

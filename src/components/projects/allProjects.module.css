@@ -1,0 +1,25 @@
+.allProjectsContainer {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	align-items: stretch;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.allProjectsProject {
+	width: calc(100% / 2 - 2%);
+	box-sizing: border-box;
+	overflow: hidden;
+	box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.allProjectsProject:hover {
+	transform: scale(1.01);
+}
+
+@media (max-width: 600px) {
+	.allProjectsProject {
+		width: 100%;
+	}
+}

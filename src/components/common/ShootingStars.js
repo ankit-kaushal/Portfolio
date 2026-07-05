@@ -1,23 +1,20 @@
-import React from "react";
-import "./styles/ShootingStars.css";
+"use client";
 
-const ShootingStars = () => {
+import styles from "./ShootingStars.module.css";
+
+export default function ShootingStars() {
 	return (
 		<>
-			<div className="starry-background">
+			<div className={styles.starryBackground}>
 				{[...Array(100)].map((_, i) => (
-					<div key={i} className="background-star"></div>
+					<div key={i} className={styles.backgroundStar} />
 				))}
 			</div>
-			<div className="shooting-stars">
-				<div className="star"></div>
-				<div className="star"></div>
-				<div className="star"></div>
-				{/* <div className="star"></div>
-				<div className="star"></div> */}
+			<div className={styles.shootingStars}>
+				<div className={styles.star} />
+				<div className={styles.star} />
+				<div className={styles.star} />
 			</div>
 		</>
 	);
-};
-
-export default ShootingStars;
+}

@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FaIcon from "@/components/common/FaIcon";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 
@@ -30,7 +32,7 @@ const Modal = ({ isOpen, onClose, title, children, actions }) => {
 				<div className={styles.modalHeader}>
 					<h3>{title}</h3>
 					<button className={styles.closeButton} onClick={onClose}>
-						<FontAwesomeIcon icon={faTimes} />
+						<FaIcon icon={faTimes} />
 					</button>
 				</div>
 				<div className={styles.modalContent}>{children}</div>

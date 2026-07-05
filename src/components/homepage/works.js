@@ -1,79 +1,83 @@
-import React from "react";
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
-import Card from "../common/card";
+import Card from "@/components/common/card";
 
-import "./styles/works.css";
+import styles from "./works.module.css";
 
-const Works = ({ works = [] }) => {
-	const GetWorks = ({ item = {} }) => {
-		const {
-			companyName = "",
-			companyLogo = "",
-			designation = "",
-			workDuration = {},
-		} = item || {};
-		return (
-			<div className="work">
-				<img
-					src={companyLogo}
-					alt={companyName}
-					className="work-image"
-				/>
-				<div className="work-title">{companyName}</div>
-				<div className="work-subtitle">{designation}</div>
-				<div className="work-duration">
-					{workDuration?.start} - {workDuration?.end}
-				</div>
-			</div>
-		);
-	};
+function WorkItem({ item = {} }) {
+	const {
+		companyName = "",
+		companyLogo = "",
+		designation = "",
+		workDuration = {},
+	} = item || {};
 
 	return (
-		<div className="works">
+		<div className={styles.work}>
+			<Image
+				src={companyLogo}
+				alt={companyName}
+				className={styles.workImage}
+				width={30}
+				height={30}
+				unoptimized
+			/>
+			<div className={styles.workTitle}>{companyName}</div>
+			<div className={styles.workSubtitle}>{designation}</div>
+			<div className={styles.workDuration}>
+				{workDuration?.start} - {workDuration?.end}
+			</div>
+		</div>
+	);
+}
+
+export default function Works({ works = [] }) {
+	return (
+		<div className={styles.works}>
 			<Card
-				icon={faBriefcase}
 				title="Work"
 				body={
-					<div className="works-body">
+					<div className={styles.worksBody}>
 						{works.length ? (
-							<>
-								{works?.map((item, index) => (
-									<GetWorks key={index} item={item} />
-								))}
-							</>
+							works.map((item, index) => (
+								<WorkItem key={index} item={item} />
+							))
 						) : (
 							<>
-								<div className="work">
-									<img
-										src="./cogoport.jpeg"
+								<div className={styles.work}>
+									<Image
+										src="/cogoport.jpeg"
 										alt="Cogoport"
-										className="work-image"
+										className={styles.workImage}
+										width={30}
+										height={30}
 									/>
-									<div className="work-title">
+									<div className={styles.workTitle}>
 										Cogoport Pvt. Ltd.
 									</div>
-									<div className="work-subtitle">
+									<div className={styles.workSubtitle}>
 										Software Development Engineer I
 									</div>
-									<div className="work-duration">
+									<div className={styles.workDuration}>
 										Jan 2022 - Present
 									</div>
 								</div>
 
-								<div className="work">
-									<img
-										src="./kohli.jpeg"
+								<div className={styles.work}>
+									<Image
+										src="/kohli.jpeg"
 										alt="Kohli Media LLP"
-										className="work-image"
+										className={styles.workImage}
+										width={30}
+										height={30}
 									/>
-									<div className="work-title">
+									<div className={styles.workTitle}>
 										Kohli Media LLP.
 									</div>
-									<div className="work-subtitle">
+									<div className={styles.workSubtitle}>
 										Software Engineer
 									</div>
-									<div className="work-duration">
+									<div className={styles.workDuration}>
 										June 2020 - Dec 2021
 									</div>
 								</div>
@@ -84,6 +88,4 @@ const Works = ({ works = [] }) => {
 			/>
 		</div>
 	);
-};
-
-export default Works;
+}

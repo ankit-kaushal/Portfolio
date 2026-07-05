@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FaIcon from "@/components/common/FaIcon";
 import {
 	faStar as faStarSolid,
 	faStarHalfAlt,
@@ -38,7 +40,7 @@ const StarRating = ({ rating, onRatingChange }) => {
 				onMouseMove={(e) => handleMouseMove(e, index)}
 				onClick={(e) => handleClick(e, index)}
 			>
-				<FontAwesomeIcon
+				<FaIcon
 					icon={
 						isHalf
 							? faStarHalfAlt

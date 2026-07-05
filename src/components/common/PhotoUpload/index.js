@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FaIcon from "@/components/common/FaIcon";
 import { faUpload, faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 
@@ -22,7 +24,7 @@ const PhotoUpload = ({ photos, onChange }) => {
 						method: "POST",
 						body: formData,
 						headers: {
-							Authorization: process.env.REACT_APP_AUTHKEY,
+							Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
 						},
 					},
 				);
@@ -64,7 +66,7 @@ const PhotoUpload = ({ photos, onChange }) => {
 					onChange={handleFileUpload}
 					disabled={uploading}
 				/>
-				<FontAwesomeIcon icon={faUpload} />
+				<FaIcon icon={faUpload} />
 				<span>{uploading ? "Uploading..." : "Upload Photos"}</span>
 			</div>
 
@@ -85,7 +87,7 @@ const PhotoUpload = ({ photos, onChange }) => {
 							onClick={() => handleRemovePhoto(index)}
 							className={styles.removeButton}
 						>
-							<FontAwesomeIcon icon={faTimes} />
+							<FaIcon icon={faTimes} />
 						</button>
 					</div>
 				))}
