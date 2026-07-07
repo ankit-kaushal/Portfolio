@@ -21,6 +21,7 @@ import Footer from "@/components/common/footer";
 import NavBar from "@/components/common/navBar";
 import ShootingStars from "@/components/common/ShootingStars";
 import layoutStyles from "@/components/layout/layout.module.css";
+import { apiUrl } from "@/lib/api";
 
 import travelStyles from "./travelJourney.module.css";
 import styles from "./journeyDetail.module.css";
@@ -128,9 +129,7 @@ export default function JourneyDetailView({ id }) {
 	useEffect(() => {
 		const fetchJourneyDetail = async () => {
 			try {
-				const response = await fetch(
-					`https://www.api.ankitkaushal.in/travel-journeys/${id}`,
-				);
+				const response = await fetch(apiUrl(`/travel-journeys/${id}`));
 				const data = await response.json();
 				setJourney(data);
 			} catch (error) {

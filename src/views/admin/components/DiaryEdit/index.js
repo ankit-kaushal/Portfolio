@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { apiUrl, getAuthHeaders, getDiaryAuthHeaders } from "@/lib/api";
 import FaIcon from "@/components/common/FaIcon";
 import {
 	faChevronLeft,
@@ -31,14 +32,9 @@ const DiaryEdit = () => {
 
 	const fetchEntries = async () => {
 		try {
-			const response = await axios.get(
-				"https://api.ankitkaushal.in/diary",
-				{
-					headers: {
-						Authorization: process.env.NEXT_PUBLIC_DIARY_KEY,
-					},
-				},
-			);
+			const response = await axios.get(apiUrl("/diary"), {
+				headers: getDiaryAuthHeaders(),
+			});
 			setEntries(response.data);
 		} catch (error) {
 			console.error("Error fetching entries:", error);
@@ -48,18 +44,14 @@ const DiaryEdit = () => {
 	const handleSubmit = async (formData) => {
 		try {
 			await axios.post(
-				"https://api.ankitkaushal.in/diary",
+				apiUrl("/diary"),
 				{
 					content: formData.content,
 					mood: formData.mood,
 					tags: formData.tags,
 					date: formData.date,
 				},
-				{
-					headers: {
-						Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-					},
-				},
+				{ headers: getAuthHeaders() },
 			);
 			fetchEntries();
 			setShowAddModal(false);
@@ -70,10 +62,8 @@ const DiaryEdit = () => {
 
 	const handleDelete = async (entryId) => {
 		try {
-			await axios.delete(`https://api.ankitkaushal.in/diary/${entryId}`, {
-				headers: {
-					Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-				},
+			await axios.delete(apiUrl(`/diary/${entryId}`), {
+				headers: getAuthHeaders(),
 			});
 			fetchEntries();
 			setShowViewModal(false);

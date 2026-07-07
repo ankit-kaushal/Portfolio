@@ -12,6 +12,7 @@ import {
 	fetchDataFailure,
 	fetchHomeDataSuccess,
 } from "@/lib/actions";
+import { apiUrl } from "@/lib/api";
 import { TRACKING_ID } from "@/data/tracking";
 import layoutStyles from "@/components/layout/layout.module.css";
 
@@ -54,17 +55,15 @@ export default function AppInitializer({ children }) {
 					dispatch(fetchHomeDataSuccess(homeResponse.data));
 					dispatch(fetchDataRequest(false));
 
-					const profileResponse = await axios.get(
-						"https://www.api.ankitkaushal.in/profile",
-						{ signal: controller.signal },
-					);
+					const profileResponse = await axios.get(apiUrl("/profile"), {
+						signal: controller.signal,
+					});
 					if (!isSubscribed) return;
 					dispatch(fetchDataSuccess(profileResponse.data));
 				} else {
-					const profileResponse = await axios.get(
-						"https://www.api.ankitkaushal.in/profile",
-						{ signal: controller.signal },
-					);
+					const profileResponse = await axios.get(apiUrl("/profile"), {
+						signal: controller.signal,
+					});
 					if (!isSubscribed) return;
 					dispatch(fetchDataSuccess(profileResponse.data));
 					dispatch(fetchDataRequest(false));

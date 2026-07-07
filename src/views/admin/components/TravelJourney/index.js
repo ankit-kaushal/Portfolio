@@ -9,6 +9,7 @@ import {
 	faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
 import styles from "./styles.module.css";
 import Modal from "../../../../components/common/Modal";
 import JourneyForm from "./JourneyForm";
@@ -47,9 +48,7 @@ const TravelJourney = () => {
 	const fetchJourneys = async () => {
 		setIsLoading(true);
 		try {
-			const response = await axios.get(
-				"https://api.ankitkaushal.in/travel-journeys",
-			);
+			const response = await axios.get(apiUrl("/travel-journeys"));
 			setJourneys(response.data);
 		} catch (error) {
 			console.error("Error fetching journeys:", error);
@@ -63,13 +62,9 @@ const TravelJourney = () => {
 		try {
 			if (isEditing) {
 				await axios.patch(
-					`https://api.ankitkaushal.in/travel-journeys/${editingId}`,
+					apiUrl(`/travel-journeys/${editingId}`),
 					formattedData,
-					{
-						headers: {
-							Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-						},
-					},
+					{ headers: getAuthHeaders() },
 				);
 				setToast({
 					show: true,
@@ -78,15 +73,9 @@ const TravelJourney = () => {
 				});
 				closeModal();
 			} else {
-				await axios.post(
-					"https://api.ankitkaushal.in/travel-journeys",
-					formattedData,
-					{
-						headers: {
-							Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-						},
-					},
-				);
+				await axios.post(apiUrl("/travel-journeys"), formattedData, {
+					headers: getAuthHeaders(),
+				});
 				setToast({
 					show: true,
 					message: "New journey added successfully!",
@@ -125,14 +114,9 @@ const TravelJourney = () => {
 
 	const handleDelete = async (id) => {
 		try {
-			await axios.delete(
-				`https://api.ankitkaushal.in/travel-journeys/${id}`,
-				{
-					headers: {
-						Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-					},
-				},
-			);
+			await axios.delete(apiUrl(`/travel-journeys/${id}`), {
+				headers: getAuthHeaders(),
+			});
 			setToast({
 				show: true,
 				message: "Journey deleted successfully!",

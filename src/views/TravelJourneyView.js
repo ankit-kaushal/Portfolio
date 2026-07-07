@@ -9,6 +9,7 @@ import Footer from "@/components/common/footer";
 import NavBar from "@/components/common/navBar";
 import ShootingStars from "@/components/common/ShootingStars";
 import layoutStyles from "@/components/layout/layout.module.css";
+import { apiUrl } from "@/lib/api";
 
 import styles from "./travelJourney.module.css";
 
@@ -76,9 +77,7 @@ export default function TravelJourneyView() {
 		const fetchJourneys = async () => {
 			setIsLoading(true);
 			try {
-				const response = await fetch(
-					"https://www.api.ankitkaushal.in/travel-journeys",
-				);
+				const response = await fetch(apiUrl("/travel-journeys"));
 				const data = await response.json();
 				setJourneys(data);
 				localStorage.setItem("travelJourneys", JSON.stringify(data));

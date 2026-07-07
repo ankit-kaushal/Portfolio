@@ -18,6 +18,7 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
+import { apiUrl } from "@/lib/api";
 import styles from "./styles.module.css";
 
 const Overview = () => {
@@ -32,10 +33,8 @@ const Overview = () => {
 		const fetchStats = async () => {
 			try {
 				const [projects, journeys] = await Promise.all([
-					axios.get("https://www.api.ankitkaushal.in/projects"),
-					axios.get(
-						"https://www.api.ankitkaushal.in/travel-journeys",
-					),
+					axios.get(apiUrl("/projects")),
+					axios.get(apiUrl("/travel-journeys")),
 				]);
 
 				setStats({

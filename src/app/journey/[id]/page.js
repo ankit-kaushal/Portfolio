@@ -1,4 +1,5 @@
 import JourneyDetailView from "@/views/JourneyDetailView";
+import { getTravelJourneyById } from "@/lib/server/services/travelJourney";
 
 export const dynamic = "force-dynamic";
 
@@ -6,11 +7,11 @@ export async function generateMetadata({ params }) {
 	const { id } = await params;
 
 	try {
-		const response = await fetch(
-			`https://www.api.ankitkaushal.in/travel-journeys/${id}`,
-			{ next: { revalidate: 3600 } },
-		);
-		const journey = await response.json();
+		const journey = await getTravelJourneyById(id);
+
+		if (!journey) {
+			return { title: "Travel Journey" };
+		}
 
 		return {
 			title: journey.title,

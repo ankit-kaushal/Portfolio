@@ -14,6 +14,7 @@ import styles from "./styles.module.css";
 import AboutEdit from "./components/AboutEdit";
 import ProjectsEdit from "./components/ProjectsEdit";
 import axios from "axios";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
 import OTPInput from "./components/OTPInput";
 import TravelJourney from "./components/TravelJourney";
 import Overview from "./components/Overview";
@@ -73,15 +74,9 @@ const Admin = () => {
 	const handleOTPComplete = async (code) => {
 		try {
 			const response = await axios.post(
-				"https://api.ankitkaushal.in/validate",
-				{
-					token: code,
-				},
-				{
-					headers: {
-						Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-					},
-				},
+				apiUrl("/validate"),
+				{ token: code },
+				{ headers: getAuthHeaders() },
 			);
 
 			if (response.status === 200) {

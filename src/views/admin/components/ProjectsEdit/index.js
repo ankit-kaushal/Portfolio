@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
 import styles from "./styles.module.css";
 import Toast from "../../../../components/common/Toast";
 import ProjectFormModal from "./ProjectFormModal";
@@ -44,13 +45,9 @@ const ProjectsEdit = () => {
 			let response;
 			if (editMode) {
 				response = await axios.patch(
-					`https://www.api.ankitkaushal.in/projects/${editingId}`,
+					apiUrl(`/projects/${editingId}`),
 					formData,
-					{
-						headers: {
-							Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-						},
-					},
+					{ headers: getAuthHeaders() },
 				);
 
 				if (response.status === 200) {
@@ -66,15 +63,9 @@ const ProjectsEdit = () => {
 					});
 				}
 			} else {
-				response = await axios.post(
-					`https://www.api.ankitkaushal.in/projects`,
-					formData,
-					{
-						headers: {
-							Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-						},
-					},
-				);
+				response = await axios.post(apiUrl("/projects"), formData, {
+					headers: getAuthHeaders(),
+				});
 
 				if (response.status === 201) {
 					setProjects([...projects, response.data]);
@@ -113,14 +104,9 @@ const ProjectsEdit = () => {
 
 	const handleDelete = async (id) => {
 		try {
-			await axios.delete(
-				`https://www.api.ankitkaushal.in/projects/${id}`,
-				{
-					headers: {
-						Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-					},
-				},
-			);
+			await axios.delete(apiUrl(`/projects/${id}`), {
+				headers: getAuthHeaders(),
+			});
 			setProjects(projects.filter((project) => project._id !== id));
 			setToast({
 				show: true,

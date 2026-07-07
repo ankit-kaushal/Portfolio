@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
 import styles from "./styles.module.css";
 import Toast from "../../../../components/common/Toast";
 
@@ -44,13 +45,9 @@ const AboutEdit = () => {
 
 		try {
 			const response = await axios.patch(
-				`https://www.api.ankitkaushal.in/users/${user._id}`,
+				apiUrl(`/users/${user._id}`),
 				formData,
-				{
-					headers: {
-						Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-					},
-				},
+				{ headers: getAuthHeaders() },
 			);
 
 			if (response.status === 200) {

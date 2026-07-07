@@ -1,12 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 import AsyncSelect from "../../../../components/common/AsyncSelect";
 import "react-quill/dist/quill.snow.css";
 import styles from "./styles.module.css";
 import StarRating from "../../../../components/common/StarRating";
 import PhotoUpload from "../../../../components/common/PhotoUpload";
+import { apiUrl } from "@/lib/api";
+
+const ReactQuill = dynamic(() => import("react-quill"), {
+	ssr: false,
+});
 
 const travelModes = [
 	"flight",
@@ -37,9 +42,7 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 	const loadFriends = async (search) => {
 		try {
 			if (friendsCache.length === 0) {
-				const response = await fetch(
-					"https://www.api.ankitkaushal.in/friends",
-				);
+				const response = await fetch(apiUrl("/friends"));
 				const data = await response.json();
 				setFriendsCache(data);
 				return data.filter((friend) =>

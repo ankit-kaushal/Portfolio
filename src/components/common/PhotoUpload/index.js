@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import FaIcon from "@/components/common/FaIcon";
 import { faUpload, faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
 
 const PhotoUpload = ({ photos, onChange }) => {
 	const [uploading, setUploading] = useState(false);
@@ -18,16 +19,11 @@ const PhotoUpload = ({ photos, onChange }) => {
 				const blob = new Blob([file], { type: file.type });
 				formData.append("file", blob, file.name);
 
-				const response = await fetch(
-					"https://www.api.ankitkaushal.in/upload",
-					{
-						method: "POST",
-						body: formData,
-						headers: {
-							Authorization: process.env.NEXT_PUBLIC_AUTHKEY,
-						},
-					},
-				);
+				const response = await fetch(apiUrl("/upload"), {
+					method: "POST",
+					body: formData,
+					headers: getAuthHeaders(),
+				});
 
 				const data = await response.json();
 				return {
