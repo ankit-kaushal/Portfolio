@@ -9,37 +9,51 @@ import {
 	faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {
+	Button,
+	IconButton,
+	Card,
+	CardBody,
+	CardTitle,
+	Badge,
+	Toast,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	ModalCloseButton,
+	Text,
+	Flex,
+} from "uiplex";
 import { apiUrl, getAuthHeaders } from "@/lib/api";
-import styles from "./styles.module.css";
-import Modal from "../../../../components/common/Modal";
+import AdminSectionHeader from "../shared/AdminSectionHeader";
+import ConfirmModal from "../shared/ConfirmModal";
 import JourneyForm from "./JourneyForm";
 import JourneySkeleton from "./JourneySkeleton";
-import Toast from "../../../../components/common/Toast";
+import styles from "../../admin.module.css";
+
+const EMPTY_FORM = {
+	title: "",
+	description: "",
+	place: "",
+	duration: { startDate: "", endDate: "" },
+	expense: { amount: "", currency: "INR" },
+	buddies: [],
+	modeOfTravel: [],
+	placesVisited: [],
+	photos: [],
+	rating: 0,
+};
 
 const TravelJourney = () => {
 	const [journeys, setJourneys] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [formData, setFormData] = useState({
-		title: "",
-		description: "",
-		place: "",
-		duration: {
-			startDate: "",
-			endDate: "",
-		},
-		expense: {
-			amount: "",
-			currency: "INR",
-		},
-		buddies: [],
-		modeOfTravel: [],
-		placesVisited: [],
-		photos: [],
-		rating: 0,
-	});
+	const [formData, setFormData] = useState(EMPTY_FORM);
 	const [isEditing, setIsEditing] = useState(false);
 	const [editingId, setEditingId] = useState(null);
-	const [toast, setToast] = useState({ show: false, message: "", type: "" });
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [deleteId, setDeleteId] = useState(null);
 
 	useEffect(() => {
 		fetchJourneys();
@@ -52,9 +66,51 @@ const TravelJourney = () => {
 			setJourneys(response.data);
 		} catch (error) {
 			console.error("Error fetching journeys:", error);
+			Toast.error("Failed to load travel journeys");
 		} finally {
 			setIsLoading(false);
 		}
+	};
+
+	const resetForm = () => {
+		setFormData(EMPTY_FORM);
+		setIsEditing(false);
+		setEditingId(null);
+	};
+
+	const openModal = (journey = null) => {
+		if (journey) {
+			setFormData({
+				title: journey.title || "",
+				description: journey.description || "",
+				place: journey.place || "",
+				duration: {
+					startDate: journey.duration?.startDate || "",
+					endDate: journey.duration?.endDate || "",
+				},
+				expense: {
+					amount: journey.expense?.amount ?? "",
+					currency: journey.expense?.currency || "INR",
+				},
+				buddies: Array.isArray(journey.buddies) ? journey.buddies : [],
+				modeOfTravel: Array.isArray(journey.modeOfTravel)
+					? journey.modeOfTravel
+					: [],
+				placesVisited: journey.placesVisited || [],
+				photos: Array.isArray(journey.photos) ? journey.photos : [],
+				rating: Number(journey.rating) || 0,
+			});
+			setIsEditing(true);
+			setEditingId(journey._id);
+		} else {
+			resetForm();
+		}
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+		resetForm();
 	};
 
 	const handleSubmit = async (e, formattedData) => {
@@ -66,169 +122,46 @@ const TravelJourney = () => {
 					formattedData,
 					{ headers: getAuthHeaders() },
 				);
-				setToast({
-					show: true,
-					message: "Journey updated successfully!",
-					type: "success",
-				});
-				closeModal();
+				Toast.success("Journey updated successfully!");
 			} else {
 				await axios.post(apiUrl("/travel-journeys"), formattedData, {
 					headers: getAuthHeaders(),
 				});
-				setToast({
-					show: true,
-					message: "New journey added successfully!",
-					type: "success",
-				});
-				closeModal();
+				Toast.success("New journey added successfully!");
 			}
+			closeModal();
 			fetchJourneys();
-			resetForm();
 		} catch (error) {
 			console.error("Error saving journey:", error);
-			setToast({
-				show: true,
-				message: "Failed to save journey. Please try again.",
-				type: "error",
-			});
+			Toast.error("Failed to save journey. Please try again.");
 		}
 	};
 
-	const handleEdit = (journey) => {
-		setFormData({
-			title: journey.title,
-			description: journey.description,
-			place: journey.place,
-			duration: journey.duration,
-			expense: journey.expense,
-			buddies: journey.buddies,
-			modeOfTravel: journey.modeOfTravel,
-			placesVisited: journey.placesVisited,
-			photos: journey.photos,
-			rating: journey.rating,
-		});
-		setIsEditing(true);
-		setEditingId(journey._id);
-	};
-
-	const handleDelete = async (id) => {
+	const handleDelete = async () => {
 		try {
-			await axios.delete(apiUrl(`/travel-journeys/${id}`), {
+			await axios.delete(apiUrl(`/travel-journeys/${deleteId}`), {
 				headers: getAuthHeaders(),
 			});
-			setToast({
-				show: true,
-				message: "Journey deleted successfully!",
-				type: "success",
-			});
+			Toast.success("Journey deleted successfully!");
+			setShowDeleteModal(false);
 			fetchJourneys();
 		} catch (error) {
 			console.error("Error deleting journey:", error);
-			setToast({
-				show: true,
-				message: "Failed to delete journey. Please try again.",
-				type: "error",
-			});
+			Toast.error("Failed to delete journey.");
 		}
-	};
-
-	const resetForm = () => {
-		setFormData({
-			title: "",
-			description: "",
-			place: "",
-			duration: {
-				startDate: "",
-				endDate: "",
-			},
-			expense: {
-				amount: "",
-				currency: "INR",
-			},
-			buddies: [],
-			modeOfTravel: [],
-			placesVisited: [],
-			photos: [],
-			rating: 0,
-		});
-		setIsEditing(false);
-		setEditingId(null);
-	};
-
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const openModal = (journey = null) => {
-		if (journey) {
-			handleEdit(journey);
-		} else {
-			resetForm();
-		}
-		setIsModalOpen(true);
-	};
-
-	const closeModal = () => {
-		setIsModalOpen(false);
-		resetForm();
-	};
-	const [showDeleteModal, setShowDeleteModal] = useState(false);
-	const [deleteId, setDeleteId] = useState(null);
-
-	const handleDeleteClick = (id) => {
-		setDeleteId(id);
-		setShowDeleteModal(true);
-	};
-
-	const confirmDelete = async () => {
-		await handleDelete(deleteId);
-		setShowDeleteModal(false);
 	};
 
 	return (
-		<div className={styles.travelContainer}>
-			<div className={styles.header}>
-				<h2>Travel Journey</h2>
-				<button
-					className={styles.addButton}
-					onClick={() => openModal()}
-				>
-					<FaIcon icon={faPlus} /> Add New Journey
-				</button>
-			</div>
+		<>
+			<AdminSectionHeader
+				title="Travel Journeys"
+				description={`${journeys.length} journey${journeys.length === 1 ? "" : "s"} published`}
+				actionLabel="Add Journey"
+				onAction={() => openModal()}
+				actionIcon={<FaIcon icon={faPlus} />}
+			/>
 
-			<Modal
-				isOpen={isModalOpen}
-				onClose={closeModal}
-				title={isEditing ? "Edit Journey" : "Add New Journey"}
-				actions={
-					<>
-						<button
-							type="button"
-							className={styles.cancelButton}
-							onClick={closeModal}
-						>
-							Cancel
-						</button>
-						<button
-							type="submit"
-							className={styles.submitButton}
-							form="journeyForm"
-						>
-							{isEditing ? "Update Journey" : "Save Journey"}
-						</button>
-					</>
-				}
-			>
-				<JourneyForm
-					formData={formData}
-					setFormData={setFormData}
-					onSubmit={handleSubmit}
-					isEditing={isEditing}
-					id="journeyForm"
-				/>
-			</Modal>
-
-			<div className={styles.journeyList}>
+			<div className={styles.journeyGrid}>
 				{isLoading ? (
 					<>
 						<JourneySkeleton />
@@ -237,97 +170,114 @@ const TravelJourney = () => {
 					</>
 				) : (
 					journeys.map((journey) => (
-						<div key={journey._id} className={styles.journeyCard}>
-							{journey.photos[0] && (
+						<Card key={journey._id}>
+							{journey.photos?.[0]?.url && (
 								<img
 									src={journey.photos[0].url}
 									alt={journey.title}
+									className={styles.journeyImage}
 								/>
 							)}
-							<div className={styles.journeyContent}>
-								<h3>{journey.title}</h3>
-								<p className={styles.location}>
-									{journey.place}
-								</p>
-								<p className={styles.date}>
+							<CardBody>
+								<CardTitle>{journey.title}</CardTitle>
+								<div className={styles.journeyMeta}>
+									<Badge variant="primary" size="sm">
+										{journey.place}
+									</Badge>
+									{journey.expense?.amount && (
+										<Badge variant="default" size="sm">
+											{journey.expense.amount} {journey.expense.currency}
+										</Badge>
+									)}
+								</div>
+								<Text size="sm" variant="muted" style={{ marginTop: "0.5rem" }}>
 									{new Date(
 										journey.duration.startDate,
 									).toLocaleDateString()}{" "}
-									-
+									–{" "}
 									{new Date(
 										journey.duration.endDate,
 									).toLocaleDateString()}
-								</p>
-								<p className={styles.expense}>
-									Expense: {journey.expense.amount}{" "}
-									{journey.expense.currency}
-								</p>
-								<p className={styles.description}>
-									{journey.description}
-								</p>
-							</div>
-							<div className={styles.cardActions}>
-								<a
-									href={`/journey/${journey._id}`}
-									target="_blank"
-									rel="noopener noreferrer"
-									className={styles.redirectButton}
-								>
-									<FaIcon icon={faExternalLinkAlt} />
-								</a>
-								<button
-									className={styles.editButton}
-									onClick={() => openModal(journey)}
-								>
-									<FaIcon icon={faEdit} />
-								</button>
-								<button
-									className={styles.deleteButton}
-									onClick={() =>
-										handleDeleteClick(journey._id)
-									}
-								>
-									<FaIcon icon={faTrash} />
-								</button>
-							</div>
-						</div>
+								</Text>
+								<div
+									className={styles.journeyDescription}
+									dangerouslySetInnerHTML={{
+										__html: journey.description || "",
+									}}
+								/>
+								<Flex gap="0.5rem" justify="end" style={{ marginTop: "1rem" }}>
+									<IconButton
+										icon={<FaIcon icon={faExternalLinkAlt} />}
+										variant="ghost"
+										aria-label="View journey"
+										onClick={() =>
+											window.open(`/journey/${journey._id}`, "_blank")
+										}
+									/>
+									<IconButton
+										icon={<FaIcon icon={faEdit} />}
+										variant="ghost"
+										aria-label="Edit journey"
+										onClick={() => openModal(journey)}
+									/>
+									<IconButton
+										icon={<FaIcon icon={faTrash} />}
+										variant="ghost"
+										colorScheme="red"
+										aria-label="Delete journey"
+										onClick={() => {
+											setDeleteId(journey._id);
+											setShowDeleteModal(true);
+										}}
+									/>
+								</Flex>
+							</CardBody>
+						</Card>
 					))
 				)}
 			</div>
+
 			<Modal
+				isOpen={isModalOpen}
+				onClose={closeModal}
+				size="full"
+				isCentered
+			>
+				<ModalHeader>
+					{isEditing ? "Edit Journey" : "Add New Journey"}
+					<ModalCloseButton onClose={closeModal} />
+				</ModalHeader>
+				<ModalBody>
+					<JourneyForm
+						formData={formData}
+						setFormData={setFormData}
+						onSubmit={handleSubmit}
+					/>
+				</ModalBody>
+				<ModalFooter>
+					<Button variant="outline" onClick={closeModal}>
+						Cancel
+					</Button>
+					<Button
+						type="submit"
+						form="journeyForm"
+						variant="primary"
+						colorScheme="green"
+					>
+						{isEditing ? "Update Journey" : "Save Journey"}
+					</Button>
+				</ModalFooter>
+			</Modal>
+
+			<ConfirmModal
 				isOpen={showDeleteModal}
 				onClose={() => setShowDeleteModal(false)}
-				title="Confirm Delete"
-				actions={
-					<>
-						<button
-							className={styles.cancelButton}
-							onClick={() => setShowDeleteModal(false)}
-						>
-							Cancel
-						</button>
-						<button
-							className={styles.submitButton}
-							onClick={confirmDelete}
-							style={{ background: "#dc2626" }}
-						>
-							Delete
-						</button>
-					</>
-				}
-			>
-				<p>Are you sure you want to delete this journey?</p>
-			</Modal>
-			{toast.show && (
-				<Toast
-					message={toast.message}
-					type={toast.type}
-					onClose={() =>
-						setToast({ show: false, message: "", type: "" })
-					}
-				/>
-			)}
-		</div>
+				onConfirm={handleDelete}
+				title="Delete Journey"
+				message="Are you sure you want to delete this journey?"
+				confirmLabel="Delete"
+			/>
+		</>
 	);
 };
 

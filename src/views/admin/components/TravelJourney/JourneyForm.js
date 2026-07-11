@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import React, { useCallback, useState } from "react";
 import AsyncSelect from "../../../../components/common/AsyncSelect";
-import "react-quill/dist/quill.snow.css";
-import styles from "./styles.module.css";
+import {
+	FormControl,
+	FormLabel,
+	Input,
+	Grid,
+	Select,
+	DateTimePicker,
+} from "uiplex";
 import StarRating from "../../../../components/common/StarRating";
 import PhotoUpload from "../../../../components/common/PhotoUpload";
 import { apiUrl } from "@/lib/api";
-
-const ReactQuill = dynamic(() => import("react-quill"), {
-	ssr: false,
-});
+import styles from "../../admin.module.css";
+import RichTextEditor from "./RichTextEditor";
 
 const travelModes = [
 	"flight",
@@ -38,8 +41,15 @@ const modules = {
 
 const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 	const [friendsCache, setFriendsCache] = useState([]);
+	const safeBuddies = Array.isArray(formData.buddies) ? formData.buddies : [];
+	const safeTravelModes = Array.isArray(formData.modeOfTravel)
+		? formData.modeOfTravel
+		: [];
+	const safePlacesVisited = Array.isArray(formData.placesVisited)
+		? formData.placesVisited
+		: [];
 
-	const loadFriends = async (search) => {
+	const loadFriends = useCallback(async (search) => {
 		try {
 			if (friendsCache.length === 0) {
 				const response = await fetch(apiUrl("/friends"));
@@ -56,7 +66,7 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 			console.error("Error loading friends:", error);
 			return [];
 		}
-	};
+	}, [friendsCache]);
 
 	const formatDate = (dateString) => {
 		if (!dateString) return "";
@@ -76,7 +86,6 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 
 	return (
 		<form
-			className={styles.journeyForm}
 			onSubmit={(e) => {
 				e.preventDefault();
 				const formattedData = {
@@ -95,17 +104,16 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 						Number(formData.rating) > 0
 							? Number(formData.rating)
 							: undefined,
-					buddies: formData.buddies.map((buddy) => buddy._id),
+					buddies: safeBuddies.map((buddy) => buddy._id),
 				};
 				onSubmit(e, formattedData);
 			}}
 			id="journeyForm"
 		>
-			<div className={styles.formGrid}>
-				<div className={styles.inputGroup}>
-					<label>Title</label>
-					<input
-						type="text"
+			<Grid templateColumns="repeat(2, 1fr)" className={styles.formGrid} gap="1rem">
+				<FormControl>
+					<FormLabel>Title</FormLabel>
+					<Input
 						value={formData.title}
 						onChange={(e) =>
 							setFormData({ ...formData, title: e.target.value })
@@ -113,11 +121,11 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 						placeholder="Journey Title"
 						required
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Place</label>
-					<input
-						type="text"
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Place</FormLabel>
+					<Input
 						value={formData.place}
 						onChange={(e) =>
 							setFormData({ ...formData, place: e.target.value })
@@ -125,44 +133,45 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 						placeholder="Place"
 						required
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Start Date</label>
-					<input
-						type="date"
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Start Date</FormLabel>
+					<DateTimePicker
+						mode="date"
 						value={formatDate(formData.duration.startDate)}
-						onChange={(e) =>
+						onChange={(value) =>
 							setFormData({
 								...formData,
 								duration: {
 									...formData.duration,
-									startDate: e.target.value,
+									startDate: value,
 								},
 							})
 						}
-						required
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>End Date</label>
-					<input
-						type="date"
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>End Date</FormLabel>
+					<DateTimePicker
+						mode="date"
 						value={formatDate(formData.duration.endDate)}
-						onChange={(e) =>
+						onChange={(value) =>
 							setFormData({
 								...formData,
 								duration: {
 									...formData.duration,
-									endDate: e.target.value,
+									endDate: value,
 								},
 							})
 						}
-						required
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Expense Amount</label>
-					<input
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Expense Amount</FormLabel>
+					<Input
 						type="number"
 						value={formData.expense.amount}
 						onChange={(e) =>
@@ -176,79 +185,63 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 						}
 						placeholder="Amount"
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Rating</label>
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Rating</FormLabel>
 					<StarRating
 						rating={Number(formData.rating)}
 						onRatingChange={(value) =>
 							setFormData({ ...formData, rating: value })
 						}
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Mode of Travel</label>
-					<AsyncSelect
-						value={formData.modeOfTravel.map((mode) => ({
-							value: mode,
-							label: mode,
-						}))}
-						onChange={(selected) => {
-							const selectedModes = selected
-								? selected.map((option) => option.value)
-								: [];
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Mode of Travel</FormLabel>
+					<Select
+						mode="multiple"
+						searchable
+						placeholder="Select modes of travel..."
+						value={safeTravelModes}
+						onChange={(selected) =>
 							setFormData({
 								...formData,
-								modeOfTravel: selectedModes,
-							});
-						}}
-						loadOptions={(inputValue) => {
-							return new Promise((resolve) => {
-								const filtered = travelModes
-									.filter((mode) =>
-										mode
-											.toLowerCase()
-											.includes(inputValue.toLowerCase()),
-									)
-									.map((mode) => ({
-										value: mode,
-										label: mode,
-									}));
-								resolve(filtered);
-							});
-						}}
-						isMulti
-						placeholder="Select modes of travel..."
-						defaultOptions={travelModes.map((mode) => ({
+								modeOfTravel: selected || [],
+							})
+						}
+						options={travelModes.map((mode) => ({
 							value: mode,
 							label: mode,
 						}))}
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Places Visited</label>
-					<input
-						type="text"
-						value={formData.placesVisited.join(", ")}
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Places Visited</FormLabel>
+					<Input
+						value={safePlacesVisited.join(", ")}
 						onChange={(e) =>
 							setFormData({
 								...formData,
 								placesVisited: e.target.value
 									.split(",")
-									.map((item) => item.trim()),
+									.map((item) => item.trim())
+									.filter(Boolean),
 							})
 						}
-						placeholder="Enter places separated by commas"
+						placeholder="Comma-separated places"
 					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Buddies</label>
+				</FormControl>
+
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>Buddies</FormLabel>
 					<AsyncSelect
-						value={formData.buddies}
+						value={safeBuddies}
 						onChange={(selected) =>
 							setFormData({
 								...formData,
-								buddies: selected,
+								buddies: selected || [],
 							})
 						}
 						loadOptions={loadFriends}
@@ -257,30 +250,30 @@ const JourneyForm = ({ formData, setFormData, onSubmit }) => {
 						getOptionLabel={(option) => option.name}
 						getOptionValue={(option) => option._id}
 					/>
-				</div>
-			</div>
-			<div className={styles.formGrid}>
-				<div className={styles.inputGroup}>
-					<label>Description</label>
-					<ReactQuill
-						value={formData.description}
-						onChange={(content) =>
-							setFormData({ ...formData, description: content })
-						}
-						modules={modules}
-						placeholder="Write about your journey..."
-					/>
-				</div>
-				<div className={styles.inputGroup}>
-					<label>Photos</label>
+				</FormControl>
+
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>Description</FormLabel>
+					<div className={styles.quillWrap}>
+						<RichTextEditor
+							value={formData.description}
+							onChange={(content) =>
+								setFormData({ ...formData, description: content })
+							}
+							modules={modules}
+							placeholder="Write about your journey..."
+						/>
+					</div>
+				</FormControl>
+
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>Photos</FormLabel>
 					<PhotoUpload
 						photos={formData.photos}
-						onChange={(photos) =>
-							setFormData({ ...formData, photos })
-						}
+						onChange={(photos) => setFormData({ ...formData, photos })}
 					/>
-				</div>
-			</div>
+				</FormControl>
+			</Grid>
 		</form>
 	);
 };

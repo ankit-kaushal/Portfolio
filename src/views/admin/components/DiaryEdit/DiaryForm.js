@@ -1,24 +1,29 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "./styles.module.css";
+import {
+	Button,
+	FormControl,
+	FormLabel,
+	Input,
+	Textarea,
+	Select,
+	DateTimePicker,
+	Badge,
+	Flex,
+	Grid,
+} from "uiplex";
+import styles from "../../admin.module.css";
 
 const moodOptions = [
-	{ label: "Happy", emoji: "😊" },
-	{ label: "Sad", emoji: "😢" },
-	{ label: "Excited", emoji: "🤩" },
-	{ label: "Tired", emoji: "😴" },
-	{ label: "Neutral", emoji: "😐" },
-	{ label: "Exhausted", emoji: "😴" },
-	{ label: "Stressed", emoji: "😰" },
-	{ label: "Relaxed", emoji: "😌" },
-	{ label: "Anxious", emoji: "😰" },
-	{ label: "Frustrated", emoji: "😫" },
-	{ label: "Bored", emoji: "😐" },
-	{ label: "Energetic", emoji: "⚡" },
-	{ label: "Worried", emoji: "😰" },
-	{ label: "Angry", emoji: "😡" },
-	{ label: "Other", emoji: "🤔" },
+	{ value: "Happy", label: "😊 Happy" },
+	{ value: "Sad", label: "😢 Sad" },
+	{ value: "Excited", label: "🤩 Excited" },
+	{ value: "Tired", label: "😴 Tired" },
+	{ value: "Neutral", label: "😐 Neutral" },
+	{ value: "Exhausted", label: "😴 Exhausted" },
+	{ value: "Worried", label: "😰 Worried" },
+	{ value: "Other", label: "🤔 Other" },
 ];
 
 const DiaryForm = ({ onSubmit, initialValues = null, existingTags = [] }) => {
@@ -28,7 +33,9 @@ const DiaryForm = ({ onSubmit, initialValues = null, existingTags = [] }) => {
 	const [tagInput, setTagInput] = useState("");
 	const [filteredTags, setFilteredTags] = useState([]);
 	const [date, setDate] = useState(
-		initialValues?.date || new Date().toISOString().split("T")[0],
+		initialValues?.date
+			? new Date(initialValues.date).toISOString().split("T")[0]
+			: new Date().toISOString().split("T")[0],
 	);
 
 	const handleSubmit = (e) => {
@@ -43,14 +50,12 @@ const DiaryForm = ({ onSubmit, initialValues = null, existingTags = [] }) => {
 		}
 	};
 
-	const handleTagInput = (e) => {
-		const input = e.target.value;
-		setTagInput(input);
-
-		if (input.trim()) {
+	const handleTagInput = (value) => {
+		setTagInput(value);
+		if (value.trim()) {
 			const filtered = existingTags.filter(
 				(tag) =>
-					tag.toLowerCase().includes(input.toLowerCase()) &&
+					tag.toLowerCase().includes(value.toLowerCase()) &&
 					!tags.includes(tag),
 			);
 			setFilteredTags(filtered);
@@ -59,18 +64,7 @@ const DiaryForm = ({ onSubmit, initialValues = null, existingTags = [] }) => {
 		}
 	};
 
-	const handleKeyPress = (e) => {
-		if (e.key === "Enter" && tagInput.trim()) {
-			e.preventDefault();
-			if (!tags.includes(tagInput.trim())) {
-				setTags([...tags, tagInput.trim()]);
-			}
-			setTagInput("");
-			setFilteredTags([]);
-		}
-	};
-
-	const handleTagSelect = (tag) => {
+	const addTag = (tag) => {
 		if (!tags.includes(tag)) {
 			setTags([...tags, tag]);
 		}
@@ -78,96 +72,94 @@ const DiaryForm = ({ onSubmit, initialValues = null, existingTags = [] }) => {
 		setFilteredTags([]);
 	};
 
-	const handleDeleteTag = (tagToDelete) => {
-		setTags(tags.filter((tag) => tag !== tagToDelete));
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter" && tagInput.trim()) {
+			e.preventDefault();
+			addTag(tagInput.trim());
+		}
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className={styles.diaryForm}>
-			<div className={styles.formHeader}>
-				<div className={styles.dateField}>
-					<label htmlFor="date" className={styles.label}>
-						Date
-					</label>
-					<input
-						type="date"
-						id="date"
-						value={date}
-						onChange={(e) => setDate(e.target.value)}
-						className={styles.dateInput}
-					/>
-				</div>
-				<div className={styles.moodSelectContainer}>
-					<label htmlFor="mood" className={styles.label}>
-						Mood
-					</label>
-					<select
-						id="mood"
+		<form onSubmit={handleSubmit}>
+			<Grid templateColumns="repeat(2, 1fr)" className={styles.formGrid} gap="1rem">
+				<FormControl>
+					<FormLabel>Date</FormLabel>
+					<DateTimePicker mode="date" value={date} onChange={setDate} />
+				</FormControl>
+
+				<FormControl>
+					<FormLabel>Mood</FormLabel>
+					<Select
 						value={mood}
-						onChange={(e) => setMood(e.target.value)}
-						className={styles.moodSelect}
-					>
-						{moodOptions.map((option) => (
-							<option key={option.label} value={option.label}>
-								{option.emoji} {option.label}
-							</option>
+						onChange={setMood}
+						options={moodOptions}
+					/>
+				</FormControl>
+
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>Entry</FormLabel>
+					<Textarea
+						value={content}
+						onChange={(e) => setContent(e.target.value)}
+						placeholder="Write your diary entry..."
+						rows={6}
+					/>
+				</FormControl>
+
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>Tags</FormLabel>
+					<div className={styles.tagList}>
+						{tags.map((tag) => (
+							<Badge key={tag} variant="primary">
+								<Flex align="center" gap="0.35rem">
+									{tag}
+									<button
+										type="button"
+										onClick={() =>
+											setTags(tags.filter((t) => t !== tag))
+										}
+										style={{
+											border: "none",
+											background: "transparent",
+											cursor: "pointer",
+											padding: 0,
+										}}
+									>
+										×
+									</button>
+								</Flex>
+							</Badge>
 						))}
-					</select>
-				</div>
-			</div>
-
-			<textarea
-				value={content}
-				onChange={(e) => setContent(e.target.value)}
-				placeholder="Write your diary entry..."
-				className={styles.contentField}
-				rows={6}
-			/>
-
-			<div className={styles.tagsSection}>
-				<label className={styles.label}>Tags</label>
-				<div className={styles.tagsList}>
-					{tags.map((tag) => (
-						<span key={tag} className={styles.tag}>
-							{tag}
-							<button
-								type="button"
-								onClick={() => handleDeleteTag(tag)}
-								className={styles.deleteTag}
-							>
-								×
-							</button>
-						</span>
-					))}
-				</div>
-				<div className={styles.tagInputContainer}>
-					<input
-						type="text"
+					</div>
+					<Input
 						value={tagInput}
-						onChange={handleTagInput}
-						onKeyPress={handleKeyPress}
-						placeholder="Type to add or search tags..."
-						className={styles.tagInput}
+						onChange={(e) => handleTagInput(e.target.value)}
+						onKeyDown={handleKeyDown}
+						placeholder="Type and press Enter to add tags..."
 					/>
 					{filteredTags.length > 0 && (
 						<div className={styles.tagSuggestions}>
 							{filteredTags.map((tag) => (
-								<button
+								<Button
 									key={tag}
 									type="button"
-									onClick={() => handleTagSelect(tag)}
-									className={styles.tagSuggestion}
+									size="sm"
+									variant="outline"
+									onClick={() => addTag(tag)}
 								>
 									{tag}
-								</button>
+								</Button>
 							))}
 						</div>
 					)}
-				</div>
+				</FormControl>
+			</Grid>
+
+			<div className={styles.formActions}>
+				<Button type="submit" variant="primary" colorScheme="green">
+					{initialValues ? "Update Entry" : "Save Entry"}
+				</Button>
 			</div>
-			<button type="submit" className={styles.submitButton}>
-				{initialValues ? "Update Entry" : "Add Entry"}
-			</button>
 		</form>
 	);
 };

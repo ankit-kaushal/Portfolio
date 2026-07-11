@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema(
 	{
-		blogTitle: { type: String, required: true, trim: true },
-		blogDescription: String,
-		blogUrl: String,
-		blogPublishDate: String,
+		title: { type: String, required: true, trim: true },
+		slug: { type: String, required: true, unique: true, trim: true },
+		excerpt: { type: String, default: "" },
+		content: { type: String, required: true },
+		coverImage: { type: String, default: "" },
+		tags: [{ type: String, trim: true }],
+		published: { type: Boolean, default: true },
+		publishedAt: { type: Date, default: Date.now },
 	},
 	{ timestamps: true },
 );

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./styles.module.css";
+import styles from "../../admin.module.css";
 
 const TOTAL_INPUT = 6;
 
@@ -36,18 +36,19 @@ const OTPInput = ({ onComplete }) => {
 	};
 
 	return (
-		<div className={styles.otpContainer}>
+		<div className={styles.otpRow}>
 			{inputBox.map((item, i) => (
 				<input
 					key={i}
 					ref={(r) => (refArr.current[i] = r)}
 					className={styles.otpInput}
 					type="text"
+					inputMode="numeric"
 					value={inputBox[i]}
 					onChange={(e) => handleInput(e.target.value, i)}
 					onKeyDown={(e) => handleKeyDown(e, i)}
 					maxLength={1}
-					autoComplete="off"
+					autoComplete="one-time-code"
 				/>
 			))}
 		</div>

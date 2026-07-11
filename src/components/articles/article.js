@@ -1,5 +1,6 @@
 import FaIcon from "@/components/common/FaIcon";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 import styles from "./article.module.css";
 
@@ -37,35 +38,43 @@ const formatDate = (dateString) => {
 	return `${day}${suffix} ${month} ${year}`;
 };
 
-export default function Article({ date, title, description, link, image }) {
+export default function Article({
+	date,
+	title,
+	description,
+	link,
+	image,
+	internal = false,
+}) {
+	const content = (
+		<div className={styles.articleRightSide}>
+			{image && (
+				<div
+					className={styles.articleImage}
+					style={{ backgroundImage: `url(${image})` }}
+				/>
+			)}
+			<div className={styles.articleTitle}>{title}</div>
+			<div className={styles.articleDescription}>{description}</div>
+			<div className={styles.articleFlex}>
+				<div className={styles.articleLink}>
+					Read Article{" "}
+					<FaIcon style={{ fontSize: "10px" }} icon={faChevronRight} />
+				</div>
+				<div className={styles.articleDate}>{formatDate(date)}</div>
+			</div>
+		</div>
+	);
+
 	return (
 		<div className={styles.article}>
-			<a href={link} target="_blank" rel="noreferrer">
-				<div className={styles.articleRightSide}>
-					{image && (
-						<div
-							className={styles.articleImage}
-							style={{ backgroundImage: `url(${image})` }}
-						/>
-					)}
-					<div className={styles.articleTitle}>{title}</div>
-					<div className={styles.articleDescription}>
-						{description}
-					</div>
-					<div className={styles.articleFlex}>
-						<div className={styles.articleLink}>
-							Read Article{" "}
-							<FaIcon
-								style={{ fontSize: "10px" }}
-								icon={faChevronRight}
-							/>
-						</div>
-						<div className={styles.articleDate}>
-							{formatDate(date)}
-						</div>
-					</div>
-				</div>
-			</a>
+			{internal ? (
+				<Link href={link}>{content}</Link>
+			) : (
+				<a href={link} target="_blank" rel="noreferrer">
+					{content}
+				</a>
+			)}
 		</div>
 	);
 }

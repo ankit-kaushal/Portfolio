@@ -1,38 +1,9 @@
 "use client";
 
-import React from "react";
-import styles from "./styles.module.css";
+import { Skeleton } from "uiplex";
 
-const JourneySkeleton = () => {
-	return (
-		<div className={`${styles.journeyCard} ${styles.skeletonCard}`}>
-			<div className={`${styles.skeletonImage} ${styles.skeleton}`} />
-			<div className={styles.journeyContent}>
-				<div className={`${styles.skeletonTitle} ${styles.skeleton}`} />
-				<div
-					className={`${styles.skeletonLocation} ${styles.skeleton}`}
-				/>
-				<div className={`${styles.skeletonDate} ${styles.skeleton}`} />
-				<div
-					className={`${styles.skeletonExpense} ${styles.skeleton}`}
-				/>
-				<div
-					className={`${styles.skeletonDescription} ${styles.skeleton}`}
-				/>
-			</div>
-			<div className={styles.cardActions}>
-				<div
-					className={`${styles.skeletonButton} ${styles.skeleton}`}
-				/>
-				<div
-					className={`${styles.skeletonButton} ${styles.skeleton}`}
-				/>
-				<div
-					className={`${styles.skeletonButton} ${styles.skeleton}`}
-				/>
-			</div>
-		</div>
-	);
-};
+const JourneySkeleton = () => (
+	<Skeleton variant="rectangular" height={320} style={{ borderRadius: "12px" }} />
+);
 
 export default JourneySkeleton;

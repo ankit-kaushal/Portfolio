@@ -3,146 +3,80 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { apiUrl, getAuthHeaders } from "@/lib/api";
-import styles from "./styles.module.css";
-import Toast from "../../../../components/common/Toast";
-import ProjectFormModal from "./ProjectFormModal";
 import FaIcon from "@/components/common/FaIcon";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../../../components/common/Modal";
+import { faEdit, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+	Button,
+	IconButton,
+	Card,
+	CardBody,
+	CardTitle,
+	CardSubtitle,
+	Badge,
+	Link,
+	Toast,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	ModalCloseButton,
+	FormControl,
+	FormLabel,
+	Input,
+	Textarea,
+	Select,
+	DateTimePicker,
+	Text,
+	Flex,
+	Skeleton,
+} from "uiplex";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
+import AdminSectionHeader from "../shared/AdminSectionHeader";
+import ConfirmModal from "../shared/ConfirmModal";
+import styles from "../../admin.module.css";
+
+const EMPTY_FORM = {
+	projectName: "",
+	projectDescription: "",
+	projectPicture: "",
+	projectLink: "",
+	projectGitHub: "",
+	projectType: "personal",
+	mainStack: "",
+	projectPublishDate: new Date().toISOString().split("T")[0],
+};
 
 const ProjectsEdit = () => {
 	const data = useSelector((state) => state.data);
 	const { projects: projectsData = [] } = data || {};
 
-	const [formData, setFormData] = useState({
-		projectName: "",
-		projectDescription: "",
-		projectPicture: "",
-		projectLink: "",
-		projectGitHub: "",
-		projectType: "personal",
-		mainStack: "",
-		projectPublishDate: new Date().toISOString().split("T")[0],
-	});
-
+	const [formData, setFormData] = useState(EMPTY_FORM);
 	const [projects, setProjects] = useState(projectsData);
 	const [isLoading, setIsLoading] = useState(false);
-	const [toast, setToast] = useState({ show: false, message: "", type: "" });
 	const [editMode, setEditMode] = useState(false);
 	const [editingId, setEditingId] = useState(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [deleteId, setDeleteId] = useState(null);
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
+	const handleChange = (name, value) => {
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setIsLoading(true);
-
-		try {
-			let response;
-			if (editMode) {
-				response = await axios.patch(
-					apiUrl(`/projects/${editingId}`),
-					formData,
-					{ headers: getAuthHeaders() },
-				);
-
-				if (response.status === 200) {
-					setProjects(
-						projects.map((p) =>
-							p._id === editingId ? response.data : p,
-						),
-					);
-					setToast({
-						show: true,
-						message: "Project updated successfully!",
-						type: "success",
-					});
-				}
-			} else {
-				response = await axios.post(apiUrl("/projects"), formData, {
-					headers: getAuthHeaders(),
-				});
-
-				if (response.status === 201) {
-					setProjects([...projects, response.data]);
-					setToast({
-						show: true,
-						message: "Project added successfully!",
-						type: "success",
-					});
-				}
-			}
-
-			setFormData({
-				projectName: "",
-				projectDescription: "",
-				projectPicture: "",
-				projectLink: "",
-				projectGitHub: "",
-				projectType: "personal",
-				mainStack: "",
-				projectPublishDate: new Date().toISOString().split("T")[0],
-			});
-			setEditMode(false);
-			setEditingId(null);
-		} catch (error) {
-			setToast({
-				show: true,
-				message:
-					error.response?.data?.message ||
-					`Failed to ${editMode ? "update" : "add"} project`,
-				type: "error",
-			});
-		} finally {
-			setIsLoading(false);
-		}
+	const resetForm = () => {
+		setFormData(EMPTY_FORM);
+		setEditMode(false);
+		setEditingId(null);
 	};
-
-	const handleDelete = async (id) => {
-		try {
-			await axios.delete(apiUrl(`/projects/${id}`), {
-				headers: getAuthHeaders(),
-			});
-			setProjects(projects.filter((project) => project._id !== id));
-			setToast({
-				show: true,
-				message: "Project deleted successfully!",
-				type: "success",
-			});
-		} catch (error) {
-			setToast({
-				show: true,
-				message:
-					error.response?.data?.message || "Failed to delete project",
-				type: "error",
-			});
-		}
-	};
-
-	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleOpenModal = () => {
+		resetForm();
 		setIsModalOpen(true);
 	};
 
 	const handleCloseModal = () => {
 		setIsModalOpen(false);
-		setEditMode(false);
-		setEditingId(null);
-		setFormData({
-			projectName: "",
-			projectDescription: "",
-			projectPicture: "",
-			projectLink: "",
-			projectGitHub: "",
-			projectType: "personal",
-			mainStack: "",
-			projectPublishDate: new Date().toISOString().split("T")[0],
-		});
+		resetForm();
 	};
 
 	const handleEdit = (project) => {
@@ -163,128 +97,272 @@ const ProjectsEdit = () => {
 		setIsModalOpen(true);
 	};
 
-	const [showDeleteModal, setShowDeleteModal] = useState(false);
-	const [deleteId, setDeleteId] = useState(null);
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setIsLoading(true);
 
-	const handleDeleteClick = (id) => {
-		setDeleteId(id);
-		setShowDeleteModal(true);
+		try {
+			let response;
+			if (editMode) {
+				response = await axios.patch(
+					apiUrl(`/projects/${editingId}`),
+					formData,
+					{ headers: getAuthHeaders() },
+				);
+				setProjects(
+					projects.map((p) => (p._id === editingId ? response.data : p)),
+				);
+				Toast.success("Project updated successfully!");
+			} else {
+				response = await axios.post(apiUrl("/projects"), formData, {
+					headers: getAuthHeaders(),
+				});
+				setProjects([...projects, response.data]);
+				Toast.success("Project added successfully!");
+			}
+			handleCloseModal();
+		} catch (error) {
+			Toast.error(
+				error.response?.data?.message ||
+					`Failed to ${editMode ? "update" : "add"} project`,
+			);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
-	const confirmDelete = async () => {
-		await handleDelete(deleteId);
-		setShowDeleteModal(false);
+	const handleDelete = async () => {
+		try {
+			await axios.delete(apiUrl(`/projects/${deleteId}`), {
+				headers: getAuthHeaders(),
+			});
+			setProjects(projects.filter((project) => project._id !== deleteId));
+			Toast.success("Project deleted successfully!");
+			setShowDeleteModal(false);
+		} catch (error) {
+			Toast.error(
+				error.response?.data?.message || "Failed to delete project",
+			);
+		}
 	};
 
 	return (
-		<div className={styles.projectsContainer}>
-			<div className={styles.header}>
-				<h2>Manage Projects</h2>
-				<button onClick={handleOpenModal} className={styles.addButton}>
-					Add New Project
-				</button>
-			</div>
-			<div className={styles.projectsList}>
-				{projects.map((project) => (
-					<div key={project._id} className={styles.projectCard}>
-						<img
-							src={project.projectPicture}
-							alt={project.projectName}
-							className={styles.projectLogo}
-						/>
-						<div className={styles.projectInfo}>
-							<h3>{project.projectName}</h3>
-							<p>{project.projectDescription}</p>
-							<div className={styles.projectMeta}>
-								<span>Type: {project.projectType}</span>
-								<span>Stack: {project.mainStack}</span>
-								<span>
-									Published:{" "}
-									{new Date(
-										project.projectPublishDate,
-									).toLocaleDateString()}
-								</span>
-							</div>
-							<div className={styles.projectLinks}>
-								{project.projectLink && (
-									<a
-										href={project.projectLink}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										View Project
-									</a>
-								)}
-								{project.projectGitHub && (
-									<a
-										href={project.projectGitHub}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										GitHub
-									</a>
-								)}
-							</div>
-						</div>
-						<div className={styles.cardActions}>
-							<button
-								onClick={() => handleEdit(project)}
-								className={styles.editButton}
-							>
-								<FaIcon icon={faEdit} />
-							</button>
-							<button
-								onClick={() => handleDeleteClick(project._id)}
-								className={styles.deleteButton}
-							>
-								<FaIcon icon={faTrash} />
-							</button>
-						</div>
-					</div>
-				))}
-			</div>
-			<ProjectFormModal
-				isOpen={isModalOpen}
-				onClose={handleCloseModal}
-				formData={formData}
-				handleChange={handleChange}
-				handleSubmit={handleSubmit}
-				isLoading={isLoading}
-				editMode={editMode}
+		<>
+			<AdminSectionHeader
+				title="All Projects"
+				description={`${projects.length} project${projects.length === 1 ? "" : "s"} in your portfolio`}
+				actionLabel="Add Project"
+				onAction={handleOpenModal}
+				actionIcon={<FaIcon icon={faPlus} />}
 			/>
-			<Modal
+
+			<div className={styles.projectGrid}>
+				{projects.length === 0
+					? Array.from({ length: 3 }).map((_, i) => (
+							<Skeleton key={i} variant="rectangular" height={280} />
+						))
+					: projects.map((project) => (
+							<Card key={project._id}>
+								{project.projectPicture && (
+									<img
+										src={project.projectPicture}
+										alt={project.projectName}
+										className={styles.projectCardImage}
+									/>
+								)}
+								<CardBody>
+									<Flex
+										align="start"
+										justify="between"
+										gap="0.75rem"
+										style={{ marginBottom: "0.5rem" }}
+									>
+										<Flex direction="column" gap="0.25rem">
+											<CardTitle>{project.projectName}</CardTitle>
+											<CardSubtitle>
+												{project.mainStack || "No stack listed"}
+											</CardSubtitle>
+										</Flex>
+										<Badge variant="primary" size="sm">
+											{project.projectType}
+										</Badge>
+									</Flex>
+
+									<Text size="sm" variant="muted">
+										{project.projectDescription}
+									</Text>
+
+									<Flex gap="0.75rem" style={{ marginTop: "0.75rem" }} wrap="wrap">
+										{project.projectLink && (
+											<Link
+												href={project.projectLink}
+												isExternal
+												variant="link"
+											>
+												View Project
+											</Link>
+										)}
+										{project.projectGitHub && (
+											<Link
+												href={project.projectGitHub}
+												isExternal
+												variant="link"
+											>
+												GitHub
+											</Link>
+										)}
+									</Flex>
+
+									<div className={styles.projectCardActions}>
+										<IconButton
+											icon={<FaIcon icon={faEdit} />}
+											variant="ghost"
+											aria-label="Edit project"
+											onClick={() => handleEdit(project)}
+										/>
+										<IconButton
+											icon={<FaIcon icon={faTrash} />}
+											variant="ghost"
+											colorScheme="red"
+											aria-label="Delete project"
+											onClick={() => {
+												setDeleteId(project._id);
+												setShowDeleteModal(true);
+											}}
+										/>
+									</div>
+								</CardBody>
+							</Card>
+						))}
+			</div>
+
+			<Modal isOpen={isModalOpen} onClose={handleCloseModal} size="xl">
+				<ModalHeader>
+					{editMode ? "Edit Project" : "Add New Project"}
+					<ModalCloseButton onClose={handleCloseModal} />
+				</ModalHeader>
+				<ModalBody>
+					<form id="projectForm" onSubmit={handleSubmit}>
+						<div className={styles.formGrid}>
+							<FormControl>
+								<FormLabel>Project Name</FormLabel>
+								<Input
+									value={formData.projectName}
+									onChange={(e) =>
+										handleChange("projectName", e.target.value)
+									}
+									placeholder="Project Name"
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>Main Stack</FormLabel>
+								<Input
+									value={formData.mainStack}
+									onChange={(e) =>
+										handleChange("mainStack", e.target.value)
+									}
+									placeholder="React, Node.js..."
+								/>
+							</FormControl>
+
+							<FormControl style={{ gridColumn: "1 / -1" }}>
+								<FormLabel>Description</FormLabel>
+								<Textarea
+									value={formData.projectDescription}
+									onChange={(e) =>
+										handleChange("projectDescription", e.target.value)
+									}
+									placeholder="Project Description"
+									rows={3}
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>Project Picture URL</FormLabel>
+								<Input
+									value={formData.projectPicture}
+									onChange={(e) =>
+										handleChange("projectPicture", e.target.value)
+									}
+									placeholder="Image URL"
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>Project Link</FormLabel>
+								<Input
+									value={formData.projectLink}
+									onChange={(e) =>
+										handleChange("projectLink", e.target.value)
+									}
+									placeholder="Live URL (optional)"
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>GitHub Link</FormLabel>
+								<Input
+									value={formData.projectGitHub}
+									onChange={(e) =>
+										handleChange("projectGitHub", e.target.value)
+									}
+									placeholder="Repository URL"
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>Project Type</FormLabel>
+								<Select
+									value={formData.projectType}
+									onChange={(value) =>
+										handleChange("projectType", value)
+									}
+									options={[
+										{ value: "personal", label: "Personal" },
+										{ value: "professional", label: "Professional" },
+									]}
+								/>
+							</FormControl>
+
+							<FormControl>
+								<FormLabel>Publish Date</FormLabel>
+								<DateTimePicker
+									mode="date"
+									value={formData.projectPublishDate}
+									onChange={(value) =>
+										handleChange("projectPublishDate", value)
+									}
+								/>
+							</FormControl>
+						</div>
+					</form>
+				</ModalBody>
+				<ModalFooter>
+					<Button variant="outline" onClick={handleCloseModal}>
+						Cancel
+					</Button>
+					<Button
+						type="submit"
+						form="projectForm"
+						variant="primary"
+						colorScheme="green"
+						loading={isLoading}
+					>
+						{editMode ? "Update Project" : "Add Project"}
+					</Button>
+				</ModalFooter>
+			</Modal>
+
+			<ConfirmModal
 				isOpen={showDeleteModal}
 				onClose={() => setShowDeleteModal(false)}
-				title="Confirm Delete"
-				actions={
-					<>
-						<button
-							className={styles.cancelButton}
-							onClick={() => setShowDeleteModal(false)}
-						>
-							Cancel
-						</button>
-						<button
-							className={styles.deleteButton}
-							onClick={confirmDelete}
-						>
-							Delete
-						</button>
-					</>
-				}
-			>
-				<p>Are you sure you want to delete this project?</p>
-			</Modal>
-			{toast.show && (
-				<Toast
-					message={toast.message}
-					type={toast.type}
-					onClose={() =>
-						setToast({ show: false, message: "", type: "" })
-					}
-				/>
-			)}
-		</div>
+				onConfirm={handleDelete}
+				title="Delete Project"
+				message="Are you sure you want to delete this project? This action cannot be undone."
+				confirmLabel="Delete"
+			/>
+		</>
 	);
 };
 

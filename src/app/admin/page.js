@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import AdminView from "@/views/admin";
 
 export const dynamic = "force-dynamic";
@@ -8,5 +9,9 @@ export const metadata = {
 };
 
 export default function AdminPage() {
-	return <AdminView />;
+	return (
+		<Suspense fallback={null}>
+			<AdminView />
+		</Suspense>
+	);
 }

@@ -2,29 +2,40 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { apiUrl, getAuthHeaders, getDiaryAuthHeaders } from "@/lib/api";
 import FaIcon from "@/components/common/FaIcon";
 import {
 	faChevronLeft,
 	faChevronRight,
 	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../../../../components/common/Modal";
-import styles from "./styles.module.css";
+import {
+	Button,
+	IconButton,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	ModalCloseButton,
+	Badge,
+	Text,
+	Flex,
+	Toast,
+} from "uiplex";
+import { apiUrl, getAuthHeaders, getDiaryAuthHeaders } from "@/lib/api";
+import AdminSectionHeader from "../shared/AdminSectionHeader";
+import ConfirmModal from "../shared/ConfirmModal";
 import DiaryForm from "./DiaryForm";
+import styles from "../../admin.module.css";
+
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const DiaryEdit = () => {
 	const [entries, setEntries] = useState([]);
 	const [selectedEntry, setSelectedEntry] = useState(null);
 	const [showAddModal, setShowAddModal] = useState(false);
 	const [showViewModal, setShowViewModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [currentDate, setCurrentDate] = useState(new Date());
-	const [newEntry, setNewEntry] = useState({
-		content: "",
-		mood: "",
-		tags: "",
-		images: [],
-	});
 
 	useEffect(() => {
 		fetchEntries();
@@ -38,6 +49,7 @@ const DiaryEdit = () => {
 			setEntries(response.data);
 		} catch (error) {
 			console.error("Error fetching entries:", error);
+			Toast.error("Failed to load diary entries");
 		}
 	};
 
@@ -53,35 +65,29 @@ const DiaryEdit = () => {
 				},
 				{ headers: getAuthHeaders() },
 			);
+			Toast.success("Diary entry saved!");
 			fetchEntries();
 			setShowAddModal(false);
 		} catch (error) {
 			console.error("Error creating entry:", error);
+			Toast.error("Failed to save diary entry");
 		}
 	};
 
-	const handleDelete = async (entryId) => {
+	const handleDelete = async () => {
 		try {
-			await axios.delete(apiUrl(`/diary/${entryId}`), {
+			await axios.delete(apiUrl(`/diary/${selectedEntry._id}`), {
 				headers: getAuthHeaders(),
 			});
+			Toast.success("Entry deleted");
 			fetchEntries();
+			setShowDeleteModal(false);
 			setShowViewModal(false);
+			setSelectedEntry(null);
 		} catch (error) {
 			console.error("Error deleting entry:", error);
+			Toast.error("Failed to delete entry");
 		}
-	};
-
-	const handlePrevMonth = () => {
-		setCurrentDate(
-			new Date(currentDate.getFullYear(), currentDate.getMonth() - 1),
-		);
-	};
-
-	const handleNextMonth = () => {
-		setCurrentDate(
-			new Date(currentDate.getFullYear(), currentDate.getMonth() + 1),
-		);
 	};
 
 	const getDaysInMonth = (year, month) => {
@@ -91,26 +97,11 @@ const DiaryEdit = () => {
 		return { daysInMonth, firstDay, prevMonthDays };
 	};
 
-	const formatDate = (date) => {
-		const months = [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December",
-		];
-		return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-	};
+	const formatMonthYear = (date) =>
+		date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 
-	const getEntriesForDate = (date) => {
-		return entries.filter((entry) => {
+	const getEntriesForDate = (date) =>
+		entries.filter((entry) => {
 			const entryDate = new Date(entry.date);
 			return (
 				entryDate.getDate() === date &&
@@ -118,115 +109,71 @@ const DiaryEdit = () => {
 				entryDate.getFullYear() === currentDate.getFullYear()
 			);
 		});
+
+	const getExistingTags = () => {
+		const allTags = entries.reduce(
+			(tags, entry) => tags.concat(entry.tags || []),
+			[],
+		);
+		return [...new Set(allTags)];
 	};
-
-	const renderAddModal = () => (
-		<Modal
-			isOpen={showAddModal}
-			onClose={() => setShowAddModal(false)}
-			title="Add New Entry"
-			actions={
-				<div className={styles.modalButtons}>
-					<button onClick={handleSubmit}>Save</button>
-					<button onClick={() => setShowAddModal(false)}>
-						Cancel
-					</button>
-				</div>
-			}
-		>
-			<DiaryForm
-				onSubmit={handleSubmit}
-				initialValues={selectedEntry}
-				existingTags={getExistingTags()}
-			/>
-		</Modal>
-	);
-
-	const renderViewModal = () => (
-		<Modal
-			isOpen={showViewModal}
-			onClose={() => setShowViewModal(false)}
-			title={formatDate(new Date(selectedEntry.date))}
-			actions={
-				<div className={styles.modalButtons}>
-					<button onClick={() => handleDelete(selectedEntry._id)}>
-						Delete
-					</button>
-					<button onClick={() => setShowViewModal(false)}>
-						Close
-					</button>
-				</div>
-			}
-		>
-			<div className={styles.entryContent}>
-				<p>{selectedEntry.content}</p>
-				<div className={styles.entryMeta}>
-					<span>Mood: {selectedEntry.mood}</span>
-					<span>Tags: {selectedEntry.tags.join(", ")}</span>
-				</div>
-				{selectedEntry.images?.length > 0 && (
-					<div className={styles.entryImages}>
-						{selectedEntry.images.map((image, index) => (
-							<img
-								key={index}
-								src={image}
-								alt={`Entry ${index + 1}`}
-							/>
-						))}
-					</div>
-				)}
-			</div>
-		</Modal>
-	);
 
 	const { daysInMonth, firstDay, prevMonthDays } = getDaysInMonth(
 		currentDate.getFullYear(),
 		currentDate.getMonth(),
 	);
 
-	// Add this function to extract unique tags from entries
-	const getExistingTags = () => {
-		const allTags = entries.reduce((tags, entry) => {
-			return tags.concat(entry.tags || []);
-		}, []);
-		return [...new Set(allTags)];
-	};
-
 	return (
-		<div className={styles.diaryContainer}>
-			<div className={styles.header}>
-				<div className={styles.monthNavigation}>
-					<button
-						onClick={handlePrevMonth}
-						className={styles.navButton}
-					>
-						<FaIcon icon={faChevronLeft} />
-					</button>
-					<h2>{formatDate(currentDate)}</h2>
-					<button
-						onClick={handleNextMonth}
-						className={styles.navButton}
-					>
-						<FaIcon icon={faChevronRight} />
-					</button>
+		<>
+			<AdminSectionHeader
+				title="Diary Calendar"
+				description={`${entries.length} entr${entries.length === 1 ? "y" : "ies"} total`}
+				actionLabel="Add Entry"
+				onAction={() => setShowAddModal(true)}
+				actionIcon={<FaIcon icon={faPlus} />}
+			/>
+
+			<div className={styles.calendarHeader}>
+				<div className={styles.monthNav}>
+					<IconButton
+						icon={<FaIcon icon={faChevronLeft} />}
+						variant="ghost"
+						aria-label="Previous month"
+						onClick={() =>
+							setCurrentDate(
+								new Date(
+									currentDate.getFullYear(),
+									currentDate.getMonth() - 1,
+								),
+							)
+						}
+					/>
+					<Text size="lg" weight="semibold">
+						{formatMonthYear(currentDate)}
+					</Text>
+					<IconButton
+						icon={<FaIcon icon={faChevronRight} />}
+						variant="ghost"
+						aria-label="Next month"
+						onClick={() =>
+							setCurrentDate(
+								new Date(
+									currentDate.getFullYear(),
+									currentDate.getMonth() + 1,
+								),
+							)
+						}
+					/>
 				</div>
-				<button
-					className={styles.addButton}
-					onClick={() => setShowAddModal(true)}
-				>
-					<FaIcon icon={faPlus} /> Add Entry
-				</button>
 			</div>
 
 			<div className={styles.calendar}>
 				<div className={styles.weekdays}>
-					{["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-						(day) => (
-							<div key={day} className={styles.weekday}>
-								{day}
-							</div>
-						),
-					)}
+					{WEEKDAYS.map((day) => (
+						<div key={day} className={styles.weekday}>
+							{day}
+						</div>
+					))}
 				</div>
 				<div className={styles.days}>
 					{[...Array(firstDay)].map((_, index) => (
@@ -269,24 +216,105 @@ const DiaryEdit = () => {
 							</div>
 						);
 					})}
-					{[...Array(42 - (firstDay + daysInMonth))].map(
-						(_, index) => (
-							<div
-								key={`next-${index}`}
-								className={`${styles.day} ${styles.nextMonth}`}
-							>
-								<span className={styles.dateNumber}>
-									{index + 1}
-								</span>
-							</div>
-						),
-					)}
+					{[...Array(42 - (firstDay + daysInMonth))].map((_, index) => (
+						<div
+							key={`next-${index}`}
+							className={`${styles.day} ${styles.nextMonth}`}
+						>
+							<span className={styles.dateNumber}>{index + 1}</span>
+						</div>
+					))}
 				</div>
 			</div>
 
-			{showAddModal && renderAddModal()}
-			{showViewModal && selectedEntry && renderViewModal()}
-		</div>
+			<Modal
+				isOpen={showAddModal}
+				onClose={() => setShowAddModal(false)}
+				size="lg"
+			>
+				<ModalHeader>
+					Add New Entry
+					<ModalCloseButton onClose={() => setShowAddModal(false)} />
+				</ModalHeader>
+				<ModalBody>
+					<DiaryForm
+						onSubmit={handleSubmit}
+						existingTags={getExistingTags()}
+					/>
+				</ModalBody>
+			</Modal>
+
+			<Modal
+				isOpen={showViewModal}
+				onClose={() => setShowViewModal(false)}
+				size="md"
+			>
+				<ModalHeader>
+					{selectedEntry &&
+						new Date(selectedEntry.date).toLocaleDateString("en-US", {
+							month: "long",
+							day: "numeric",
+							year: "numeric",
+						})}
+					<ModalCloseButton onClose={() => setShowViewModal(false)} />
+				</ModalHeader>
+				<ModalBody>
+					{selectedEntry && (
+						<>
+							<Text style={{ marginBottom: "1rem" }}>{selectedEntry.content}</Text>
+							<Flex gap="0.5rem" wrap="wrap" style={{ marginBottom: "1rem" }}>
+								<Badge variant="primary">{selectedEntry.mood}</Badge>
+								{selectedEntry.tags?.map((tag) => (
+									<Badge key={tag} variant="default">
+										{tag}
+									</Badge>
+								))}
+							</Flex>
+							{selectedEntry.images?.length > 0 && (
+								<Flex direction="column" gap="0.75rem">
+									{selectedEntry.images.map((image, index) => (
+										<img
+											key={index}
+											src={image}
+											alt={`Entry ${index + 1}`}
+											style={{
+												width: "100%",
+												borderRadius: "10px",
+											}}
+										/>
+									))}
+								</Flex>
+							)}
+						</>
+					)}
+				</ModalBody>
+				<ModalFooter>
+					<Button
+						variant="outline"
+						colorScheme="red"
+						onClick={() => setShowDeleteModal(true)}
+					>
+						Delete
+					</Button>
+					<Button
+						variant="primary"
+						colorScheme="green"
+						onClick={() => setShowViewModal(false)}
+					>
+						Close
+					</Button>
+				</ModalFooter>
+			</Modal>
+
+			<ConfirmModal
+				isOpen={showDeleteModal}
+				onClose={() => setShowDeleteModal(false)}
+				onConfirm={handleDelete}
+				title="Delete Entry"
+				message="Are you sure you want to delete this diary entry?"
+				confirmLabel="Delete"
+			/>
+		</>
 	);
 };
 

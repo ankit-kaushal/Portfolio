@@ -3,9 +3,17 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import {
+	Button,
+	FormControl,
+	FormLabel,
+	Input,
+	Textarea,
+	Toast,
+	Grid,
+} from "uiplex";
 import { apiUrl, getAuthHeaders } from "@/lib/api";
-import styles from "./styles.module.css";
-import Toast from "../../../../components/common/Toast";
+import styles from "../../admin.module.css";
 
 const AboutEdit = () => {
 	const data = useSelector((state) => state.data);
@@ -24,10 +32,8 @@ const AboutEdit = () => {
 		},
 	});
 	const [isLoading, setIsLoading] = useState(false);
-	const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
+	const handleChange = (name, value) => {
 		if (name.startsWith("pictureUrl.")) {
 			const key = name.split(".")[1];
 			setFormData((prev) => ({
@@ -51,137 +57,112 @@ const AboutEdit = () => {
 			);
 
 			if (response.status === 200) {
-				setToast({
-					show: true,
-					message: "Updated successfully!",
-					type: "success",
-				});
+				Toast.success("Profile updated successfully!");
 			}
 		} catch (error) {
-			setToast({
-				show: true,
-				message: error.response?.data?.message || "Update failed",
-				type: "error",
-			});
+			Toast.error(error.response?.data?.message || "Update failed");
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
 	return (
-		<div className={styles.editContainer}>
-			<h2>Edit About Information</h2>
-
-			{/* Remove the old message div */}
-
-			<form onSubmit={handleSubmit} className={styles.form}>
-				<div className={styles.formGroup}>
-					<label>Name</label>
-					<input
-						type="text"
-						name="name"
+		<form onSubmit={handleSubmit}>
+			<Grid templateColumns="repeat(2, 1fr)" className={styles.formGrid} gap="1rem">
+				<FormControl>
+					<FormLabel>Name</FormLabel>
+					<Input
 						value={formData.name}
-						onChange={handleChange}
+						onChange={(e) => handleChange("name", e.target.value)}
 						placeholder="Your Name"
 					/>
-				</div>
+				</FormControl>
 
-				<div className={styles.formGroup}>
-					<label>Description</label>
-					<textarea
-						name="description"
-						value={formData.description}
-						onChange={handleChange}
-						placeholder="Your Description"
-						rows="3"
-					/>
-				</div>
-
-				<div className={styles.formGroup}>
-					<label>Current Location</label>
-					<input
-						type="text"
-						name="currentLocation"
+				<FormControl>
+					<FormLabel>Current Location</FormLabel>
+					<Input
 						value={formData.currentLocation}
-						onChange={handleChange}
+						onChange={(e) =>
+							handleChange("currentLocation", e.target.value)
+						}
 						placeholder="Your Current Location"
 					/>
-				</div>
+				</FormControl>
 
-				<div className={styles.formGroup}>
-					<label>Logo URL</label>
-					<input
-						type="text"
-						name="logoUrl"
+				<FormControl>
+					<FormLabel>Logo URL</FormLabel>
+					<Input
 						value={formData.logoUrl}
-						onChange={handleChange}
+						onChange={(e) => handleChange("logoUrl", e.target.value)}
 						placeholder="Logo URL"
 					/>
-				</div>
+				</FormControl>
 
-				<div className={styles.formGroup}>
-					<label>Home Picture URL</label>
-					<input
-						type="text"
-						name="pictureUrl.home"
+				<FormControl>
+					<FormLabel>Home Picture URL</FormLabel>
+					<Input
 						value={formData.pictureUrl.home}
-						onChange={handleChange}
+						onChange={(e) =>
+							handleChange("pictureUrl.home", e.target.value)
+						}
 						placeholder="Home Picture URL"
 					/>
-				</div>
+				</FormControl>
 
-				<div className={styles.formGroup}>
-					<label>About Title</label>
-					<input
-						type="text"
-						name="aboutTitle"
+				<FormControl>
+					<FormLabel>About Title</FormLabel>
+					<Input
 						value={formData.aboutTitle}
-						onChange={handleChange}
+						onChange={(e) => handleChange("aboutTitle", e.target.value)}
 						placeholder="About Title"
 					/>
-				</div>
+				</FormControl>
 
-				<div className={styles.formGroup}>
-					<label>About Description</label>
-					<textarea
-						name="aboutDescription"
-						value={formData.aboutDescription}
-						onChange={handleChange}
-						placeholder="About Description"
-						rows="5"
-					/>
-				</div>
-
-				<div className={styles.formGroup}>
-					<label>About Picture URL</label>
-					<input
-						type="text"
-						name="pictureUrl.about"
+				<FormControl>
+					<FormLabel>About Picture URL</FormLabel>
+					<Input
 						value={formData.pictureUrl.about}
-						onChange={handleChange}
-						placeholder="Picture URL"
+						onChange={(e) =>
+							handleChange("pictureUrl.about", e.target.value)
+						}
+						placeholder="About Picture URL"
 					/>
-				</div>
+				</FormControl>
 
-				<button
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>Description</FormLabel>
+					<Textarea
+						value={formData.description}
+						onChange={(e) => handleChange("description", e.target.value)}
+						placeholder="Your Description"
+						rows={3}
+					/>
+				</FormControl>
+
+				<FormControl style={{ gridColumn: "1 / -1" }}>
+					<FormLabel>About Description</FormLabel>
+					<Textarea
+						value={formData.aboutDescription}
+						onChange={(e) =>
+							handleChange("aboutDescription", e.target.value)
+						}
+						placeholder="About Description"
+						rows={5}
+					/>
+				</FormControl>
+			</Grid>
+
+			<div className={styles.formActions}>
+				<Button
 					type="submit"
-					disabled={isLoading}
-					className={styles.submitButton}
+					variant="primary"
+					colorScheme="green"
+					loading={isLoading}
 				>
-					{isLoading ? "Updating..." : "Update"}
-				</button>
-			</form>
-
-			{toast.show && (
-				<Toast
-					message={toast.message}
-					type={toast.type}
-					onClose={() =>
-						setToast({ show: false, message: "", type: "" })
-					}
-				/>
-			)}
-		</div>
+					Save Changes
+				</Button>
+			</div>
+		</form>
 	);
 };
 
