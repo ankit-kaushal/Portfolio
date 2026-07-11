@@ -2,8 +2,8 @@ name: Update Portfolio Data
 
 on:
   schedule:
-    # Every 10 minutes for testing — later use "0 0 * * *" for daily
-    - cron: "*/10 * * * *"
+    # Weekly on Monday at 00:00 UTC
+    - cron: "0 0 * * 1"
   workflow_dispatch:
 
 concurrency:
