@@ -356,6 +356,16 @@
 	],
 	"blogs": [
 		{
+			"id": "6a5207127422b6d605ed5324",
+			"source": "portfolio",
+			"title": "A Late-Night \"Glitch\" in Gurgaon",
+			"excerpt": "The life of a software developer often involves long hours, but nothing quite prepares you for a \"glitch\" that doesn't happen in the code, but in reality. Back...",
+			"coverImage": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1783760613/mbwyboq6df2ieha65eiv.png",
+			"link": "/blogs/a-late-night-glitch-in-gurgaon",
+			"slug": "a-late-night-glitch-in-gurgaon",
+			"publishedAt": "2026-04-15T00:00:00.000Z"
+		},
+		{
 			"id": "https://medium.com/p/77ecdc4049b1",
 			"source": "medium",
 			"title": "My Modal Had Overflow, Height, and z-Index — Still No Scroll",
@@ -437,7 +447,22 @@
 			"publishedAt": "2024-07-12 11:05:43"
 		}
 	],
-	"portfolioBlogs": [],
+	"portfolioBlogs": [
+		{
+			"_id": "6a5207127422b6d605ed5324",
+			"title": "A Late-Night \"Glitch\" in Gurgaon",
+			"slug": "a-late-night-glitch-in-gurgaon",
+			"excerpt": "The life of a software developer often involves long hours, but nothing quite prepares you for a \"glitch\" that doesn't happen in the code, but in reality. Back...",
+			"content": "<p>The life of a software developer often involves long hours, but nothing quite prepares you for a \"glitch\" that doesn't happen in the code, but in reality.</p><p>Back when I was working at my previous company in Gurgaon, our office was located near the Fortis Hospital exit gate. It’s a busy area during the day, but by 11 PM, the streets take on a different, quieter energy. One night, after a long deployment shift, we finally wrapped up our work and headed out. I had my scooty with me, so getting home late at night wasn’t a problem.</p><h2>The First Encounter</h2><p>I had barely traveled 100 meters when I saw a girl walking alone. She was wearing a Kurti with jeans and looked like she was from a good family. When she waved her hand to stop me, I hesitated. In a city like Gurgaon, you learn to be cautious. But then I thought, this is right next to my office. Nothing shady should happen here. So I stopped.</p><p>She looked distressed. She explained that her friend was admitted to Fortis and she had stepped out to get food. Now, the guard wouldn't let her back in through the back gate, and since she didn't have her phone, she couldn't book a ride to the front.</p><p>\"I’m heading that way anyway,\" I told her. \"I'll drop you.\"</p><p>The entire ride was silent. When we reached the front gate, another girl was already standing there, waiting. <em>\"Payal yaar, kitna time laga diya!\"</em> the friend exclaimed. <em>\"Sorry, Preeti,\"</em> Payal replied, explaining the situation. They both thanked me, and I went home. Just a small act of kindness, I thought.</p><h2>The Second Encounter</h2><p>A few days later, we were staying late again for another deployment. Around 8 PM, I went down to the gate to collect a dinner order from a delivery rider.</p><p>There she was again. She waved at me. <em>\"Oh hi, again here?\"</em> I asked. She smiled. “Yeah, came to get food for my friends.” She thanked me again for that night and casually mentioned that her friend was still in the hospital. We exchanged a few words. It felt… normal. Almost too normal. I even joked, “Again from the exit gate? You could’ve just gone to the front.” She laughed and said she didn't have an issue with the guards anymore.</p><p>As we were talking, I spotted my delivery rider. I shouted out to him, <em>\"Han bhaiya, mera order hai!\"</em> I turned my head for just a second to grab the bag. When I turned back to say goodbye... <strong>she was gone.</strong></p><h2>The Evidence</h2><p>I looked at the security guard standing nearby. <em>\"Where did that girl go? I was just talking to her.?\"</em> I asked. The guard looked at me like I was crazy. <em>\"Kaunsi ladki? Aap toh akele the.\" </em>(Which girl? You were alone.)</p><p>I brushed it off, thinking he just hadn't noticed. But when I went back upstairs, I saw a notification on my phone. A colleague had taken a snap of me from the office window while I was collecting my food.</p><p>My blood ran cold.</p><p>In the video, I was alone when I turned back to delivery person. The space where \"Payal\" stood was empty air.</p><h2>The Realization</h2><p>That night, I replayed everything in my head. That night… she didn’t have a phone. She clearly told me that. So how was Preeti (her friend) already standing at the front gate, at the exact second we arrived, waiting for her?</p><p>At that moment, during the ride, it didn’t feel strange. But now… it didn’t make sense at all.</p>",
+			"coverImage": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1783760613/mbwyboq6df2ieha65eiv.png",
+			"tags": [],
+			"published": true,
+			"publishedAt": "2026-04-15T00:00:00.000Z",
+			"createdAt": "2026-07-11T09:04:18.272Z",
+			"updatedAt": "2026-07-11T09:04:18.272Z",
+			"__v": 0
+		}
+	],
 	"mediumBlogs": [
 		{
 			"id": "https://medium.com/p/77ecdc4049b1",
