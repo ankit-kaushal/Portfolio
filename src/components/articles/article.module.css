@@ -31,6 +31,19 @@
 	margin-bottom: 12px;
 }
 
+.articleBadge {
+	display: inline-flex;
+	align-items: center;
+	margin-bottom: 8px;
+	padding: 0.2rem 0.55rem;
+	border-radius: 999px;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	background: color-mix(in srgb, var(--link-color, #089669) 14%, transparent);
+	color: var(--link-color, #089669);
+}
+
 .articleDescription {
 	padding-top: 10px;
 	font-size: 12px;

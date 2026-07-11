@@ -76,13 +76,6 @@ export default function BlogDetailView({ slug }) {
 						<p className={styles.status}>{error}</p>
 					) : blog ? (
 						<article className={styles.article}>
-							{blog.coverImage ? (
-								<img
-									src={blog.coverImage}
-									alt={blog.title}
-									className={styles.coverImage}
-								/>
-							) : null}
 							<h1 className={styles.title}>{blog.title}</h1>
 							<div className={styles.meta}>
 								<span>
@@ -98,6 +91,13 @@ export default function BlogDetailView({ slug }) {
 									<span>{blog.tags.join(" · ")}</span>
 								)}
 							</div>
+							{blog.coverImage ? (
+								<img
+									src={blog.coverImage}
+									alt={blog.title}
+									className={styles.coverImage}
+								/>
+							) : null}
 							{blog.content ? (
 								<div
 									className={styles.content}

@@ -31,23 +31,8 @@
 }
 
 .articleItem {
-	position: relative;
 	box-shadow: rgb(0 0 0 / 10%) 0 4px 12px;
 	background: var(--elements-background-color);
-}
-
-.sourceBadge {
-	position: absolute;
-	top: 12px;
-	right: 12px;
-	z-index: 2;
-	padding: 0.2rem 0.55rem;
-	border-radius: 999px;
-	font-size: 0.7rem;
-	font-weight: 600;
-	letter-spacing: 0.02em;
-	background: color-mix(in srgb, var(--link-color, #089669) 14%, transparent);
-	color: var(--link-color, #089669);
 }
 
 .articleItem:hover {

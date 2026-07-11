@@ -31,12 +31,14 @@
 
 .status {
 	opacity: 0.7;
+	color: var(--secondary-color);
 }
 
 .article {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	color: var(--primary-color);
 }
 
 .coverImage {
@@ -44,12 +46,14 @@
 	max-height: 420px;
 	object-fit: cover;
 	border-radius: 16px;
+	margin-top: 0.5rem;
 }
 
 .title {
 	font-size: clamp(2rem, 4vw, 2.75rem);
 	line-height: 1.2;
 	margin: 0;
+	color: var(--primary-color);
 }
 
 .meta {
@@ -58,11 +62,13 @@
 	gap: 0.75rem 1.25rem;
 	opacity: 0.7;
 	font-size: 0.95rem;
+	color: var(--secondary-color);
 }
 
 .content {
 	line-height: 1.8;
 	font-size: 1.05rem;
+	color: var(--primary-color);
 }
 
 .content :global(h1),
@@ -70,6 +76,7 @@
 .content :global(h3) {
 	line-height: 1.3;
 	margin: 1.75rem 0 0.75rem;
+	color: var(--primary-color);
 }
 
 .content :global(h1) {
@@ -82,6 +89,12 @@
 
 .content :global(h3) {
 	font-size: 1.25rem;
+}
+
+.content :global(p),
+.content :global(li),
+.content :global(span) {
+	color: inherit;
 }
 
 .content :global(p) {
@@ -102,7 +115,7 @@
 	margin: 0 0 1.25rem;
 	padding: 0.5rem 0 0.5rem 1rem;
 	border-left: 3px solid var(--link-color, #089669);
-	opacity: 0.9;
+	color: var(--secondary-color);
 	font-style: italic;
 }
 
@@ -123,7 +136,8 @@
 	font-size: 0.9em;
 	padding: 0.15rem 0.4rem;
 	border-radius: 6px;
-	background: color-mix(in srgb, var(--text-color, #111) 8%, transparent);
+	background: var(--side-background-color);
+	color: var(--primary-color);
 }
 
 .content :global(pre) {

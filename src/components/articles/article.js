@@ -45,6 +45,7 @@ export default function Article({
 	link,
 	image,
 	internal = false,
+	badge = "",
 }) {
 	const content = (
 		<div className={styles.articleRightSide}>
@@ -54,6 +55,7 @@ export default function Article({
 					style={{ backgroundImage: `url(${image})` }}
 				/>
 			)}
+			{badge ? <div className={styles.articleBadge}>{badge}</div> : null}
 			<div className={styles.articleTitle}>{title}</div>
 			<div className={styles.articleDescription}>{description}</div>
 			<div className={styles.articleFlex}>

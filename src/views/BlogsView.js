@@ -158,9 +158,6 @@ export default function BlogsView() {
 						) : blogs.length ? (
 							blogs.map((blog) => (
 								<div className={styles.articleItem} key={blog.id}>
-									<div className={styles.sourceBadge}>
-										{blog.source === "medium" ? "Medium" : "Portfolio"}
-									</div>
 									<Article
 										date={blog.date}
 										title={blog.title}
@@ -168,6 +165,9 @@ export default function BlogsView() {
 										image={blog.image}
 										link={blog.link}
 										internal={blog.internal}
+										badge={
+											blog.source === "medium" ? "Medium" : "Portfolio"
+										}
 									/>
 								</div>
 							))
