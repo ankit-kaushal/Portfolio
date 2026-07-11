@@ -2,9 +2,13 @@ name: Update Portfolio Data
 
 on:
   schedule:
-    # Hourly for testing — change to "0 0 * * *" for daily
-    - cron: "0 * * * *"
+    # Every 10 minutes for testing — later use "0 0 * * *" for daily
+    - cron: "*/10 * * * *"
   workflow_dispatch:
+
+concurrency:
+  group: update-portfolio-data
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -14,6 +18,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -26,16 +33,26 @@ jobs:
 
       - name: Update data.json from /api/profile
         env:
+          CI: "true"
+          # Override via repo Actions variable PROFILE_API_URL if needed
           PROFILE_API_URL: ${{ vars.PROFILE_API_URL }}
-        run: npm run update-data
+        run: |
+          if [ -z "$PROFILE_API_URL" ]; then
+            export PROFILE_API_URL="https://www.ankitkaushal.in/api/profile"
+          fi
+          echo "Using PROFILE_API_URL=$PROFILE_API_URL"
+          npm run update-data
 
       - name: Check for changes
         id: check_changes
         run: |
           if [[ -n "$(git status --porcelain public/data.json)" ]]; then
             echo "changes=true" >> "$GITHUB_OUTPUT"
+            echo "data.json changed"
+            git diff --stat public/data.json
           else
             echo "changes=false" >> "$GITHUB_OUTPUT"
+            echo "No changes in data.json"
           fi
 
       - name: Commit and push updated data.json

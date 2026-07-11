@@ -24,14 +24,23 @@ function getProfileApiUrl() {
 
 async function updateData() {
 	const profileUrl = getProfileApiUrl();
+	const failOnError = process.env.CI === "true";
 
 	try {
+		console.log(`Fetching portfolio data from ${profileUrl}`);
 		const response = await axios.get(profileUrl, {
 			timeout: 30000,
 			headers: {
 				Accept: "application/json",
 			},
+			validateStatus: () => true,
 		});
+
+		if (response.status < 200 || response.status >= 300) {
+			throw new Error(
+				`Profile API returned HTTP ${response.status}: ${JSON.stringify(response.data)?.slice(0, 200)}`,
+			);
+		}
 
 		const newData = response.data;
 
@@ -42,13 +51,15 @@ async function updateData() {
 		fs.writeFileSync(DATA_FILE, `${JSON.stringify(newData, null, "\t")}\n`);
 		console.log(`Data updated successfully from ${profileUrl}`);
 	} catch (error) {
+		console.error("Error updating data:", error.message);
+
+		if (failOnError) {
+			process.exit(1);
+		}
+
 		if (fs.existsSync(DATA_FILE)) {
-			console.warn(
-				"Could not fetch profile data from API, keeping existing data.json:",
-				error.message,
-			);
+			console.warn("Keeping existing data.json");
 		} else {
-			console.error("Error updating data:", error.message);
 			process.exit(1);
 		}
 	}

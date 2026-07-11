@@ -356,6 +356,16 @@
 	],
 	"blogs": [
 		{
+			"id": "6a5210fabbdab10887db21d4",
+			"source": "portfolio",
+			"title": "The Night the Village Went Silent for My Meeting",
+			"excerpt": "Yesterday was a very special day for my family. After months of renovation, we finally performed the Grih Pravesh Puja for our ancestral home in our village. Ac...",
+			"coverImage": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1783763177/ahmlcecybl8wfh5jsmsj.png",
+			"link": "/blogs/the-night-the-village-went-silent-for-my-meeting",
+			"slug": "the-night-the-village-went-silent-for-my-meeting",
+			"publishedAt": "2026-04-21T00:00:00.000Z"
+		},
+		{
 			"id": "6a5207127422b6d605ed5324",
 			"source": "portfolio",
 			"title": "A Late-Night \"Glitch\" in Gurgaon",
@@ -448,6 +458,20 @@
 		}
 	],
 	"portfolioBlogs": [
+		{
+			"_id": "6a5210fabbdab10887db21d4",
+			"title": "The Night the Village Went Silent for My Meeting",
+			"slug": "the-night-the-village-went-silent-for-my-meeting",
+			"excerpt": "Yesterday was a very special day for my family. After months of renovation, we finally performed the Grih Pravesh Puja for our ancestral home in our village. Ac...",
+			"content": "<p>Yesterday was a very special day for my family. After months of renovation, we finally performed the <strong>Grih Pravesh Puja</strong> for our ancestral home in our village. According to our tradition, the family spends the first night in the house after the puja. So, we stayed there that night.</p><p>Although I had taken leave from work to be with my family, an important meeting with our CEO was scheduled for the same evening. Since it was an important discussion, I decided to join the meeting from the village.</p><p>As the meeting time approached, a wedding procession nearby was getting ready to leave. The DJ was playing at full volume as everyone gathered for the baraat.</p><p>At first, I thought I could manage. I went into a room and closed the doors, hoping the noise would reduce. But the village network had other plans, the signal inside the room was too weak for a video call. The signal was much better outside, but so was the sound of the DJ. I was stuck between a loud DJ upstairs and no internet downstairs.</p><p>I was trying to figure out what to do when my uncle noticed the situation. He walked over to the DJ team and politely requested them to lower the volume for a little while because I had an important office meeting.</p><p>What happened next was something I never expected.</p><p>Within a few minutes, the music didn't just become softer, it stopped completely.</p><p>As people came to know why the request had been made, everyone understood. Instead of getting impatient, the people who had gathered for the baraat quietly waited outside our house. No one complained. No one insisted on starting the music again.</p><p>They simply waited.</p><p>I attended my meeting without any disturbance. Only after my meeting ended did the DJ start playing again, and the baraat continued its celebration.</p><p>The entire incident lasted only a short while, but it has stayed with me ever since.</p><p>None of those people were a part of my meeting. They didn't know what we were discussing or why it was important. Yet they chose to pause their celebration so that someone else could finish an important responsibility.</p><p>It may seem like a small incident, but to me, it speaks volumes about the spirit of village life.</p><p>We often say that villages may not have the best infrastructure. And that's true, sometimes even finding a stable internet connection can be a challenge.</p><p>But villages have something that is much harder to build than roads or mobile towers.</p><p>They have people who genuinely care about one another.</p><p>In cities, we often adjust ourselves to fit the situation.</p><p>In villages, people often adjust for each other.</p><p>That night reminded me that community isn't just about living in the same place. It's about understanding, respecting, and helping each other without expecting anything in return.</p>",
+			"coverImage": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1783763177/ahmlcecybl8wfh5jsmsj.png",
+			"tags": [],
+			"published": true,
+			"publishedAt": "2026-04-21T00:00:00.000Z",
+			"createdAt": "2026-07-11T09:46:34.753Z",
+			"updatedAt": "2026-07-11T09:46:34.753Z",
+			"__v": 0
+		},
 		{
 			"_id": "6a5207127422b6d605ed5324",
 			"title": "A Late-Night \"Glitch\" in Gurgaon",
