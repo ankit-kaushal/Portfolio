@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 import NavBar from "@/components/common/navBar";
 import Footer from "@/components/common/footer";
@@ -12,7 +11,6 @@ import ShootingStars from "@/components/common/ShootingStars";
 import layoutStyles from "@/components/layout/layout.module.css";
 import INFO from "@/data/user";
 import myArticles from "@/data/articles";
-import { apiUrl } from "@/lib/api";
 
 import styles from "./blogs.module.css";
 
@@ -80,65 +78,58 @@ function toFeedItem(item) {
 	};
 }
 
+function buildBlogFeed(data) {
+	if (Array.isArray(data?.blogs) && data.blogs.length) {
+		return data.blogs.map(toFeedItem);
+	}
+
+	const portfolio = (data?.portfolioBlogs || []).map((blog) =>
+		toFeedItem({ ...blog, source: "portfolio" }),
+	);
+	const medium = (data?.mediumBlogs || []).map((blog) =>
+		toFeedItem({ ...blog, source: "medium" }),
+	);
+
+	return [...portfolio, ...medium].sort(
+		(a, b) => new Date(b.date || 0) - new Date(a.date || 0),
+	);
+}
+
 export default function BlogsView() {
 	const data = useSelector((state) => state.data);
-	const { user = {}, blogs: storeBlogs = [] } = data || {};
-	const [blogs, setBlogs] = useState(
-		Array.isArray(storeBlogs) ? storeBlogs.map(toFeedItem) : [],
-	);
-	const [isLoading, setIsLoading] = useState(!storeBlogs.length);
+	const { user = {} } = data || {};
+	const [blogs, setBlogs] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
 
 	useEffect(() => {
-		const fetchBlogs = async () => {
-			try {
-				const [portfolioRes, profileRes] = await Promise.all([
-					axios.get(apiUrl("/blogs")),
-					axios.get(apiUrl("/profile")),
-				]);
+		if (!data) return;
 
-				const portfolio = (portfolioRes.data || []).map((blog) =>
-					toFeedItem({ ...blog, source: "portfolio" }),
-				);
-				const medium = (profileRes.data?.mediumBlogs || []).map((blog) =>
-					toFeedItem({ ...blog, source: "medium" }),
-				);
-
-				const merged = [...portfolio, ...medium].sort((a, b) => {
-					return new Date(b.date || 0) - new Date(a.date || 0);
-				});
-
-				setBlogs(merged);
-			} catch (error) {
-				console.error("Error fetching blogs:", error);
-				if (!blogs.length) {
-					setBlogs(
-						myArticles.map((articleFn, index) => {
-							const article = articleFn();
-							return {
-								id: `static-${index}`,
-								title: article.title,
-								date: article.date,
-								description: article.description,
-								image: "",
-								link: article.link,
-								internal: false,
-								source: "medium",
-							};
-						}),
-					);
-				}
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchBlogs();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		const feed = buildBlogFeed(data);
+		if (feed.length) {
+			setBlogs(feed);
+		} else {
+			setBlogs(
+				myArticles.map((articleFn, index) => {
+					const article = articleFn();
+					return {
+						id: `static-${index}`,
+						title: article.title,
+						date: article.date,
+						description: article.description,
+						image: "",
+						link: article.link,
+						internal: false,
+						source: "medium",
+					};
+				}),
+			);
+		}
+		setIsLoading(false);
+	}, [data]);
 
 	return (
 		<div className={layoutStyles.pageContent}>

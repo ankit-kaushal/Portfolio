@@ -1,40 +1,524 @@
 {
-  "pictureUrl": {
-    "home": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742022848/Pic_vln7wz.jpg",
-    "about": "https://document-upload.cogoport.io/profile_images/ebdb04ef-2f90-4848-9396-d38d4487dbb7.png"
-  },
-  "name": "Ankit Kaushal",
-  "logoUrl": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742022944/logo_ma8a0c.png",
-  "description": "Frontend Software Developer with 3.9 years of experience specializing in creating dynamic and visually appealing web applications. Currently, I am a valuable member of the development team at Silverlabs India Pvt Ltd, where I contribute to the design and implementation of user interfaces.",
-  "aboutDescription": "and I am delighted to introduce myself as a software engineer at Silverlabs India Pvt Ltd, located in the vibrant city of Hyderabad. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role. I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures. Throughout my academic journey, I actively engaged in coding competitions and collaborative projects, sharpening my skills and fostering a hands-on approach to software development.",
-  "aboutTitle": "I’m Ankit Kaushal,",
-  "social": [
-    {
-      "name": "linkedin",
-      "url": "https://www.linkedin.com/in/ankit-kaushal/",
-      "_id": "67bdd0297541b809dc24737b"
-    },
-    {
-      "name": "github",
-      "url": "https://github.com/ankit-kaushal",
-      "_id": "67bdd0297541b809dc24737c"
-    },
-    {
-      "name": "email",
-      "url": "ankitkaushal288@gmail.com",
-      "_id": "67bdd0297541b809dc24737d"
-    },
-    {
-      "name": "twitter",
-      "url": "https://twitter.com/ImAnkitKaushal",
-      "_id": "67bdd0297541b809dc24737e"
-    },
-    {
-      "name": "instagram",
-      "url": "https://www.instagram.com/imankitkaushal/",
-      "_id": "67bdd0297541b809dc24737f"
-    }
-  ],
-  "__v": 0,
-  "currentLocation": "Hyderabad, Telangana"
+	"user": {
+		"pictureUrl": {
+			"home": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742022848/Pic_vln7wz.jpg",
+			"about": "https://document-upload.cogoport.io/profile_images/ebdb04ef-2f90-4848-9396-d38d4487dbb7.png"
+		},
+		"_id": "67bdd0297541b809dc24737a",
+		"name": "Ankit Kaushal",
+		"logoUrl": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742022944/logo_ma8a0c.png",
+		"description": "Frontend Software Developer with 3.9 years of experience specializing in creating dynamic and visually appealing web applications. Currently, I am a valuable member of the development team at Silverlabs India Pvt Ltd, where I contribute to the design and implementation of user interfaces.",
+		"aboutDescription": "and I am delighted to introduce myself as a software engineer at Silverlabs India Pvt Ltd, located in the vibrant city of Hyderabad. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role. I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures. Throughout my academic journey, I actively engaged in coding competitions and collaborative projects, sharpening my skills and fostering a hands-on approach to software development.",
+		"aboutTitle": "I’m Ankit Kaushal,",
+		"social": [
+			{
+				"name": "linkedin",
+				"url": "https://www.linkedin.com/in/ankit-kaushal/",
+				"_id": "67bdd0297541b809dc24737b"
+			},
+			{
+				"name": "github",
+				"url": "https://github.com/ankit-kaushal",
+				"_id": "67bdd0297541b809dc24737c"
+			},
+			{
+				"name": "email",
+				"url": "ankitkaushal288@gmail.com",
+				"_id": "67bdd0297541b809dc24737d"
+			},
+			{
+				"name": "twitter",
+				"url": "https://twitter.com/ImAnkitKaushal",
+				"_id": "67bdd0297541b809dc24737e"
+			},
+			{
+				"name": "instagram",
+				"url": "https://www.instagram.com/imankitkaushal/",
+				"_id": "67bdd0297541b809dc24737f"
+			}
+		],
+		"__v": 0,
+		"currentLocation": "Hyderabad, Telangana"
+	},
+	"projects": [
+		{
+			"_id": "696d00a3ab9d28f85113d2e7",
+			"projectName": "Code Player v2",
+			"projectDescription": "Code Player v2 is a web-based real-time code editor that allows users to write, edit, and run HTML, CSS, and JavaScript with live preview and console output. It supports code formatting, downloadable snippets, shareable links, and email preview testing with a credit-based system powered by Cashfree payments.",
+			"projectLink": "https://code.docreator.in/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Code-Player-V2",
+			"projectType": "personal",
+			"mainStack": "react",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1768752598/qyuesbj1x7t93fc6wlya.png",
+			"projectPublishDate": "2025-12-20T08:00:00.000Z",
+			"createdAt": "2026-01-18T15:47:47.939Z",
+			"updatedAt": "2026-01-18T16:10:17.424Z",
+			"__v": 0
+		},
+		{
+			"_id": "696d03b7dbaf29c282c0c117",
+			"projectName": "Modernity Test",
+			"projectDescription": "Modernity Test is an interactive web app designed to assess modern thinking patterns through a clean, engaging quiz-based experience. It focuses on intuitive UI, smooth interactions, and clear result visualization to make the test both insightful and enjoyable for users.",
+			"projectLink": "https://github.com/ankit-kaushal/Modernity-Test",
+			"projectGitHub": "https://modernitytest.ankitkaushal.in/",
+			"projectType": "personal",
+			"mainStack": "react",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1768751727/fri3ryij3odbhh3lmykv.png",
+			"projectPublishDate": "2025-12-09T08:00:00.000Z",
+			"createdAt": "2026-01-18T16:00:55.571Z",
+			"updatedAt": "2026-01-18T16:00:55.571Z",
+			"__v": 0
+		},
+		{
+			"_id": "696d012bab9d28f85113d2e9",
+			"projectName": "UIPlex",
+			"projectDescription": "UIPlex is a reusable frontend UI component library focused on building clean, consistent, and scalable user interfaces. It provides themeable, customizable components with light and dark mode support, helping developers ship UI faster while maintaining design consistency.",
+			"projectLink": "https://uiplex.ankitkaushal.in/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Frontend-UI-Library",
+			"projectType": "personal",
+			"mainStack": "react",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1768752222/gf4dfbyr87vbd73fhhm8.png",
+			"projectPublishDate": "2025-08-22T08:00:00.000Z",
+			"createdAt": "2026-01-18T15:50:03.353Z",
+			"updatedAt": "2026-01-18T16:05:29.863Z",
+			"__v": 0
+		},
+		{
+			"_id": "67fe4d4137a32c46d9e1cf4a",
+			"projectName": "Layout Lens",
+			"projectDescription": "Layout Lens is a Chrome extension I built to help frontend developers inspect and debug CSS Flex and Grid layouts on any webpage. It overlays visual guides to highlight flex containers, grid tracks, and layout boundaries—making it easier to understand and troubleshoot complex UI structures.",
+			"projectLink": "",
+			"projectGitHub": "https://github.com/ankit-kaushal/Layout-Lens",
+			"projectType": "personal",
+			"mainStack": "javascript",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1744718669/pdkwif0n1j2m8wp19rcm.png",
+			"projectPublishDate": "2025-04-14T00:00:00.000Z",
+			"createdAt": "2025-04-15T12:12:49.396Z",
+			"updatedAt": "2025-05-04T14:26:33.411Z",
+			"__v": 0
+		},
+		{
+			"_id": "693ebffea3609432c9cd710e",
+			"projectName": "New Rajasthan Motor Driving School",
+			"projectDescription": "I developed this website as a freelance project to strengthen its digital presence and improve accessibility for learners. The driving school provides professional training for four-wheelers, focusing on road safety, practical skills, and confidence building. The website presents course details, admission information, and contact options in a user-friendly manner.",
+			"projectLink": "https://www.newrajasthanmotor.com/",
+			"projectGitHub": "https://github.com/ankit-kaushal/New-Rajasthan-Motor",
+			"projectType": "personal",
+			"mainStack": "html",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1765720046/luldtqzltbwrxxzpz2k4.png",
+			"projectPublishDate": "2024-08-11T00:00:00.000Z",
+			"createdAt": "2025-12-14T13:47:42.614Z",
+			"updatedAt": "2025-12-15T05:18:59.787Z",
+			"__v": 0
+		},
+		{
+			"_id": "693ebed8e75061bcdd4df9d3",
+			"projectName": "Clap massage service",
+			"projectDescription": "I developed this website as a freelance project to establish its online presence and simplify service discovery. Clap Massage Service offers professional at-home massage therapies focused on relaxation, wellness, and convenience. The website highlights their range of services and brand identity to help users easily explore and schedule sessions.",
+			"projectLink": "https://www.clapmassageservice.com/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Clap-Massage-Service",
+			"projectType": "personal",
+			"mainStack": "html",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1765719687/pihk63ypa70qkoelscbu.png",
+			"projectPublishDate": "2024-07-14T00:00:00.000Z",
+			"createdAt": "2025-12-14T13:42:48.641Z",
+			"updatedAt": "2025-12-14T14:24:58.934Z",
+			"__v": 0
+		},
+		{
+			"_id": "66b86f6ba5a8d58414cc3790",
+			"projectName": "Truth or Dare",
+			"projectDescription": "'Truth or Dare' is a web app for friends to play the classic game. App allows users to add members and create custom truths and dares. Once the game starts, the app randomly selects a player and presents them with a 'Truth' or 'Dare' challenge. The backend manages the list of players, truths, and dares, ensuring a seamless and enjoyable experience.",
+			"projectLink": "https://spin.ankitkaushal.in/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Truth-and-Dare",
+			"projectType": "personal",
+			"mainStack": "react",
+			"createdAt": "2024-08-11T07:59:39.238Z",
+			"updatedAt": "2025-05-02T12:44:09.352Z",
+			"__v": 0,
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741590571/Screenshot_2025-03-10_at_12.39.21_PM_ltwunh.png",
+			"projectPublishDate": "2024-06-26T08:00:00.000Z"
+		},
+		{
+			"_id": "664f282ccc49da5d08aaebaf",
+			"projectName": "Where in the world?",
+			"projectDescription": "'Where in the World?' is a web project using the REST Countries API to display country data. Users can view all countries, search by name, filter by region, click for detailed information, navigate to border countries, and toggle between light and dark modes. The interface is responsive, with hover and focus states for interactive elements.",
+			"projectLink": "https://where-in-the-world-748eb.web.app/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Countries",
+			"projectType": "personal",
+			"mainStack": "react",
+			"__v": 0,
+			"createdAt": "2024-08-10T07:59:39.238Z",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741590422/Screenshot_2025-03-10_at_12.36.43_PM_y687cn.png",
+			"projectPublishDate": "2024-05-18T08:00:00.000Z",
+			"updatedAt": "2025-03-10T07:08:12.368Z"
+		},
+		{
+			"_id": "6635fde43e0cd5f5c223d572",
+			"projectName": "Docreator",
+			"projectDescription": "This app combines a Pastebin-like tool for sharing large text via unique URLs and an Air Waybill (AWB) generator for the logistics industry. Built with React, it offers a modular, responsive, and efficient document management experience.",
+			"projectLink": "https://docreator.vercel.app/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Docreator",
+			"projectType": "personal",
+			"mainStack": "react",
+			"__v": 0,
+			"updatedAt": "2025-03-10T06:07:51.965Z",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741586777/Screenshot_2025-03-10_at_11.35.55_AM_lgoitw.png",
+			"projectPublishDate": "2023-09-23T08:00:00.000Z"
+		},
+		{
+			"_id": "67d40ad45e78c38a92e6c79b",
+			"projectName": "GenQR",
+			"projectDescription": "GenQR is a simple and efficient QR code generator. Enter any text or URL, and the app instantly creates a scannable QR code for easy sharing.",
+			"projectLink": "https://ankit-kaushal.github.io/GenQR/",
+			"projectGitHub": "https://github.com/ankit-kaushal/GenQR",
+			"projectType": "personal",
+			"mainStack": "javascript",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741949568/Screenshot_2025-03-14_at_4.22.38_PM_i0iute.png",
+			"projectPublishDate": "2021-06-30T08:00:00.000Z",
+			"createdAt": "2025-03-14T10:54:12.046Z",
+			"updatedAt": "2025-03-14T10:54:12.046Z",
+			"__v": 0
+		},
+		{
+			"_id": "6635fe4c3e0cd5f5c223d574",
+			"projectName": "VaxSlotSearch",
+			"projectDescription": "This JavaScript-based web application helps users find available COVID-19 vaccination slots using the CoWIN API. By entering their state and district, users can view real-time slot availability at nearby vaccination centers.",
+			"projectLink": "https://ankit-kaushal.github.io/VaxSlotSearch/",
+			"projectGitHub": "https://github.com/ankit-kaushal/VaxSlotSearch",
+			"projectType": "personal",
+			"mainStack": "javascript",
+			"__v": 0,
+			"updatedAt": "2025-03-10T06:12:52.710Z",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741587076/Screenshot_2025-03-10_at_11.41.04_AM_mkukj4.png",
+			"projectPublishDate": "2021-06-06T08:00:00.000Z"
+		},
+		{
+			"_id": "6635fe763e0cd5f5c223d576",
+			"projectName": "Social Distance Detection",
+			"projectDescription": "This GUI-based application uses computer vision and deep learning to detect social distancing violations in video or live camera feeds. It highlights non-compliant individuals with a red bounding box, helping authorities monitor and enforce regulations.",
+			"projectLink": "",
+			"projectGitHub": "https://github.com/ankit-kaushal/Social-Distance-Detection",
+			"projectType": "personal",
+			"mainStack": "python",
+			"__v": 0,
+			"updatedAt": "2025-03-10T06:23:58.952Z",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741587719/Screenshot_2025-03-10_at_11.51.26_AM_epaobq.png",
+			"projectPublishDate": "2021-05-31T08:00:00.000Z"
+		},
+		{
+			"_id": "67e398f72216870660f2bda3",
+			"projectName": "TicTacToe",
+			"projectDescription": "Tic Tac Toe is a classic two-player game built with React. Players take turns marking X or O on a 3x3 grid, aiming to form a horizontal, vertical, or diagonal line. The game features real-time win detection and turn indication.",
+			"projectLink": "https://ankit-kaushal.github.io/TicTacToe/",
+			"projectGitHub": "https://github.com/ankit-kaushal/TicTacToe",
+			"projectType": "personal",
+			"mainStack": "react",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742968763/Screenshot_2025-03-26_at_11.29.06_AM_bnijda.png",
+			"projectPublishDate": "2021-01-19T08:00:00.000Z",
+			"createdAt": "2025-03-26T06:04:40.008Z",
+			"updatedAt": "2025-03-26T06:06:25.211Z",
+			"__v": 0
+		},
+		{
+			"_id": "67d3e4c257959f49c256d92f",
+			"projectName": "On road obstacle detection",
+			"projectDescription": "An object detection system for autonomous vehicles using a camera to identify road objects with bounding boxes and probability scores. Supports real-time detection via live camera and video input, tracking objects in motion.",
+			"projectGitHub": "https://github.com/ankit-kaushal/On-road-Obstacle-Detection",
+			"projectType": "personal",
+			"mainStack": "python",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741939742/on-road-obstacle-detection_fzsvkp.png",
+			"projectPublishDate": "2020-11-27T08:00:00.000Z",
+			"createdAt": "2025-03-14T08:11:46.583Z",
+			"updatedAt": "2025-03-14T08:11:46.583Z",
+			"__v": 0
+		},
+		{
+			"_id": "67e3c43d45d6c492edbb97a5",
+			"projectName": "Siamarg",
+			"projectDescription": "I developed the Siamarg website as a freelance project to showcase its eco-friendly solutions. Siamarg specializes in compostable, high-performance materials, integrating biodegradable masterbatches to enhance sustainability. Their products address environmental challenges by promoting a greener supply chain.",
+			"projectLink": "https://ankit-kaushal.github.io/Siamarg/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Siamarg",
+			"projectType": "freelancing",
+			"mainStack": "html",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742980230/Screenshot_2025-03-26_at_2.40.05_PM_eueev8.png",
+			"projectPublishDate": "2020-09-26T08:00:00.000Z",
+			"createdAt": "2025-03-26T09:09:17.830Z",
+			"updatedAt": "2025-03-26T09:11:02.457Z",
+			"__v": 0
+		},
+		{
+			"_id": "67d407e830accc1750e17a6f",
+			"projectName": "Just Relax",
+			"projectDescription": "Just Relax is a meditation app that helps you unwind with soothing sounds. Simply select the duration and type of sound, and the app will play a relaxing video with calming music.",
+			"projectLink": "https://ankit-kaushal.github.io/Just-Relax/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Just-Relax",
+			"projectType": "personal",
+			"mainStack": "html",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741948778/Screenshot_2025-03-14_at_4.08.13_PM_v0bqta.png",
+			"projectPublishDate": "2020-07-05T08:00:00.000Z",
+			"createdAt": "2025-03-14T10:41:44.583Z",
+			"updatedAt": "2025-03-14T10:41:44.583Z",
+			"__v": 0
+		},
+		{
+			"_id": "6635feb23e0cd5f5c223d578",
+			"projectName": "Code Player",
+			"projectDescription": "Code Player is a web app for writing, editing, and executing HTML, CSS, and JavaScript in real-time. It offers a user-friendly interface, live previews, and code sharing for developers and learners.",
+			"projectLink": "https://ankit-kaushal.github.io/Code-Player/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Code-Player",
+			"projectType": "personal",
+			"mainStack": "html",
+			"__v": 0,
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741588012/Screenshot_2025-03-10_at_11.56.45_AM_dv177j.png",
+			"projectPublishDate": "2020-05-01T08:00:00.000Z",
+			"updatedAt": "2025-03-10T06:27:36.610Z"
+		},
+		{
+			"_id": "67d3e659122dcd15a29a5f07",
+			"projectName": "Reaction Tester",
+			"projectDescription": "Test Your Reactions! is a project that measures your reaction time. A random shape appears on the screen, and you must click on it as quickly as possible to see your reaction time.",
+			"projectLink": "https://ankit-kaushal.github.io/Reaction-Tester/",
+			"projectGitHub": "https://github.com/ankit-kaushal/Reaction-Tester",
+			"projectType": "personal",
+			"mainStack": "javascript",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741940295/Screenshot_2025-03-14_at_1.48.02_PM_jfg7ia.png",
+			"projectPublishDate": "2020-04-28T08:00:00.000Z",
+			"createdAt": "2025-03-14T08:18:33.541Z",
+			"updatedAt": "2025-03-14T08:18:33.541Z",
+			"__v": 0
+		},
+		{
+			"_id": "67d3e3bb57959f49c256d924",
+			"projectName": "Scientific Calculator",
+			"projectDescription": "A feature-rich scientific calculator supporting basic arithmetic, trigonometry, logarithms, probability (nPn, nCr, factorial), and number system conversions (Decimal to Binary, Hex, Octal). It includes equation support with special function buttons, graph plotting, and a calculation history feature.",
+			"projectLink": "https://youtu.be/5GYWyk9Lth8?si=Omw3QXTu3wh8Gnyr",
+			"projectGitHub": "https://github.com/ankit-kaushal/Scientific-Calculator",
+			"projectType": "personal",
+			"mainStack": "java",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741939473/Screenshot_2025-03-13_at_11.39.59_PM_gck1v8.png",
+			"projectPublishDate": "2020-04-24T08:00:00.000Z",
+			"createdAt": "2025-03-14T08:07:23.109Z",
+			"updatedAt": "2025-03-14T08:07:23.109Z",
+			"__v": 0
+		},
+		{
+			"_id": "6635fed43e0cd5f5c223d57a",
+			"projectName": "Student Management System for the College",
+			"projectDescription": "This Java-based Student Management System, developed with NetBeans IDE, was part of a hackathon project organized by BIT Sindri. It helps colleges streamline student record management, including admissions, attendance, and grades, through an easy-to-use interface.",
+			"projectLink": "",
+			"projectGitHub": "https://github.com/ankit-kaushal/sabal",
+			"projectType": "personal",
+			"mainStack": "java",
+			"__v": 0,
+			"updatedAt": "2025-03-10T07:05:29.414Z",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1741590298/Screenshot_2025-03-10_at_12.34.49_PM_opdspe.png",
+			"projectPublishDate": "2019-11-16T08:00:00.000Z"
+		}
+	],
+	"works": [
+		{
+			"workDuration": {
+				"start": "Oct 2024",
+				"end": "Present"
+			},
+			"_id": "673db7670c90b969697be8d7",
+			"companyName": "Rizzle",
+			"companyLogo": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1759941136/kkyzurrxhawse9kkcwj8.png",
+			"designation": "Engineer - Frontend",
+			"workLocation": "Hyderabad",
+			"__v": 0
+		},
+		{
+			"workDuration": {
+				"start": "Jan 2022",
+				"end": "Sept 2024"
+			},
+			"_id": "6635fc443e0cd5f5c223d52c",
+			"companyName": "Cogoport Pvt. Ltd.",
+			"companyLogo": "https://cogoport-production.sgp1.digitaloceanspaces.com/65e8da9962421e5c6e9d53639b0abc05/cogoport.jpeg",
+			"designation": "Software Development Engineer I",
+			"workLocation": "Gurgaon",
+			"__v": 0
+		},
+		{
+			"workDuration": {
+				"start": "June 2020",
+				"end": "Dec 2021"
+			},
+			"_id": "6635fc9a3e0cd5f5c223d53e",
+			"companyName": "Kohli Media LLP.",
+			"companyLogo": "https://cogoport-production.sgp1.digitaloceanspaces.com/1a6cb2b0cb44070be2733f5c91e56f83/kohli.jpeg",
+			"designation": "Software Engineer",
+			"workLocation": "Remote",
+			"__v": 0
+		}
+	],
+	"blogs": [
+		{
+			"id": "https://medium.com/p/77ecdc4049b1",
+			"source": "medium",
+			"title": "My Modal Had Overflow, Height, and z-Index — Still No Scroll",
+			"excerpt": "My Modal Had Overflow, Height, and z-Index — Still No Scroll I recently ran into one of those UI bugs that feels way more complicated than i...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*4jsn5LuOWF2DcOdaElfQHw.png",
+			"link": "https://medium.com/@ankit-kaushal/my-modal-had-overflow-height-and-z-index-still-no-scroll-77ecdc4049b1?source=rss-63d9ed241110------2",
+			"publishedAt": "2026-01-04 16:21:39"
+		},
+		{
+			"id": "https://medium.com/p/c9bfe4a23d4a",
+			"source": "medium",
+			"title": "Learning GraphQL: It’s Not Just Fancy Fetch",
+			"excerpt": "When I joined my current company, one of the first things they told me was: Bro, we use GraphQL here. So, first explore queries and mutation...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*aZL8mcNfYdaxB7oSYA6TXg.png",
+			"link": "https://medium.com/@ankit-kaushal/learning-graphql-its-not-just-fancy-fetch-c9bfe4a23d4a?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-08-11 05:26:41"
+		},
+		{
+			"id": "https://medium.com/p/3979ee48fc2d",
+			"source": "medium",
+			"title": "How I Used Nodemailer to Send OTPs in My App",
+			"excerpt": "Email verification is a common feature in most modern applications. One effective way to implement it is by sending a One-Time Password (OTP...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*3vEOPscMNsI7NJO0YQ5s4g.png",
+			"link": "https://medium.com/@ankit-kaushal/how-i-used-nodemailer-to-send-otps-in-my-app-3979ee48fc2d?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-05-05 06:50:39"
+		},
+		{
+			"id": "https://medium.com/p/c878ae33abf4",
+			"source": "medium",
+			"title": "Stuck in Cache Hell: A Service Worker Nightmare",
+			"excerpt": "“It’s not working? It must be the cache!” This phrase turned into a running joke among our team. Whenever something went awry, we’d point fi...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*HHgPfVf2OFpfxClUBQzdwg.png",
+			"link": "https://medium.com/@ankit-kaushal/stuck-in-cache-hell-a-service-worker-nightmare-c878ae33abf4?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-03-31 16:27:03"
+		},
+		{
+			"id": "https://medium.com/p/dce33492317c",
+			"source": "medium",
+			"title": "A Dream Saved Me from a Major Outrage",
+			"excerpt": "It’s a common joke in the tech world that bugs haunt us in our dreams. However, for me, a dream literally saved me from a disastrous mistake...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*L5O7jhEMXYKZKunxe7PEBg.jpeg",
+			"link": "https://medium.com/@ankit-kaushal/a-dream-saved-me-from-a-major-outrage-dce33492317c?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-02-24 18:19:02"
+		},
+		{
+			"id": "https://medium.com/p/6a0003f63a57",
+			"source": "medium",
+			"title": "Interactive Draggable and Resizable UI Component",
+			"excerpt": "Creating an interactive and fun user interface can really make your website stand out. One of the coolest features you can to your component...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*3X6AjI3DLMq3EhnmwGGUuw.png",
+			"link": "https://medium.com/@ankit-kaushal/interactive-draggable-and-resizable-ui-component-6a0003f63a57?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-09-14 06:21:13"
+		},
+		{
+			"id": "https://medium.com/p/888b28f81a7b",
+			"source": "medium",
+			"title": "Writing Cleaner React Code: The Ultimate ESLint and Stylelint Setup Guide",
+			"excerpt": "In large projects or collaborative environments, writing clean and consistent code isn’t just important — it’s essential. That’s where tools...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*1V3ODDTzl7QZbaPyAjq0MQ.png",
+			"link": "https://medium.com/@ankit-kaushal/writing-cleaner-react-code-the-ultimate-eslint-and-stylelint-setup-guide-888b28f81a7b?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-09-12 12:45:30"
+		},
+		{
+			"id": "https://medium.com/p/6b8c1a4b1970",
+			"source": "medium",
+			"title": "The Unexpected Law of Surprise: My Dream Encounter with Ciri",
+			"excerpt": "Have you watched the Witchers? Yes…then definitely go ahead and read this blog story. Dreams can often take us to strange places, but what I...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*0XkISIQbKaRrwZ-VLS3E9Q.png",
+			"link": "https://medium.com/@ankit-kaushal/the-unexpected-law-of-surprise-my-dream-encounter-with-ciri-6b8c1a4b1970?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-09-09 12:26:23"
+		},
+		{
+			"id": "https://medium.com/p/41b5ca4e617d",
+			"source": "medium",
+			"title": "Cracking the Code: Why Your z-index Isn’t Behaving",
+			"excerpt": "Dealing with z-index issues in CSS can be quite challenging for many developers. Organising elements within the stacking context often turns...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*DNlQwMrmT61cnt3cR2QiRQ.png",
+			"link": "https://medium.com/@ankit-kaushal/cracking-the-code-why-your-z-index-isnt-behaving-41b5ca4e617d?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-07-12 11:05:43"
+		}
+	],
+	"portfolioBlogs": [],
+	"mediumBlogs": [
+		{
+			"id": "https://medium.com/p/77ecdc4049b1",
+			"source": "medium",
+			"title": "My Modal Had Overflow, Height, and z-Index — Still No Scroll",
+			"excerpt": "My Modal Had Overflow, Height, and z-Index — Still No Scroll I recently ran into one of those UI bugs that feels way more complicated than i...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*4jsn5LuOWF2DcOdaElfQHw.png",
+			"link": "https://medium.com/@ankit-kaushal/my-modal-had-overflow-height-and-z-index-still-no-scroll-77ecdc4049b1?source=rss-63d9ed241110------2",
+			"publishedAt": "2026-01-04 16:21:39"
+		},
+		{
+			"id": "https://medium.com/p/c9bfe4a23d4a",
+			"source": "medium",
+			"title": "Learning GraphQL: It’s Not Just Fancy Fetch",
+			"excerpt": "When I joined my current company, one of the first things they told me was: Bro, we use GraphQL here. So, first explore queries and mutation...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*aZL8mcNfYdaxB7oSYA6TXg.png",
+			"link": "https://medium.com/@ankit-kaushal/learning-graphql-its-not-just-fancy-fetch-c9bfe4a23d4a?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-08-11 05:26:41"
+		},
+		{
+			"id": "https://medium.com/p/3979ee48fc2d",
+			"source": "medium",
+			"title": "How I Used Nodemailer to Send OTPs in My App",
+			"excerpt": "Email verification is a common feature in most modern applications. One effective way to implement it is by sending a One-Time Password (OTP...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*3vEOPscMNsI7NJO0YQ5s4g.png",
+			"link": "https://medium.com/@ankit-kaushal/how-i-used-nodemailer-to-send-otps-in-my-app-3979ee48fc2d?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-05-05 06:50:39"
+		},
+		{
+			"id": "https://medium.com/p/c878ae33abf4",
+			"source": "medium",
+			"title": "Stuck in Cache Hell: A Service Worker Nightmare",
+			"excerpt": "“It’s not working? It must be the cache!” This phrase turned into a running joke among our team. Whenever something went awry, we’d point fi...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*HHgPfVf2OFpfxClUBQzdwg.png",
+			"link": "https://medium.com/@ankit-kaushal/stuck-in-cache-hell-a-service-worker-nightmare-c878ae33abf4?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-03-31 16:27:03"
+		},
+		{
+			"id": "https://medium.com/p/dce33492317c",
+			"source": "medium",
+			"title": "A Dream Saved Me from a Major Outrage",
+			"excerpt": "It’s a common joke in the tech world that bugs haunt us in our dreams. However, for me, a dream literally saved me from a disastrous mistake...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*L5O7jhEMXYKZKunxe7PEBg.jpeg",
+			"link": "https://medium.com/@ankit-kaushal/a-dream-saved-me-from-a-major-outrage-dce33492317c?source=rss-63d9ed241110------2",
+			"publishedAt": "2025-02-24 18:19:02"
+		},
+		{
+			"id": "https://medium.com/p/6a0003f63a57",
+			"source": "medium",
+			"title": "Interactive Draggable and Resizable UI Component",
+			"excerpt": "Creating an interactive and fun user interface can really make your website stand out. One of the coolest features you can to your component...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*3X6AjI3DLMq3EhnmwGGUuw.png",
+			"link": "https://medium.com/@ankit-kaushal/interactive-draggable-and-resizable-ui-component-6a0003f63a57?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-09-14 06:21:13"
+		},
+		{
+			"id": "https://medium.com/p/888b28f81a7b",
+			"source": "medium",
+			"title": "Writing Cleaner React Code: The Ultimate ESLint and Stylelint Setup Guide",
+			"excerpt": "In large projects or collaborative environments, writing clean and consistent code isn’t just important — it’s essential. That’s where tools...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*1V3ODDTzl7QZbaPyAjq0MQ.png",
+			"link": "https://medium.com/@ankit-kaushal/writing-cleaner-react-code-the-ultimate-eslint-and-stylelint-setup-guide-888b28f81a7b?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-09-12 12:45:30"
+		},
+		{
+			"id": "https://medium.com/p/6b8c1a4b1970",
+			"source": "medium",
+			"title": "The Unexpected Law of Surprise: My Dream Encounter with Ciri",
+			"excerpt": "Have you watched the Witchers? Yes…then definitely go ahead and read this blog story. Dreams can often take us to strange places, but what I...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*0XkISIQbKaRrwZ-VLS3E9Q.png",
+			"link": "https://medium.com/@ankit-kaushal/the-unexpected-law-of-surprise-my-dream-encounter-with-ciri-6b8c1a4b1970?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-09-09 12:26:23"
+		},
+		{
+			"id": "https://medium.com/p/41b5ca4e617d",
+			"source": "medium",
+			"title": "Cracking the Code: Why Your z-index Isn’t Behaving",
+			"excerpt": "Dealing with z-index issues in CSS can be quite challenging for many developers. Organising elements within the stacking context often turns...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*DNlQwMrmT61cnt3cR2QiRQ.png",
+			"link": "https://medium.com/@ankit-kaushal/cracking-the-code-why-your-z-index-isnt-behaving-41b5ca4e617d?source=rss-63d9ed241110------2",
+			"publishedAt": "2024-07-12 11:05:43"
+		}
+	]
 }

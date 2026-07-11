@@ -3,15 +3,26 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 import NavBar from "@/components/common/navBar";
 import Footer from "@/components/common/footer";
 import Logo from "@/components/common/logo";
 import ShootingStars from "@/components/common/ShootingStars";
 import layoutStyles from "@/components/layout/layout.module.css";
-import { apiUrl } from "@/lib/api";
 import styles from "./blogDetail.module.css";
+
+function findPortfolioBlog(data, slug) {
+	const candidates = [
+		...(data?.portfolioBlogs || []),
+		...(data?.blogs || []).filter(
+			(blog) => blog.source === "portfolio" || blog.slug || blog.content,
+		),
+	];
+
+	return candidates.find(
+		(blog) => blog.slug === slug || blog.link === `/blogs/${slug}`,
+	);
+}
 
 export default function BlogDetailView({ slug }) {
 	const data = useSelector((state) => state.data);
@@ -25,20 +36,23 @@ export default function BlogDetailView({ slug }) {
 	}, []);
 
 	useEffect(() => {
-		const fetchBlog = async () => {
-			setIsLoading(true);
-			try {
-				const response = await axios.get(apiUrl(`/blogs/${slug}`));
-				setBlog(response.data);
-			} catch {
-				setError("Blog not found");
-			} finally {
-				setIsLoading(false);
-			}
-		};
+		if (!slug) return;
 
-		if (slug) fetchBlog();
-	}, [slug]);
+		if (!data) {
+			setIsLoading(true);
+			return;
+		}
+
+		const matched = findPortfolioBlog(data, slug);
+		if (matched) {
+			setBlog(matched);
+			setError("");
+		} else {
+			setBlog(null);
+			setError("Blog not found");
+		}
+		setIsLoading(false);
+	}, [data, slug]);
 
 	return (
 		<div className={layoutStyles.pageContent}>
@@ -84,10 +98,14 @@ export default function BlogDetailView({ slug }) {
 									<span>{blog.tags.join(" · ")}</span>
 								)}
 							</div>
-							<div
-								className={styles.content}
-								dangerouslySetInnerHTML={{ __html: blog.content }}
-							/>
+							{blog.content ? (
+								<div
+									className={styles.content}
+									dangerouslySetInnerHTML={{ __html: blog.content }}
+								/>
+							) : blog.excerpt ? (
+								<p className={styles.content}>{blog.excerpt}</p>
+							) : null}
 						</article>
 					) : null}
 				</div>

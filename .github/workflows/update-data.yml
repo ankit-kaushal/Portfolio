@@ -1,8 +1,9 @@
-name: Update Cached Data
+name: Update Portfolio Data
 
 on:
   schedule:
-    - cron: '0 */12 * * *'
+    # Hourly for testing — change to "0 0 * * *" for daily
+    - cron: "0 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -11,30 +12,37 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      
+          node-version: "20"
+          cache: "npm"
+
       - name: Install dependencies
-        run: npm install
-      
-      - name: Update data
+        run: npm ci --ignore-scripts
+
+      - name: Update data.json from /api/profile
+        env:
+          PROFILE_API_URL: ${{ vars.PROFILE_API_URL }}
         run: npm run update-data
-        
+
       - name: Check for changes
         id: check_changes
         run: |
-          if [[ -n "$(git status --porcelain)" ]]; then
-            echo "changes=true" >> $GITHUB_OUTPUT
+          if [[ -n "$(git status --porcelain public/data.json)" ]]; then
+            echo "changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changes=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Commit and push if changes exist
+      - name: Commit and push updated data.json
         if: steps.check_changes.outputs.changes == 'true'
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data.json
-          git commit -m "Auto-update data.json"
+          git commit -m "chore: refresh public/data.json from profile API"
           git push

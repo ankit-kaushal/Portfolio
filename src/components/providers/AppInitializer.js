@@ -12,7 +12,6 @@ import {
 	fetchDataFailure,
 	fetchHomeDataSuccess,
 } from "@/lib/actions";
-import { apiUrl } from "@/lib/api";
 import { TRACKING_ID } from "@/data/tracking";
 import layoutStyles from "@/components/layout/layout.module.css";
 
@@ -44,36 +43,22 @@ export default function AppInitializer({ children }) {
 		let isSubscribed = true;
 		const controller = new AbortController();
 
-		const fetchData = async () => {
+		const loadPortfolioData = async () => {
 			dispatch(fetchDataRequest());
 			try {
-				if (pathname === "/") {
-					const homeResponse = await axios.get("/data.json", {
-						signal: controller.signal,
-					});
-					if (!isSubscribed) return;
-					dispatch(fetchHomeDataSuccess(homeResponse.data));
-					dispatch(fetchDataRequest(false));
+				const response = await axios.get("/data.json", {
+					signal: controller.signal,
+					headers: {
+						"Cache-Control": "no-cache",
+					},
+				});
+				if (!isSubscribed) return;
 
-					const profileResponse = await axios.get(apiUrl("/profile"), {
-						signal: controller.signal,
-					});
-					if (!isSubscribed) return;
-					dispatch(fetchDataSuccess(profileResponse.data));
-				} else {
-					const profileResponse = await axios.get(apiUrl("/profile"), {
-						signal: controller.signal,
-					});
-					if (!isSubscribed) return;
-					dispatch(fetchDataSuccess(profileResponse.data));
-					dispatch(fetchDataRequest(false));
+				const portfolio = response.data || {};
+				const homeUser = portfolio.user || portfolio;
 
-					const homeResponse = await axios.get("/data.json", {
-						signal: controller.signal,
-					});
-					if (!isSubscribed) return;
-					dispatch(fetchHomeDataSuccess(homeResponse.data));
-				}
+				dispatch(fetchHomeDataSuccess(homeUser));
+				dispatch(fetchDataSuccess(portfolio));
 				hasFetched.current = true;
 			} catch (error) {
 				if (!isSubscribed) return;
@@ -85,7 +70,7 @@ export default function AppInitializer({ children }) {
 			}
 		};
 
-		fetchData();
+		loadPortfolioData();
 
 		return () => {
 			isSubscribed = false;
