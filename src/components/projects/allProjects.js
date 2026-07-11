@@ -1,53 +1,39 @@
-import React from "react";
-
 import Project from "./project";
-
-import INFO from "../../data/user";
-
+import INFO from "@/data/user";
 import LOGO_MAPPING from "./logo-mapping";
 
-import "./styles/allProjects.css";
+import styles from "./allProjects.module.css";
 
-const AllProjects = ({ projects = [] }) => {
+export default function AllProjects({ projects = [] }) {
 	return (
-		<div className="all-projects-container">
+		<div className={styles.allProjectsContainer}>
 			{projects.length ? (
-				<>
-					{projects?.map((project, index) => (
-						<div className="all-projects-project" key={index}>
-							<Project
-								logo={
-									LOGO_MAPPING[
-										project?.mainStack.toLowerCase()
-									]
-								}
-								title={project?.projectName}
-								description={project?.projectDescription}
-								linkText="View Project"
-								liveDemo={project?.projectLink}
-								githubLink={project?.projectGitHub}
-								projectPicture={project?.projectPicture}
-							/>
-						</div>
-					))}
-				</>
+				projects.map((project, index) => (
+					<div className={styles.allProjectsProject} key={index}>
+						<Project
+							logo={
+								LOGO_MAPPING[project?.mainStack.toLowerCase()]
+							}
+							title={project?.projectName}
+							description={project?.projectDescription}
+							liveDemo={project?.projectLink}
+							githubLink={project?.projectGitHub}
+							projectPicture={project?.projectPicture}
+						/>
+					</div>
+				))
 			) : (
-				<>
-					{INFO.projects.map((project, index) => (
-						<div className="all-projects-project" key={index}>
-							<Project
-								logo={project.logo}
-								title={project.title}
-								description={project.description}
-								linkText={project.linkText}
-								liveDemo={project.link}
-							/>
-						</div>
-					))}
-				</>
+				INFO.projects.map((project, index) => (
+					<div className={styles.allProjectsProject} key={index}>
+						<Project
+							logo={project.logo}
+							title={project.title}
+							description={project.description}
+							liveDemo={project.link}
+						/>
+					</div>
+				))
 			)}
 		</div>
 	);
-};
-
-export default AllProjects;
+}

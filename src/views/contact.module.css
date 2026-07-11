@@ -1,0 +1,130 @@
+.logoContainer {
+	display: flex;
+	justify-content: left;
+	padding-top: 25px;
+}
+
+.logo {
+	border: 1px solid white;
+	border-radius: 50%;
+	box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
+	display: flex;
+	position: fixed;
+	top: 4vh;
+}
+
+.contactSubtitle {
+	width: 100% !important;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	margin-top: 120px;
+}
+
+.socialsContainer {
+	display: flex;
+	flex-direction: column;
+	margin-top: 40px;
+}
+
+.contactSocials {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.contactLink {
+	color: var(--link-color);
+}
+
+.contactForm {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	width: 60%;
+}
+
+.formGroup {
+	margin-bottom: 1.5rem;
+	width: 100%;
+}
+
+.formInput,
+.formTextarea {
+	background: var(--background-color);
+	border: 1px solid var(--secondary-color);
+	border-radius: 5px;
+	box-sizing: border-box;
+	color: var(--primary-color);
+	font-size: 1rem;
+	padding: 0.8rem;
+	transition: border-color 0.3s ease;
+	width: 100%;
+}
+
+.formTextarea {
+	min-height: 100px;
+	resize: vertical;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+	border-color: var(--primary-color);
+	outline: none;
+}
+
+.submitButton {
+	background-color: var(--primary-color);
+	border: none;
+	border-radius: 5px;
+	color: var(--background-color);
+	cursor: pointer;
+	font-size: 1rem;
+	padding: 0.8rem 2rem;
+	transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+	background-color: var(--secondary-color);
+}
+
+.submitButton:disabled {
+	background-color: var(--secondary-color);
+	cursor: not-allowed;
+	opacity: 0.7;
+}
+
+.successMessage {
+	color: #4caf50;
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.errorMessage {
+	color: #f44336;
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.flexContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+	.contactSubtitle {
+		text-align: justify;
+	}
+
+	.flexContainer {
+		flex-direction: column-reverse;
+	}
+
+	.contactForm {
+		padding: 2rem 1rem;
+		width: auto;
+	}
+}

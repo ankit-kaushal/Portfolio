@@ -1,6 +1,6 @@
 # 🧑‍💻 Ankit Kaushal - Portfolio
 
-This is the source code for my personal portfolio website. It showcases my projects, skills, work experience, travel journeys, and includes an interactive chatbot.
+Personal portfolio built with **Next.js** and **CSS Modules**.
 
 🔗 [Live Website](https://portfolio-phi-seven-45.vercel.app)
 
@@ -8,58 +8,68 @@ This is the source code for my personal portfolio website. It showcases my proje
 
 ## 🚀 Features
 
-- ⚡️ Fully responsive layout
-- 🧩 Project showcase with descriptions and live links
-- 🛠 Skills and tech stack section
-- 🌍 Travel Journey: A visual log of places I’ve explored
-- 🤖 Chatbot: An interactive assistant to guide visitors
-- 📩 Contact section with email integration
-
----
-
-## 🧳 Travel Journey
-
-This section highlights places I've visited, complete with short stories, photos, and some other infos. It adds a personal touch to the portfolio and gives insight into who I am beyond code.
-
-🔗 [Browse my journey](https://portfolio-phi-seven-45.vercel.app/travel-journey)
-
----
-
-## 🤖 Chatbot
-
-An interactive chatbot is integrated into the site to:
-
-- Guide users through the portfolio
-- Answer common questions
-- Share details about projects, experience, and contact info
-
-Built with JavaScript and integrated with AI.
+- Fully responsive layout
+- Project showcase with descriptions and live links
+- Skills and work experience section
+- Travel Journey: visual log of places explored
+- Contact section with email integration
+- Admin dashboard for content management
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend**: HTML, CSS, JavaScript
-- **Styling**: Vanilla CSS
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: CSS Modules
+- **State**: Redux
 - **Deployment**: Vercel
 
 ---
 
 ## 🖥️ Local Development
 
-To run the project locally:
-
 1. **Clone the repository**
    ```bash
    git clone https://github.com/ankit-kaushal/Portfolio.git
-2. **Navigate to the project folder**
-   ```bash
    cd Portfolio
-3. **Install dependencies**
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
+   ```
+
+3. **Set up environment variables**
+
+   Copy `.env.example` to `.env.local` and fill in your values. If migrating from the old CRA setup, rename `REACT_APP_*` variables to `NEXT_PUBLIC_*`.
+
 4. **Start the development server**
    ```bash
-   npm start
+   npm run dev
+   ```
 
-The app will be running at http://localhost:3000.
+   The app runs at [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/              # Next.js App Router pages
+├── components/       # Reusable UI components (CSS Modules)
+├── views/            # Page-level view components
+├── lib/              # Redux store, actions, reducers
+└── data/             # Static config and fallback data
+```
+
+---
+
+## 📜 Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build (updates data + sitemap) |
+| `npm start` | Start production server |
+| `npm run lint:all` | Lint JS and CSS |

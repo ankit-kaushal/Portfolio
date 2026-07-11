@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FaIcon from "@/components/common/FaIcon";
 import { faUpload, faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
+import { apiUrl, getAuthHeaders } from "@/lib/api";
 
 const PhotoUpload = ({ photos, onChange }) => {
 	const [uploading, setUploading] = useState(false);
@@ -16,16 +19,11 @@ const PhotoUpload = ({ photos, onChange }) => {
 				const blob = new Blob([file], { type: file.type });
 				formData.append("file", blob, file.name);
 
-				const response = await fetch(
-					"https://www.api.ankitkaushal.in/upload",
-					{
-						method: "POST",
-						body: formData,
-						headers: {
-							Authorization: process.env.REACT_APP_AUTHKEY,
-						},
-					},
-				);
+				const response = await fetch(apiUrl("/upload"), {
+					method: "POST",
+					body: formData,
+					headers: getAuthHeaders(),
+				});
 
 				const data = await response.json();
 				return {
@@ -64,7 +62,7 @@ const PhotoUpload = ({ photos, onChange }) => {
 					onChange={handleFileUpload}
 					disabled={uploading}
 				/>
-				<FontAwesomeIcon icon={faUpload} />
+				<FaIcon icon={faUpload} />
 				<span>{uploading ? "Uploading..." : "Upload Photos"}</span>
 			</div>
 
@@ -85,7 +83,7 @@ const PhotoUpload = ({ photos, onChange }) => {
 							onClick={() => handleRemovePhoto(index)}
 							className={styles.removeButton}
 						>
-							<FontAwesomeIcon icon={faTimes} />
+							<FaIcon icon={faTimes} />
 						</button>
 					</div>
 				))}

@@ -1,31 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+"use client";
 
-import INFO from "../../data/user";
+import Link from "next/link";
+import Image from "next/image";
 
-import "./styles/logo.css";
+import INFO from "@/data/user";
 
-const Logo = (props) => {
-	let { width, link, user = {} } = props;
+import styles from "./logo.module.css";
 
-	if (link === undefined) {
-		link = true;
-	}
+export default function Logo({ width, link, user = {} }) {
+	const showLink = link !== false;
+	const src = user?.logoUrl || INFO.main.logo;
 
 	const imageElement = (
-		<img
-			src={user?.logoUrl || INFO.main.logo}
+		<Image
+			src={src}
 			alt="logo"
-			className="logo"
+			className={styles.logo}
 			width={width}
+			height={width}
+			unoptimized
 		/>
 	);
 
-	return (
-		<React.Fragment>
-			{link ? <Link to="/">{imageElement}</Link> : imageElement}
-		</React.Fragment>
-	);
-};
-
-export default Logo;
+	return showLink ? <Link href="/">{imageElement}</Link> : imageElement;
+}

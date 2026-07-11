@@ -1,79 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useTheme } from "../context/themeContext";
+"use client";
 
-import "./styles/navBar.css";
+import Link from "next/link";
+import { useTheme } from "@/components/providers/ThemeProvider";
 
-const NavBar = (props) => {
+import styles from "./navBar.module.css";
+
+const NAV_ITEMS = [
+	{ id: "home", label: "Home", href: "/" },
+	{ id: "about", label: "About", href: "/about" },
+	{ id: "projects", label: "Projects", href: "/projects" },
+	{ id: "blogs", label: "Blogs", href: "/blogs" },
+	{ id: "contact", label: "Contact", href: "/contact" },
+];
+
+export default function NavBar({ active }) {
 	const { toggleTheme, theme } = useTheme();
-	const { active } = props;
 
 	return (
-		<React.Fragment>
-			<div className="nav-container">
-				<nav className="navbar">
-					<div className="nav-background">
-						<ul className="nav-list">
-							<li
-								className={
-									active === "home"
-										? "nav-item active"
-										: "nav-item"
-								}
-							>
-								<Link to="/">Home</Link>
-							</li>
-							<li
-								className={
-									active === "about"
-										? "nav-item active"
-										: "nav-item"
-								}
-							>
-								<Link to="/about">About</Link>
-							</li>
-							<li
-								className={
-									active === "projects"
-										? "nav-item active"
-										: "nav-item"
-								}
-							>
-								<Link to="/projects">Projects</Link>
-							</li>
-							<li
-								className={
-									active === "blogs"
-										? "nav-item active"
-										: "nav-item"
-								}
-							>
-								<Link to="/blogs">Blogs</Link>
-							</li>
-							<li
-								className={
-									active === "contact"
-										? "nav-item active"
-										: "nav-item"
-								}
-							>
-								<Link to="/contact">Contact</Link>
-							</li>
+		<>
+			<div className={styles.navContainer}>
+				<nav className={styles.navbar}>
+					<div className={styles.navBackground}>
+						<ul className={styles.navList}>
+							{NAV_ITEMS.map((item) => (
+								<li
+									key={item.id}
+									className={`${styles.navItem} ${
+										active === item.id
+											? styles.navItemActive
+											: ""
+									}`}
+								>
+									<Link href={item.href}>{item.label}</Link>
+								</li>
+							))}
 						</ul>
 					</div>
 				</nav>
 			</div>
-			<label id="switch" className="switch">
+			<label id="switch" className={styles.switch}>
 				<input
 					type="checkbox"
 					checked={theme === "dark"}
-					onClick={toggleTheme}
+					onChange={toggleTheme}
 					id="slider"
 				/>
-				<span className="slider round"></span>
+				<span className={`${styles.slider} ${styles.round}`} />
 			</label>
-		</React.Fragment>
+		</>
 	);
-};
-
-export default NavBar;
+}
