@@ -376,6 +376,16 @@
 			"publishedAt": "2026-04-15T00:00:00.000Z"
 		},
 		{
+			"id": "6a52265a8cb15c7135c2be17",
+			"source": "portfolio",
+			"title": "Sometimes, Kindness Is Just a Mistake — But the Smile Was Real",
+			"excerpt": "It was just another bike ride. When I reached my destination, the fare showed ₹56 . Without thinking much, I rounded it off and decided to pay ₹60 . After makin...",
+			"coverImage": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1783768621/fzjkhc5xcyaaybbnudvf.png",
+			"link": "/blogs/sometimes-kindness-is-just-a-mistake-but-the-smile-was-real",
+			"slug": "sometimes-kindness-is-just-a-mistake-but-the-smile-was-real",
+			"publishedAt": "2026-01-22T00:00:00.000Z"
+		},
+		{
 			"id": "https://medium.com/p/77ecdc4049b1",
 			"source": "medium",
 			"title": "My Modal Had Overflow, Height, and z-Index — Still No Scroll",
@@ -484,6 +494,20 @@
 			"publishedAt": "2026-04-15T00:00:00.000Z",
 			"createdAt": "2026-07-11T09:04:18.272Z",
 			"updatedAt": "2026-07-11T09:04:18.272Z",
+			"__v": 0
+		},
+		{
+			"_id": "6a52265a8cb15c7135c2be17",
+			"title": "Sometimes, Kindness Is Just a Mistake — But the Smile Was Real",
+			"slug": "sometimes-kindness-is-just-a-mistake-but-the-smile-was-real",
+			"excerpt": "It was just another bike ride. When I reached my destination, the fare showed ₹56 . Without thinking much, I rounded it off and decided to pay ₹60 . After makin...",
+			"content": "<p>It was just another bike ride.</p><p>When I reached my destination, the fare showed <strong>₹56</strong>. Without thinking much, I rounded it off and decided to pay <strong>₹60</strong>.</p><p>After making the payment, the driver looked at his phone, smiled warmly, and said,</p><blockquote><p>\"Thank you, bhaiya. Aaj wife ke liye momos le jaunga. Abhi-abhi shaadi hui hai.\"</p></blockquote><p>For a second, I was confused.</p><p>I remember thinking, <em>\"How is he going to buy momos with just ₹4? Is he joking... or is he making fun of such a small tip?\"</em></p><p>I simply smiled back and replied, <em>\"Theek hai, bhaiya.\"</em></p><p>The conversation ended there, and I completely forgot about it.</p><p>The next day, while checking my transaction history, something caught my eye.</p><p>I hadn't paid <strong>₹60</strong>. I had accidentally paid <strong>₹160</strong>.</p><p>For a moment, everything clicked.</p><p>His smile. His excitement. His heartfelt thank you. He wasn't reacting to a ₹4 tip.</p><p>He was reacting to what he believed was an unexpected act of generosity. I couldn't help but smile myself.</p><p>It was a simple mistake on my part, but it unintentionally became a happy moment for someone else.</p><p>Sometimes we spend so much time calculating every rupee that we forget how differently the same amount can feel to another person.</p><p>I never met that driver again. But I hope he really did take those momos home. And I hope they tasted even better because they came with a smile.</p>",
+			"coverImage": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1783768621/fzjkhc5xcyaaybbnudvf.png",
+			"tags": [],
+			"published": true,
+			"publishedAt": "2026-01-22T00:00:00.000Z",
+			"createdAt": "2026-07-11T11:17:46.829Z",
+			"updatedAt": "2026-07-11T11:17:46.829Z",
 			"__v": 0
 		}
 	],
