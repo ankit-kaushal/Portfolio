@@ -7,7 +7,7 @@
 		"_id": "67bdd0297541b809dc24737a",
 		"name": "Ankit Kaushal",
 		"logoUrl": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742022944/logo_ma8a0c.png",
-		"description": "Frontend Software Developer with 3.9 years of experience specializing in creating dynamic and visually appealing web applications. Currently, I am a valuable member of the development team at Silverlabs India Pvt Ltd, where I contribute to the design and implementation of user interfaces.",
+		"description": "Frontend Software Developer with 4+ years of experience specializing in creating dynamic and visually appealing web applications. Currently, I am a valuable member of the development team at Silverlabs India Pvt Ltd, where I contribute to the design and implementation of user interfaces.",
 		"aboutDescription": "and I am delighted to introduce myself as a software engineer at Silverlabs India Pvt Ltd, located in the vibrant city of Hyderabad. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role. I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures. Throughout my academic journey, I actively engaged in coding competitions and collaborative projects, sharpening my skills and fostering a hands-on approach to software development.",
 		"aboutTitle": "I’m Ankit Kaushal,",
 		"social": [
@@ -356,6 +356,15 @@
 	],
 	"blogs": [
 		{
+			"id": "https://medium.com/p/198ccd865090",
+			"source": "medium",
+			"title": "The Gold of Our Forests: Why We Jharkhandis Happily Pay ₹1,000/kg for Putka",
+			"excerpt": "If you aren’t from Jharkhand, you might look at a basket of those small, muddy, round balls at the local market and wonder why people are cr...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*VtbHp6BtIxMQQO5nUuseyw.png",
+			"link": "https://medium.com/@ankit-kaushal/the-gold-of-our-forests-why-we-jharkhandis-happily-pay-1-000-kg-for-putka-198ccd865090?source=rss-63d9ed241110------2",
+			"publishedAt": "2026-07-11 19:07:29"
+		},
+		{
 			"id": "6a5210fabbdab10887db21d4",
 			"source": "portfolio",
 			"title": "The Night the Village Went Silent for My Meeting",
@@ -512,6 +521,15 @@
 		}
 	],
 	"mediumBlogs": [
+		{
+			"id": "https://medium.com/p/198ccd865090",
+			"source": "medium",
+			"title": "The Gold of Our Forests: Why We Jharkhandis Happily Pay ₹1,000/kg for Putka",
+			"excerpt": "If you aren’t from Jharkhand, you might look at a basket of those small, muddy, round balls at the local market and wonder why people are cr...",
+			"coverImage": "https://cdn-images-1.medium.com/max/1024/1*VtbHp6BtIxMQQO5nUuseyw.png",
+			"link": "https://medium.com/@ankit-kaushal/the-gold-of-our-forests-why-we-jharkhandis-happily-pay-1-000-kg-for-putka-198ccd865090?source=rss-63d9ed241110------2",
+			"publishedAt": "2026-07-11 19:07:29"
+		},
 		{
 			"id": "https://medium.com/p/77ecdc4049b1",
 			"source": "medium",
