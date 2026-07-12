@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import AppInitializer from "@/components/providers/AppInitializer";
 
 export const metadata = {
+	metadataBase: new URL("https://www.ankitkaushal.in"),
 	title: {
 		default: "Ankit Kaushal",
 		template: "%s | Ankit Kaushal",

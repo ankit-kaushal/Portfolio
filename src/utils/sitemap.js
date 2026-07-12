@@ -39,6 +39,45 @@ function getMongoUri() {
 	)}@${cluster}.hcapf5i.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=${cluster}`;
 }
 
+function readBlogsFromDataJson() {
+	try {
+		const dataPath = path.join(__dirname, "../../public/data.json");
+		const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+		const blogs = data.portfolioBlogs || [];
+
+		return blogs
+			.filter((blog) => blog.slug && blog.published !== false)
+			.map((blog) => ({
+				path: `blogs/${blog.slug}`,
+				priority: 0.7,
+				lastmod: blog.updatedAt || blog.publishedAt || blog.createdAt,
+			}));
+	} catch {
+		return [];
+	}
+}
+
+function mergeRoutesByPath(...routeGroups) {
+	const byPath = new Map();
+
+	routeGroups.flat().forEach((route) => {
+		if (!route?.path) return;
+		const existing = byPath.get(route.path);
+		if (!existing) {
+			byPath.set(route.path, route);
+			return;
+		}
+
+		const existingDate = new Date(existing.lastmod || 0).getTime();
+		const nextDate = new Date(route.lastmod || 0).getTime();
+		if (nextDate >= existingDate) {
+			byPath.set(route.path, { ...existing, ...route });
+		}
+	});
+
+	return [...byPath.values()];
+}
+
 async function fetchDynamicRoutes() {
 	await mongoose.connect(getMongoUri());
 
@@ -58,7 +97,12 @@ async function fetchDynamicRoutes() {
 
 	const [journeys, blogs] = await Promise.all([
 		TravelJourney.find({}).select("_id updatedAt").lean(),
-		Blog.find({ published: true }).select("slug updatedAt publishedAt").lean(),
+		Blog.find({
+			slug: { $exists: true, $ne: "" },
+			$or: [{ published: true }, { published: { $exists: false } }],
+		})
+			.select("slug updatedAt publishedAt")
+			.lean(),
 	]);
 
 	await mongoose.disconnect();
@@ -69,13 +113,18 @@ async function fetchDynamicRoutes() {
 		lastmod: journey.updatedAt,
 	}));
 
-	const blogRoutes = blogs
+	const blogRoutesFromDb = blogs
 		.filter((blog) => blog.slug)
 		.map((blog) => ({
 			path: `blogs/${blog.slug}`,
 			priority: 0.7,
 			lastmod: blog.updatedAt || blog.publishedAt,
 		}));
+
+	const blogRoutes = mergeRoutesByPath(
+		readBlogsFromDataJson(),
+		blogRoutesFromDb,
+	);
 
 	return [...journeyRoutes, ...blogRoutes];
 }
@@ -102,7 +151,7 @@ function writeSitemap(allRoutes) {
 			.txt(formatDate(route.lastmod))
 			.up()
 			.ele("changefreq")
-			.txt("monthly")
+			.txt(route.path?.startsWith("blogs/") ? "weekly" : "monthly")
 			.up()
 			.ele("priority")
 			.txt(String(route.priority));
@@ -113,19 +162,26 @@ function writeSitemap(allRoutes) {
 }
 
 const generateSitemap = async () => {
+	const dataJsonBlogRoutes = readBlogsFromDataJson();
+
 	try {
 		const dynamicRoutes = await fetchDynamicRoutes();
 		writeSitemap([...staticRoutes, ...dynamicRoutes]);
+		const blogCount = dynamicRoutes.filter((route) =>
+			route.path?.startsWith("blogs/"),
+		).length;
 		console.log(
-			`Sitemap generated successfully (${staticRoutes.length} static + ${dynamicRoutes.length} dynamic)`,
+			`Sitemap generated successfully (${staticRoutes.length} static + ${dynamicRoutes.length} dynamic, ${blogCount} blogs)`,
 		);
 	} catch (error) {
 		console.warn(
-			"Could not fetch journeys/blogs for sitemap, using static routes only:",
+			"Could not fetch journeys/blogs for sitemap, falling back:",
 			error.message,
 		);
-		writeSitemap(staticRoutes);
-		console.log("Sitemap generated with static routes only");
+		writeSitemap([...staticRoutes, ...dataJsonBlogRoutes]);
+		console.log(
+			`Sitemap generated with static routes + ${dataJsonBlogRoutes.length} blogs from data.json`,
+		);
 	}
 };
 

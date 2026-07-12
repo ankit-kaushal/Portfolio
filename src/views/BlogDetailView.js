@@ -24,12 +24,12 @@ function findPortfolioBlog(data, slug) {
 	);
 }
 
-export default function BlogDetailView({ slug }) {
+export default function BlogDetailView({ slug, initialBlog = null }) {
 	const data = useSelector((state) => state.data);
 	const { user = {} } = data || {};
-	const [blog, setBlog] = useState(null);
+	const [blog, setBlog] = useState(initialBlog);
 	const [error, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(!initialBlog);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -39,7 +39,7 @@ export default function BlogDetailView({ slug }) {
 		if (!slug) return;
 
 		if (!data) {
-			setIsLoading(true);
+			if (!initialBlog) setIsLoading(true);
 			return;
 		}
 
@@ -47,12 +47,15 @@ export default function BlogDetailView({ slug }) {
 		if (matched) {
 			setBlog(matched);
 			setError("");
+		} else if (initialBlog) {
+			setBlog(initialBlog);
+			setError("");
 		} else {
 			setBlog(null);
 			setError("Blog not found");
 		}
 		setIsLoading(false);
-	}, [data, slug]);
+	}, [data, slug, initialBlog]);
 
 	return (
 		<div className={layoutStyles.pageContent}>
@@ -78,7 +81,11 @@ export default function BlogDetailView({ slug }) {
 						<article className={styles.article}>
 							<h1 className={styles.title}>{blog.title}</h1>
 							<div className={styles.meta}>
-								<span>
+								<time
+									dateTime={
+										blog.publishedAt || blog.createdAt || undefined
+									}
+								>
 									{new Date(
 										blog.publishedAt || blog.createdAt,
 									).toLocaleDateString("en-US", {
@@ -86,7 +93,7 @@ export default function BlogDetailView({ slug }) {
 										month: "short",
 										year: "numeric",
 									})}
-								</span>
+								</time>
 								{blog.tags?.length > 0 && (
 									<span>{blog.tags.join(" · ")}</span>
 								)}

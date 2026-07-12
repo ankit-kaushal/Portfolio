@@ -40,7 +40,7 @@ const SEO = [
 	{
 		page: "blogs",
 		description:
-			"A place to explore solutions to common coding challenges, especially in frontend development",
+			"Stories, lessons, and experiences from Ankit Kaushal — thoughts on code, curiosity, and life along the way.",
 		keywords: [
 			"Ankit",
 			"Ankit K",
@@ -53,6 +53,8 @@ const SEO = [
 			"Ankit Kaushal Rizzle Blogs",
 			"Ankit Kaushal Silverlabs Blogs",
 			"Ankit Kaushal Cogoport Blogs",
+			"Ankit Kaushal Travel Blogs",
+			"Code and Curiosity",
 		],
 	},
 
