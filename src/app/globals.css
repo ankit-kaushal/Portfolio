@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Heebo:wght@300;500;600&family=Roboto:wght@500&display=swap");
 
 :root {
 	--primary-color: #27272a;
@@ -11,6 +11,7 @@
 	--elements-background-color: #fff;
 	--primary-font: "Heebo", sans-serif;
 	--secondary-font: "Roboto", sans-serif;
+	--script-font: "Caveat", cursive;
 }
 
 [data-theme="dark"] {

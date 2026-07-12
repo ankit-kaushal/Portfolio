@@ -29,8 +29,9 @@ const INFO = {
 	},
 
 	blogs: {
-		title: "Code & Curiosity with Ankit",
-		description: "A Collection of Experiments, Insights, and Reflections",
+		titleLine1: "Code &",
+		titleLine2: "Curiosity",
+		tagline: "Thoughts. Lessons. Experiences. My journey.",
 	},
 
 	projects: [

@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useSelector } from "react-redux";
+import FaIcon from "@/components/common/FaIcon";
+import { faArrowRight, faMountainSun } from "@fortawesome/free-solid-svg-icons";
 
 import NavBar from "@/components/common/navBar";
 import Footer from "@/components/common/footer";
@@ -95,6 +98,15 @@ function buildBlogFeed(data) {
 	);
 }
 
+function formatDate(dateString) {
+	if (!dateString) return "";
+	return new Date(dateString).toLocaleDateString("en-US", {
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+	});
+}
+
 export default function BlogsView() {
 	const data = useSelector((state) => state.data);
 	const { user = {} } = data || {};
@@ -131,53 +143,119 @@ export default function BlogsView() {
 		setIsLoading(false);
 	}, [data]);
 
+	const latest = blogs[0] || null;
+	const rest = useMemo(() => blogs.slice(1), [blogs]);
+
+	const featuredInner = latest ? (
+		<>
+			{latest.image ? (
+				<div
+					className={styles.featuredMedia}
+					style={{ backgroundImage: `url(${latest.image})` }}
+					aria-hidden="true"
+				/>
+			) : (
+				<div
+					className={`${styles.featuredMedia} ${styles.featuredMediaFallback}`}
+					aria-hidden="true"
+				/>
+			)}
+			<div className={styles.featuredBody}>
+				<div className={styles.featuredMeta}>
+					<span className={styles.latestLabel}>Latest</span>
+					<span>
+						{latest.source === "medium" ? "Medium" : "Portfolio"}
+					</span>
+					<span>{formatDate(latest.date)}</span>
+				</div>
+				<h2 className={styles.featuredTitle}>{latest.title}</h2>
+				<p className={styles.featuredExcerpt}>{latest.description}</p>
+				<span className={styles.featuredCta}>
+					Read article <FaIcon icon={faArrowRight} />
+				</span>
+			</div>
+		</>
+	) : null;
+
 	return (
 		<div className={layoutStyles.pageContent}>
 			<ShootingStars />
 			<NavBar active="blogs" />
+
 			<div className={layoutStyles.contentWrapper}>
 				<div className={styles.logoContainer}>
 					<div className={styles.logo}>
-						<Logo width={46} />
+						<Logo width={46} user={user} />
 					</div>
 				</div>
 
-				<div className={styles.mainContainer}>
-					<div className={`${layoutStyles.title} ${styles.articlesTitle}`}>
-						{INFO.blogs.title}
-					</div>
-					<div
-						className={`${layoutStyles.subtitle} ${styles.articlesSubtitle}`}
-					>
-						{INFO.blogs.description}
+				<section className={styles.hero} aria-label="Blog intro">
+					<div className={styles.heroCopy}>
+						<h1 className={styles.scriptTitle}>
+							<span className={styles.scriptLine1}>
+								{INFO.blogs.titleLine1}
+							</span>{" "}
+							<span className={styles.scriptLine2}>
+								{INFO.blogs.titleLine2}
+							</span>
+						</h1>
+						<p className={styles.heroTagline}>{INFO.blogs.tagline}</p>
+						<span className={styles.brushUnderline} aria-hidden="true" />
+						<Link href="/travel-journey" className={styles.heroTravelCta}>
+							<FaIcon icon={faMountainSun} />
+							Travel journeys
+						</Link>
 					</div>
 
-					<div className={styles.wrapper}>
+					<div className={styles.heroFeatured} id="latest-post">
 						{isLoading ? (
-							<div className={styles.emptyState}>Loading blogs...</div>
-						) : blogs.length ? (
-							blogs.map((blog) => (
-								<div className={styles.articleItem} key={blog.id}>
-									<Article
-										date={blog.date}
-										title={blog.title}
-										description={blog.description}
-										image={blog.image}
-										link={blog.link}
-										internal={blog.internal}
-										badge={
-											blog.source === "medium" ? "Medium" : "Portfolio"
-										}
-									/>
-								</div>
-							))
+							<div className={styles.featuredSkeleton} aria-hidden="true" />
+						) : latest?.internal ? (
+							<Link href={latest.link} className={styles.featured}>
+								{featuredInner}
+							</Link>
+						) : latest ? (
+							<a
+								href={latest.link}
+								target="_blank"
+								rel="noreferrer"
+								className={styles.featured}
+							>
+								{featuredInner}
+							</a>
 						) : (
-							<div className={styles.emptyState}>
-								No blogs published yet.
-							</div>
+							<div className={styles.emptyState}>No blogs published yet.</div>
 						)}
 					</div>
+				</section>
+
+				<div className={styles.mainContainer}>
+					{!isLoading && rest.length > 0 ? (
+						<section className={styles.moreSection} aria-label="More writing">
+							<h2 className={styles.sectionHeading}>More writing</h2>
+							<div className={styles.wrapper}>
+								{rest.map((blog) => (
+									<div className={styles.articleItem} key={blog.id}>
+										<Article
+											date={blog.date}
+											title={blog.title}
+											description={blog.description}
+											image={blog.image}
+											link={blog.link}
+											internal={blog.internal}
+											badge={
+												blog.source === "medium"
+													? "Medium"
+													: "Portfolio"
+											}
+										/>
+									</div>
+								))}
+							</div>
+						</section>
+					) : null}
 				</div>
+
 				<div className={layoutStyles.pageFooter}>
 					<Footer user={user} />
 				</div>
