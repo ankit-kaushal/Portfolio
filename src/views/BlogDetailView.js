@@ -9,6 +9,7 @@ import Footer from "@/components/common/footer";
 import Logo from "@/components/common/logo";
 import ShootingStars from "@/components/common/ShootingStars";
 import layoutStyles from "@/components/layout/layout.module.css";
+import { getReadingMinutes } from "@/lib/server/utils/blog";
 import styles from "./blogDetail.module.css";
 
 function findPortfolioBlog(data, slug) {
@@ -57,6 +58,10 @@ export default function BlogDetailView({ slug, initialBlog = null }) {
 		setIsLoading(false);
 	}, [data, slug, initialBlog]);
 
+	const readingMinutes = blog
+		? getReadingMinutes(blog.content || blog.excerpt || "")
+		: 0;
+
 	return (
 		<div className={layoutStyles.pageContent}>
 			<ShootingStars />
@@ -94,8 +99,17 @@ export default function BlogDetailView({ slug, initialBlog = null }) {
 										year: "numeric",
 									})}
 								</time>
+								<span className={styles.metaDot} aria-hidden="true">
+									·
+								</span>
+								<span>{readingMinutes} min read</span>
 								{blog.tags?.length > 0 && (
-									<span>{blog.tags.join(" · ")}</span>
+									<>
+										<span className={styles.metaDot} aria-hidden="true">
+											·
+										</span>
+										<span>{blog.tags.join(" · ")}</span>
+									</>
 								)}
 							</div>
 							{blog.coverImage ? (

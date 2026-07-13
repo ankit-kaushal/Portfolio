@@ -18,3 +18,12 @@ export function makeExcerpt(content = "", maxLength = 160) {
 	if (text.length <= maxLength) return text;
 	return `${text.slice(0, maxLength).trim()}...`;
 }
+
+export function getReadingMinutes(content = "", wordsPerMinute = 200) {
+	const words = stripHtml(content)
+		.split(/\s+/)
+		.filter(Boolean).length;
+
+	if (!words) return 1;
+	return Math.max(1, Math.ceil(words / wordsPerMinute));
+}
