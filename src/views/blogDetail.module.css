@@ -162,6 +162,32 @@
 	font-size: 0.92rem;
 }
 
+.content :global(table) {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1.25rem 0;
+	display: block;
+	overflow-x: auto;
+}
+
+.content :global(th),
+.content :global(td) {
+	border: 1px solid var(--quaternary-color, #e4e4e7);
+	padding: 0.65rem 0.85rem;
+	text-align: left;
+	vertical-align: top;
+}
+
+.content :global(th) {
+	font-weight: 700;
+	background: var(--side-background-color);
+	color: var(--primary-color);
+}
+
+.content :global(td) {
+	color: var(--primary-color);
+}
+
 @media (max-width: 600px) {
 	.mainContainer {
 		padding-top: 80px;

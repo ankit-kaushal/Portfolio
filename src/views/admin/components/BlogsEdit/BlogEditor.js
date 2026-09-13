@@ -7,6 +7,7 @@ import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
+import { TableKit } from "@tiptap/extension-table";
 import FaIcon from "@/components/common/FaIcon";
 import {
 	faBold,
@@ -23,6 +24,10 @@ import {
 	faParagraph,
 	faUndo,
 	faRedo,
+	faTable,
+	faPlus,
+	faMinus,
+	faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { apiUrl, getAuthHeaders } from "@/lib/api";
 import styles from "./blogEditor.module.css";
@@ -88,6 +93,14 @@ export default function BlogEditor({
 			Image.configure({
 				HTMLAttributes: {
 					class: styles.editorImage,
+				},
+			}),
+			TableKit.configure({
+				table: {
+					resizable: true,
+					HTMLAttributes: {
+						class: styles.editorTable,
+					},
 				},
 			}),
 			Placeholder.configure({
@@ -329,6 +342,59 @@ export default function BlogEditor({
 						icon={faImage}
 						onClick={insertImage}
 						disabled={uploading}
+					/>
+				</div>
+
+				<div className={styles.toolbarGroup}>
+					<ToolbarButton
+						label="Insert table"
+						icon={faTable}
+						active={editor.isActive("table")}
+						onClick={() =>
+							editor
+								.chain()
+								.focus()
+								.insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+								.run()
+						}
+					/>
+					<ToolbarButton
+						label="Add column"
+						icon={faPlus}
+						disabled={!editor.can().addColumnAfter()}
+						onClick={() => editor.chain().focus().addColumnAfter().run()}
+					/>
+					<ToolbarButton
+						label="Remove column"
+						icon={faMinus}
+						disabled={!editor.can().deleteColumn()}
+						onClick={() => editor.chain().focus().deleteColumn().run()}
+					/>
+					<button
+						type="button"
+						className={styles.toolbarBtn}
+						disabled={!editor.can().addRowAfter()}
+						onClick={() => editor.chain().focus().addRowAfter().run()}
+						title="Add row"
+						aria-label="Add row"
+					>
+						+R
+					</button>
+					<button
+						type="button"
+						className={styles.toolbarBtn}
+						disabled={!editor.can().deleteRow()}
+						onClick={() => editor.chain().focus().deleteRow().run()}
+						title="Remove row"
+						aria-label="Remove row"
+					>
+						−R
+					</button>
+					<ToolbarButton
+						label="Delete table"
+						icon={faTrash}
+						disabled={!editor.can().deleteTable()}
+						onClick={() => editor.chain().focus().deleteTable().run()}
 					/>
 				</div>
 			</div>
