@@ -13,6 +13,9 @@ export const metadata = {
 	},
 	description:
 		"Software engineer passionate about solving complex problems through innovative coding solutions.",
+	verification: {
+		google: "9RvH3NU-pxDwBitccJDCYleAFM29mqfFgGqQMhlkNdc",
+	},
 };
 
 export default function RootLayout({ children }) {
