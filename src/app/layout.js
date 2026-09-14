@@ -13,8 +13,30 @@ export const metadata = {
 	},
 	description:
 		"Software engineer passionate about solving complex problems through innovative coding solutions.",
+	alternates: {
+		canonical: "https://www.ankitkaushal.in",
+	},
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			"max-image-preview": "large",
+			"max-snippet": -1,
+		},
+	},
 	verification: {
 		google: "9RvH3NU-pxDwBitccJDCYleAFM29mqfFgGqQMhlkNdc",
+	},
+	openGraph: {
+		type: "website",
+		locale: "en_IN",
+		url: "https://www.ankitkaushal.in",
+		siteName: "Ankit Kaushal",
+		title: "Ankit Kaushal",
+		description:
+			"Software engineer passionate about solving complex problems through innovative coding solutions.",
 	},
 };
 
