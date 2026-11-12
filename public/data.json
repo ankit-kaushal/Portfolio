@@ -7,8 +7,8 @@
 		"_id": "67bdd0297541b809dc24737a",
 		"name": "Ankit Kaushal",
 		"logoUrl": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1742022944/logo_ma8a0c.png",
-		"description": "Frontend Software Developer with 4+ years of experience specializing in creating dynamic and visually appealing web applications. Currently, I am a valuable member of the development team at Silverlabs India Pvt Ltd, where I contribute to the design and implementation of user interfaces.",
-		"aboutDescription": "and I am delighted to introduce myself as a software engineer at Silverlabs India Pvt Ltd, located in the vibrant city of Hyderabad. With a genuine passion for technology and a deep-rooted curiosity for problem-solving, I find great satisfaction in my role. I hold a degree in Computer Science, which has equipped me with a strong foundation in programming languages, algorithms, and data structures. Throughout my academic journey, I actively engaged in coding competitions and collaborative projects, sharpening my skills and fostering a hands-on approach to software development.",
+		"description": "Software Engineer with 4+ years of experience specializing in building scalable, responsive, and user-friendly web applications. Experienced in developing modern web interfaces and delivering end-to-end frontend solutions using React, Next.js, JavaScript, and TypeScript. Passionate about creating seamless user experiences, optimizing application performance, and solving real-world engineering challenges.",
+		"aboutDescription": "I am a Software Engineer with 4+ years of experience building scalable and user-focused web applications. With a degree in Computer Science from IIIT Kalyani, I have developed a strong foundation in software engineering, problem-solving, and application development.\n\nThroughout my journey at Cogoport and Silverlabs India Pvt. Ltd. (Rizzle), I have worked on building responsive interfaces, improving application performance, and developing products that handle real-world user needs. My primary expertise lies in React, Next.js, JavaScript, TypeScript, and modern frontend technologies.\n\nI enjoy exploring new technologies, solving challenging problems, and continuously learning to become a better engineer. I believe in writing clean, maintainable code and building meaningful products that make a difference.",
 		"aboutTitle": "I’m Ankit Kaushal,",
 		"social": [
 			{
@@ -41,6 +41,20 @@
 		"currentLocation": "Hyderabad, Telangana"
 	},
 	"projects": [
+		{
+			"_id": "6af59b09c18acc93f0c3b5df",
+			"projectName": "Jyurniq",
+			"projectDescription": "Jyurniq is an all-in-one travel platform built with Next.js and MongoDB, offering flight and train search, PNR tracking, AI-powered trip planning, route exploration, and a personal travel timeline through a seamless, responsive interface.",
+			"projectLink": "https://www.jyurniq.in/",
+			"projectGitHub": "https://github.com/ankit-kaushal/jyurniq",
+			"projectType": "personal",
+			"mainStack": "React",
+			"projectPicture": "https://res.cloudinary.com/dm4rbcqca/image/upload/v1794480845/j7cgvumqdwlkxssmqebd.png",
+			"projectPublishDate": "2026-08-01T00:00:00.000Z",
+			"createdAt": "2026-11-12T10:55:05.804Z",
+			"updatedAt": "2026-11-12T10:55:05.804Z",
+			"__v": 0
+		},
 		{
 			"_id": "696d00a3ab9d28f85113d2e7",
 			"projectName": "Code Player v2",
@@ -320,7 +334,7 @@
 		{
 			"workDuration": {
 				"start": "Oct 2024",
-				"end": "Present"
+				"end": "Oct 2026"
 			},
 			"_id": "673db7670c90b969697be8d7",
 			"companyName": "Rizzle",
