@@ -56,6 +56,20 @@
 			"__v": 0
 		},
 		{
+			"_id": "6af6b8c7cc5f028ef7e13795",
+			"projectName": "Shiva Motor Car Driving Training School",
+			"projectDescription": "Shiva Motor Car Driving Training School is a website designed to showcase driving courses, training services, and enrollment information. It provides an easy-to-use interface for learners to explore driving programs and get started with their driving journey.",
+			"projectLink": "https://www.shivamotorcardrivingtrainingschool.com/",
+			"projectGitHub": "https://github.com/ankit-kaushal/shiva-motor-driving-school-website",
+			"projectType": "professional",
+			"mainStack": "html",
+			"projectPicture": "https://res.cloudinary.com/dakwnz0px/image/upload/v1794553982/jyurniq/users/693fe56eb5e8ee6429a2125c/journeys/vuptqzujurhywcpurzzx.webp",
+			"projectPublishDate": "2026-03-29T00:00:00.000Z",
+			"createdAt": "2026-11-13T07:14:15.447Z",
+			"updatedAt": "2026-11-13T07:14:15.447Z",
+			"__v": 0
+		},
+		{
 			"_id": "696d00a3ab9d28f85113d2e7",
 			"projectName": "Code Player v2",
 			"projectDescription": "Code Player v2 is a web-based real-time code editor that allows users to write, edit, and run HTML, CSS, and JavaScript with live preview and console output. It supports code formatting, downloadable snippets, shareable links, and email preview testing with a credit-based system powered by Cashfree payments.",
